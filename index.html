@@ -2,56 +2,321 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>J-NETWORK | RANKINGS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J-NETWORK | RED OG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background: #050000; color: white; font-family: sans-serif; margin: 0; }
-        .header { background: #000; padding: 20px; border-bottom: 3px solid red; font-family: 'Rajdhani'; font-size: 2rem; color: red; text-align: center; }
-        .container { padding: 40px; display: flex; flex-direction: column; align-items: center; }
-        .player-row { background: #111; border: 1px solid #200; margin: 10px; padding: 15px; width: 80%; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; }
-        .prestige-badge { color: gold; font-weight: bold; border: 1px solid gold; padding: 5px 10px; border-radius: 3px; }
-        .tier-box { font-size: 0.8rem; color: #888; }
-        .tier-val { color: white; margin-right: 10px; font-weight: bold; }
+        :root {
+            --bg-deep: #050000;
+            --red-lava: #ff0000;
+            --red-glow: rgba(255, 0, 0, 0.6);
+            --ht-gold: #ffcc00;
+            --text-main: #ffffff;
+            --text-dim: #999;
+        }
+
+        /* === ANIMATED NETHER BACKGROUND === */
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background: radial-gradient(circle at center, #220000 0%, #050000 100%);
+        }
+
+        .nether-floor {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 60%;
+            background-image: 
+                linear-gradient(var(--red-glow) 1.5px, transparent 1.5px), 
+                linear-gradient(90deg, var(--red-glow) 1.5px, transparent 1.5px);
+            background-size: 50px 50px;
+            transform: perspective(400px) rotateX(65deg);
+            transform-origin: bottom;
+            z-index: 0; opacity: 0.3;
+            animation: lavaFlow 8s linear infinite;
+        }
+
+        @keyframes lavaFlow { from { background-position: 0 0; } to { background-position: 0 50px; } }
+
+        .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+        .ember {
+            position: absolute; bottom: -20px; background: var(--red-lava);
+            border-radius: 50%; filter: blur(1.5px);
+            box-shadow: 0 0 12px var(--red-lava);
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-110vh) translateX(40px) scale(0); opacity: 0; }
+        }
+
+        /* === UI COMPONENTS === */
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 3px solid var(--red-lava);
+            padding: 0 2rem; height: 90px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.4rem; font-weight: 800;
+            color: var(--red-lava);
+            text-shadow: 0 0 20px var(--red-glow);
+            letter-spacing: 2px;
+        }
+
+        .search-container { position: relative; width: 300px; }
+        .search-bar {
+            width: 100%; background: #111; border: 1px solid #440000;
+            padding: 12px 15px; color: #fff; border-radius: 4px;
+            font-family: 'Rajdhani'; font-size: 1rem; outline: none;
+            transition: 0.3s;
+        }
+        .search-bar:focus { border-color: var(--red-lava); box-shadow: 0 0 15px var(--red-glow); }
+
+        .mode-bar {
+            background: rgba(15, 0, 0, 0.9);
+            padding: 18px 0; border-bottom: 1px solid #330000;
+            display: flex; justify-content: center; position: relative; z-index: 10;
+        }
+
+        .mode-btn {
+            background: #000; border: 1px solid #440000;
+            padding: 10px 22px; color: var(--text-dim);
+            font-family: 'Rajdhani', sans-serif; font-weight: 700;
+            cursor: pointer; transition: 0.3s; margin: 0 5px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        .mode-btn.active, .mode-btn:hover {
+            background: var(--red-lava); color: #000;
+            box-shadow: 0 0 25px var(--red-glow); border-color: var(--red-lava);
+        }
+
+        /* === BOARD GRID === */
+        .board {
+            position: relative; z-index: 5;
+            padding: 2.5rem; display: flex; gap: 20px;
+            width: 100%; box-sizing: border-box; overflow-x: auto;
+        }
+
+        .column {
+            background: rgba(10, 0, 0, 0.95);
+            border: 1px solid #4a0000;
+            flex: 1; min-width: 360px;
+            border-radius: 4px; overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        }
+
+        .col-header {
+            padding: 20px; background: linear-gradient(to bottom, #500000, transparent);
+            border-bottom: 2px solid var(--red-lava); text-align: center;
+        }
+
+        .col-title { font-family: 'Rajdhani'; font-size: 1.6rem; font-weight: 800; color: #fff; }
+
+        /* === PLAYER CARDS === */
+        .player-card {
+            background: rgba(30, 0, 0, 0.4);
+            border: 1px solid #2a0000;
+            margin: 12px; padding: 18px;
+            transition: 0.3s; position: relative;
+        }
+        .player-card:hover { transform: translateX(5px); border-color: var(--red-lava); }
+        .player-card.ht1-gold { border: 1px solid var(--ht-gold); box-shadow: inset 0 0 15px rgba(255, 204, 0, 0.15); }
+
+        .card-inner { display: flex; align-items: center; justify-content: space-between; }
+        .p-name { font-weight: 800; font-size: 1.1rem; color: #fff; }
+        .p-rank { font-family: 'Rajdhani'; font-weight: 900; font-size: 1.4rem; }
+
+        .stat-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 6px; margin-top: 15px; padding-top: 10px; border-top: 1px solid #220000;
+        }
+
+        .stat-box {
+            background: #000; padding: 5px 8px; font-size: 0.65rem;
+            display: flex; justify-content: space-between; border: 1px solid #1a0000;
+        }
+
+        /* COMMUNITY SECTION */
+        .community-hero { width: 100%; text-align: center; padding: 100px 20px; }
+        .discord-btn {
+            display: inline-block; background: #5865F2; color: #fff;
+            padding: 20px 50px; text-decoration: none; border-radius: 4px;
+            font-family: 'Rajdhani'; font-weight: 800; font-size: 1.8rem;
+            transition: 0.3s; box-shadow: 0 0 40px rgba(88,101,242,0.4);
+        }
     </style>
 </head>
 <body>
-    <div class="header">J-NETWORK RANKINGS</div>
-    <div class="container" id="board">Loading Latest Stats...</div>
 
-    <script>
-        async function updateSite() {
-            // The ?v= timestamp forces GitHub to stop showing the old "cached" version
-            const url = `https://raw.githubusercontent.com/Bronze-solos/j-network/main/players.json?v=${new Date().getTime()}`;
-            try {
-                const r = await fetch(url);
-                let data = await r.json();
-                
-                // Sort by Prestige (Math result)
-                data.sort((a, b) => b.prestige - a.prestige);
+<div class="nether-floor"></div>
+<div class="embers" id="emberField"></div>
 
-                const board = document.getElementById('board');
-                board.innerHTML = '';
+<nav class="navbar">
+    <div class="logo">J-NETWORK <span>OG</span></div>
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="SEARCH PLAYER..." id="searchPlayer">
+    </div>
+</nav>
 
-                data.forEach((p, index) => {
-                    let tiers = '';
-                    for (let [kit, val] of Object.entries(p.tiers)) {
-                        tiers += `<span>${kit}: <span class="tier-val">${val}</span></span>`;
-                    }
-                    board.innerHTML += `
-                        <div class="player-row">
-                            <div>
-                                <span style="color:red; margin-right:15px;">#${index + 1}</span>
-                                <span style="font-size:1.2rem; font-weight:bold;">${p.name}</span>
-                                <div class="tier-box">${tiers || 'Unranked'}</div>
-                            </div>
-                            <div class="prestige-badge">${p.prestige} PTS</div>
-                        </div>
-                    `;
-                });
-            } catch (e) { console.log("Waiting for GitHub..."); }
+<div class="mode-bar">
+    <div id="modeList"></div>
+</div>
+
+<div class="board" id="board">Connecting to Database...</div>
+
+<script>
+    // Ember Gen
+    const field = document.getElementById('emberField');
+    for(let i=0; i<45; i++) {
+        const e = document.createElement('div');
+        e.className = 'ember';
+        const size = Math.random() * 4 + 2;
+        e.style.width = size + 'px'; e.style.height = size + 'px';
+        e.style.left = Math.random() * 100 + 'vw';
+        e.style.animationDuration = (Math.random() * 5 + 4) + 's';
+        e.style.animationDelay = Math.random() * 5 + 's';
+        field.appendChild(e);
+    }
+
+    const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community"];
+    const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
+
+    let PLAYERS = [];
+    let currentMode = "Overall";
+
+    // FETCH FROM GITHUB
+    async function loadPlayers() {
+        try {
+            // Using timestamp to bypass cache
+            const response = await fetch(`https://raw.githubusercontent.com/Bronze-solos/j-network/main/players.json?t=${new Date().getTime()}`);
+            PLAYERS = await response.json();
+            renderTabs();
+            renderBoard();
+        } catch (err) {
+            document.getElementById('board').innerHTML = "Error loading database...";
         }
-        updateSite();
-        setInterval(updateSite, 10000); // Check for updates every 10 seconds
-    </script>
+    }
+
+    function setMode(m) {
+        currentMode = m;
+        renderTabs();
+        renderBoard();
+    }
+
+    function renderTabs() {
+        document.getElementById('modeList').innerHTML = MODES.map(m => `
+            <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">${m}</button>
+        `).join('');
+    }
+
+    function renderBoard() {
+        const board = document.getElementById('board');
+        board.innerHTML = '';
+
+        if(currentMode === "Community") {
+            board.innerHTML = `<div class="community-hero">
+                <h1 style="font-family:'Rajdhani'; font-size:4rem; color:#fff;">JOIN THE NETWORK</h1>
+                <a href="https://discord.gg/zJHMadUf" target="_blank" class="discord-btn">JOIN DISCORD</a>
+            </div>`;
+            return;
+        }
+
+        if(currentMode === "Overall") {
+            renderOverall(board);
+        } else {
+            renderKitTiers(board);
+        }
+    }
+
+    function renderOverall(board) {
+        const sorted = [...PLAYERS].sort((a,b) => b.prestige - a.prestige);
+        board.innerHTML = `
+            <div class="column" style="min-width:100%">
+                <div class="col-header"><div class="col-title">GLOBAL PRESTIGE</div></div>
+                <div>
+                    ${sorted.map((p, i) => `
+                        <div class="player-card" data-name="${p.name.toLowerCase()}">
+                            <div class="card-inner">
+                                <div style="display:flex; align-items:center; gap:15px;">
+                                    <div style="color:var(--red-lava); font-weight:900; font-size:1.4rem;">#${i+1}</div>
+                                    <div>
+                                        <div class="p-name">${p.name}</div>
+                                        <div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige} PTS</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-grid">
+                                ${KITS.map(k => {
+                                    let r = (p.tiers && p.tiers[k]) ? p.tiers[k] : "UR";
+                                    return `<div class="stat-box">
+                                        <span style="color:#444">${k.slice(0,3).toUpperCase()}</span>
+                                        <span style="color:${r.includes('HT') ? 'var(--ht-gold)' : (r==='UR' ? '#333' : '#fff')}">${r}</span>
+                                    </div>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function renderKitTiers(board) {
+        const eligible = PLAYERS.filter(p => p.tiers && p.tiers[currentMode] && p.tiers[currentMode] !== "UR");
+        for(let t=1; t<=3; t++) {
+            const inTier = eligible.filter(p => p.tiers[currentMode].includes(t.toString()));
+            if(inTier.length === 0) continue;
+
+            inTier.sort((a,b) => b.prestige - a.prestige);
+
+            board.innerHTML += `
+                <div class="column">
+                    <div class="col-header"><div class="col-title">TIER ${t}</div></div>
+                    <div>
+                        ${inTier.map((p, idx) => {
+                            let rank = p.tiers[currentMode];
+                            const isHT = rank === "HT1";
+
+                            return `
+                                <div class="player-card ${isHT ? 'ht1-gold' : ''}" data-name="${p.name.toLowerCase()}">
+                                    <div class="card-inner">
+                                        <div>
+                                            <div class="p-name">${p.name}</div>
+                                            <div style="font-size:0.7rem; color:#555;">${p.region}</div>
+                                        </div>
+                                        <div class="p-rank" style="color:${isHT ? 'var(--ht-gold)' : '#fff'}">${rank}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Search Feature
+    document.getElementById('searchPlayer').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.player-card').forEach(card => {
+            const name = card.getAttribute('data-name');
+            card.style.display = name.includes(term) ? 'block' : 'none';
+        });
+    });
+
+    // Start
+    loadPlayers();
+    // Auto-refresh every 30 seconds
+    setInterval(loadPlayers, 30000);
+</script>
 </body>
 </html>
