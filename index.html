@@ -7,73 +7,116 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
+/* 🔥 ANIMATED NETHER BACKGROUND */
 body {
   margin: 0;
   font-family: Orbitron, sans-serif;
-  background: radial-gradient(circle at top, #0b1d2a, #05080d 75%);
-  color: #e6faff;
+  color: #fff;
+  background: linear-gradient(
+    -45deg,
+    #1b0000,
+    #3a0000,
+    #5a1a00,
+    #2b0000
+  );
+  background-size: 400% 400%;
+  animation: lava 18s ease infinite;
 }
 
+@keyframes lava {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* HEADER */
 header {
   text-align: center;
-  padding: 40px 20px 10px;
+  padding: 40px 20px 15px;
 }
 
 header h1 {
   font-size: 3rem;
-  color: #00f6ff;
-  text-shadow: 0 0 25px #00f6ff;
+  color: #ffb347;
+  text-shadow: 0 0 25px #ff4500;
 }
 
+header p {
+  opacity: 0.85;
+}
+
+/* NAV BAR */
 nav {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 25px 0;
+  gap: 8px;
   flex-wrap: wrap;
+  padding: 15px;
 }
 
-nav button {
-  background: transparent;
-  border: 2px solid #00f6ff;
-  color: #00f6ff;
-  padding: 10px 18px;
+nav button, nav a {
+  background: rgba(0,0,0,0.6);
+  border: 2px solid #ff4500;
+  color: #ffb347;
+  padding: 8px 14px;
   cursor: pointer;
   font-family: inherit;
+  text-decoration: none;
 }
 
+nav button:hover,
 nav button.active,
-nav button:hover {
-  background: #00f6ff;
-  color: #001018;
-  box-shadow: 0 0 15px #00f6ff;
+nav a:hover {
+  background: #ff4500;
+  color: #140000;
+  box-shadow: 0 0 15px #ff4500;
 }
 
+/* MAIN CONTAINER */
 .container {
-  max-width: 900px;
-  margin: 40px auto;
-  border: 2px solid #00f6ff;
-  box-shadow: 0 0 25px rgba(0,246,255,0.25);
+  max-width: 1000px;
+  margin: 30px auto 60px;
+  background: rgba(0,0,0,0.55);
+  border: 2px solid #ff4500;
+  box-shadow: 0 0 30px rgba(255,69,0,0.4);
   padding: 20px;
 }
 
 h2 {
-  color: #00f6ff;
+  text-align: center;
+  color: #ffb347;
 }
 
+/* TABLE */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 15px;
 }
 
 th, td {
   padding: 12px;
-  border-bottom: 1px solid rgba(0,246,255,0.2);
   text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
 th {
-  color: #00f6ff;
+  color: #ffb347;
+}
+
+tr:hover {
+  background: rgba(255,69,0,0.15);
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  margin: 30px 0;
+  opacity: 0.7;
 }
 </style>
 </head>
@@ -87,12 +130,23 @@ th {
 
 <nav>
   <button class="active" onclick="setMode('overall', this)">Overall</button>
-  <button onclick="setMode('mace', this)">Mace</button>
   <button onclick="setMode('sword', this)">Sword</button>
+  <button onclick="setMode('axe', this)">Axe</button>
+  <button onclick="setMode('crystal', this)">Crystal</button>
+  <button onclick="setMode('diamond_pot', this)">Diamond Pot</button>
+  <button onclick="setMode('netherite_pot', this)">Netherite Pot</button>
+  <button onclick="setMode('mace', this)">Mace</button>
+  <button onclick="setMode('uhc', this)">UHC</button>
+  <button onclick="setMode('diamond_smp', this)">Diamond SMP</button>
+  <button onclick="setMode('netherite_smp', this)">Netherite SMP</button>
+
+  <!-- COMMUNITY -->
+  <a href="https://discord.gg/zJHMadUf" target="_blank">Community</a>
 </nav>
 
 <div class="container">
   <h2 id="title"></h2>
+
   <table>
     <thead>
       <tr>
@@ -105,28 +159,37 @@ th {
   </table>
 </div>
 
+<footer>
+  © J-Network • Join the Discord to get ranked
+</footer>
+
 <script>
 const data = {
   overall: [
-    { name: "Notsqurmyshi", rating: 2100 },
+    { name: "N0tsqurmyshi", rating: 2100 },
     { name: "BronzeHarpy80", rating: 1980 },
     { name: "JeffersonD44", rating: 1840 }
   ],
-  mace: [
-    { name: "Notsqurmyshi", rating: 2150 },
-    { name: "BronzeHarpy80", rating: 1950 },
-    { name: "JeffersonD44", rating: 1800 }
-  ],
+
   sword: [
-    { name: "Notsqurmyshi", rating: 2050 },
+    { name: "N0tsqurmyshi", rating: 2050 },
     { name: "BronzeHarpy80", rating: 1900 },
     { name: "JeffersonD44", rating: 1750 }
-  ]
+  ],
+
+  axe: [],
+  crystal: [],
+  diamond_pot: [],
+  netherite_pot: [],
+  mace: [],
+  uhc: [],
+  diamond_smp: [],
+  netherite_smp: []
 };
 
 function setMode(mode, btn) {
   document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
+  if (btn) btn.classList.add("active");
   render(mode);
 }
 
@@ -148,21 +211,24 @@ function render(mode) {
     return;
   }
 
-  title.innerText = mode.toUpperCase() + " Rankings";
+  title.innerText = mode.replace("_", " ").toUpperCase() + " TIERS";
 
-  const players = [...data[mode]].sort((a, b) => b.rating - a.rating);
-  const chunk = Math.ceil(players.length / 3);
+  const players = [...data[mode]].sort((a,b) => b.rating - a.rating);
+  if (players.length === 0) {
+    table.innerHTML = `<tr><td colspan="3">No players ranked yet</td></tr>`;
+    return;
+  }
+
+  const perTier = Math.ceil(players.length / 3);
   const tiers = [
-    players.slice(0, chunk),
-    players.slice(chunk, chunk * 2),
-    players.slice(chunk * 2)
+    players.slice(0, perTier),
+    players.slice(perTier, perTier * 2),
+    players.slice(perTier * 2)
   ];
 
   tiers.forEach((tier, i) => {
     if (tier.length === 0) return;
-    table.innerHTML += `
-      <tr><th colspan="3">Tier ${i + 1}</th></tr>
-    `;
+    table.innerHTML += `<tr><th colspan="3">Tier ${i + 1}</th></tr>`;
     tier.forEach((p, idx) => {
       const label = idx === 0 ? `HT${i + 1}` : `LT${i + 1}`;
       table.innerHTML += `
