@@ -1,82 +1,104 @@
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: Inter, Arial, sans-serif;
 }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top, #0b1a2b, #05080f 70%),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0,255,255,0.05) 0px,
-      rgba(0,255,255,0.05) 1px,
-      transparent 1px,
-      transparent 40px
-    );
-  color: #e6faff;
+  background: radial-gradient(circle at top, #0a0f1f, #02040a);
+  color: white;
 }
 
-.top {
-  padding: 20px;
+/* HEADER */
+.top-bar {
+  padding: 30px;
   text-align: center;
+  border-bottom: 1px solid #1a1f33;
 }
 
-.top h1 {
+.top-bar h1 {
   margin: 0;
-  color: #00ffff;
+  font-size: 36px;
   letter-spacing: 2px;
 }
 
+.top-bar p {
+  color: #7aa2ff;
+}
+
+/* MODES */
 .modes {
-  margin-top: 15px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
 }
 
 .modes button {
+  padding: 10px 16px;
   background: transparent;
-  border: 1px solid #00ffff;
-  color: #00ffff;
-  padding: 6px 14px;
+  border: 1px solid #2a355a;
+  color: #9bb2ff;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .modes button:hover,
 .modes button.active {
-  background: #00ffff;
-  color: #000;
-  box-shadow: 0 0 10px #00ffff;
+  background: #0f1a3a;
+  box-shadow: 0 0 10px #3b6cff;
+  color: white;
 }
 
-.panel {
+/* CONTENT */
+.container {
   max-width: 900px;
-  margin: 40px auto;
-  border: 2px solid #00ffff;
+  margin: auto;
   padding: 20px;
-  box-shadow: 0 0 25px rgba(0,255,255,0.25);
 }
 
-.panel h2 {
-  margin-top: 0;
+/* FEATURED #1 */
+.featured {
+  border: 2px solid gold;
+  background: rgba(255,215,0,0.05);
+  box-shadow: 0 0 40px rgba(255,215,0,0.4);
+  padding: 30px;
   text-align: center;
+  margin-bottom: 30px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+.featured .rank {
+  font-size: 64px;
+  color: gold;
 }
 
-th, td {
-  border: 1px solid #00ffff;
-  padding: 10px;
-  text-align: center;
+.featured .name {
+  font-size: 36px;
+  font-weight: bold;
 }
 
-thead {
-  background: rgba(0,255,255,0.15);
+.featured .rating {
+  color: #00ffff;
+}
+
+/* RANK CARDS */
+.rank-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  border: 1px solid #1f2b55;
+  background: rgba(10,20,60,0.4);
+  transition: 0.2s;
+}
+
+.rank-card:hover {
+  box-shadow: 0 0 15px #3b6cff;
+}
+
+.rank-card .pos {
+  font-weight: bold;
+  color: #7aa2ff;
 }
