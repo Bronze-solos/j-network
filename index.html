@@ -1,186 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>J-Network Rankings</title>
+<meta charset="UTF-8" />
+<title>J-NETWORK | PvP Rankings</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+/* =====================
+   GLOBAL THEME
+===================== */
+:root {
+  --bg: #05080f;
+  --panel: #0b1220;
+  --glow: #00f7ff;
+  --text: #e6f1ff;
+  --muted: #8aa0b8;
+  --gold: #ffcc00;
+  --red: #ff4d4d;
+  --blue: #4da6ff;
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  color: #00ffff;
+  font-family: Inter, system-ui, sans-serif;
+  background: radial-gradient(circle at top, #0b1220, #020409);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* animated background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
   background:
-    radial-gradient(circle at top, #2b0000 0%, #000 60%),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,80,0,0.15) 0px,
-      rgba(255,80,0,0.15) 2px,
-      transparent 2px,
-      transparent 6px
-    );
-  animation: fireMove 12s linear infinite;
+    linear-gradient(120deg, transparent 40%, rgba(0,247,255,.08), transparent 60%);
+  animation: bgMove 12s linear infinite;
+  pointer-events: none;
+}
+@keyframes bgMove {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(50%); }
 }
 
-@keyframes fireMove {
-  from { background-position: 0 0; }
-  to { background-position: 600px 600px; }
-}
-
+/* =====================
+   NAVBAR
+===================== */
 header {
-  text-align: center;
-  padding: 40px 20px;
-  border-bottom: 2px solid #00ffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(5,8,15,.7);
+  border-bottom: 1px solid rgba(255,255,255,.05);
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2.6rem;
-}
-
-nav {
+.nav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  padding: 20px;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 20px;
 }
 
-nav button, nav a {
-  padding: 10px 18px;
-  border: 2px solid #00ffff;
+.logo {
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--glow);
+}
+
+.nav-center {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-center button,
+.mode-tabs button {
   background: transparent;
-  color: #00ffff;
+  border: 1px solid rgba(255,255,255,.15);
+  color: var(--text);
+  padding: 6px 14px;
   cursor: pointer;
-  text-decoration: none;
+  border-radius: 6px;
+  transition: .2s;
 }
 
-nav button.active,
-nav button:hover,
-nav a:hover {
-  background: #00ffff;
-  color: #000;
+.nav-center button.active,
+.mode-tabs button.active {
+  border-color: var(--glow);
+  box-shadow: 0 0 12px var(--glow);
 }
 
-.container {
-  max-width: 1300px;
-  margin: 40px auto;
-  padding: 30px;
-  border: 2px solid #00ffff;
-  background: rgba(0,0,0,0.65);
+.nav-right {
+  margin-left: auto;
 }
 
-h2 {
+.nav-right input {
+  background: var(--panel);
+  border: 1px solid rgba(255,255,255,.15);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* =====================
+   MAIN
+===================== */
+main {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+h1 {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 8px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 14px;
+.subtitle {
   text-align: center;
-  border-bottom: 1px solid rgba(0,255,255,0.3);
+  color: var(--muted);
+  margin-bottom: 30px;
 }
 
-thead {
-  background: rgba(255,80,0,0.3);
+/* =====================
+   MODE TABS
+===================== */
+.mode-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  justify-content: center;
+  margin-bottom: 30px;
 }
+
+/* =====================
+   LEADERBOARD
+===================== */
+.board {
+  background: var(--panel);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0,247,255,.08);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  align-items: center;
+}
+
+.row.header {
+  background: rgba(255,255,255,.03);
+  font-weight: 700;
+}
+
+.row:hover {
+  background: rgba(0,247,255,.06);
+}
+
+.rank {
+  font-weight: 800;
+}
+
+.tier {
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.HT1 { color: var(--gold); box-shadow: 0 0 10px var(--gold); }
+.HT2 { color: #ff9f1a; }
+.HT3 { color: var(--red); }
+.LT1 { color: var(--blue); }
+.LT2 { color: #66ffff; }
+.LT3 { color: #aaa; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>J-Network PvP Rankings</h1>
-  <p>Competitive Minecraft Leaderboards</p>
+  <div class="nav">
+    <div class="logo">J-NETWORK</div>
+
+    <div class="nav-center">
+      <button class="active">Rankings</button>
+      <button onclick="joinDiscord()">Community</button>
+    </div>
+
+    <div class="nav-right">
+      <input id="search" placeholder="Search player…" />
+    </div>
+  </div>
 </header>
 
-<nav>
-  <button class="active" onclick="setMode('overall', this)">Overall</button>
-  <button onclick="setMode('sword', this)">Sword</button>
-  <button onclick="setMode('axe', this)">Axe</button>
-  <button onclick="setMode('crystal', this)">Crystal</button>
-  <button onclick="setMode('diamond_pot', this)">Diamond Pot</button>
-  <button onclick="setMode('netherite_pot', this)">Netherite Pot</button>
-  <button onclick="setMode('mace', this)">Mace</button>
-  <a href="https://discord.gg/zJHMadUf" target="_blank">Community</a>
-</nav>
+<main>
+  <h1>Competitive PvP Rankings</h1>
+  <div class="subtitle">MCTiers-style ranked ladder</div>
 
-<div class="container">
-  <h2 id="modeTitle">Overall Rankings</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Player</th>
-        <th id="rightHeader">Rating</th>
-      </tr>
-    </thead>
-    <tbody id="board"></tbody>
-  </table>
-</div>
+  <div class="mode-tabs" id="modes"></div>
+
+  <div class="board" id="board"></div>
+</main>
 
 <script>
+/* =====================
+   DATA (BOT-READY)
+===================== */
 const data = {
   overall: [
     { name: "Notsqumyshi", rating: 2100 },
     { name: "BronzeHarpy80", rating: 1980 },
     { name: "JeffersonD44", rating: 1840 }
   ],
-  sword: [{name:"Notsqumyshi"},{name:"BronzeHarpy80"}],
-  axe: [{name:"Notsqumyshi"}],
-  crystal: [{name:"BronzeHarpy80"}],
-  diamond_pot: [{name:"JeffersonD44"}],
-  netherite_pot: [{name:"Notsqumyshi"}],
-  mace: [{name:"BronzeHarpy80"}]
+  sword: [
+    { name: "Notsqumyshi", rating: 2050 },
+    { name: "BronzeHarpy80", rating: 1900 },
+    { name: "JeffersonD44", rating: 1800 }
+  ],
+  mace: [
+    { name: "BronzeHarpy80", rating: 2000 },
+    { name: "Notsqumyshi", rating: 1850 }
+  ]
 };
 
-function setMode(mode, btn) {
-  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+let currentMode = "overall";
+
+/* =====================
+   INIT
+===================== */
+const modesEl = document.getElementById("modes");
+const boardEl = document.getElementById("board");
+const searchEl = document.getElementById("search");
+
+Object.keys(data).forEach(mode => {
+  const btn = document.createElement("button");
+  btn.textContent = mode.toUpperCase();
+  btn.onclick = () => selectMode(mode, btn);
+  if (mode === currentMode) btn.classList.add("active");
+  modesEl.appendChild(btn);
+});
+
+render();
+
+/* =====================
+   FUNCTIONS
+===================== */
+function selectMode(mode, btn) {
+  currentMode = mode;
+  document.querySelectorAll(".mode-tabs button")
+    .forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  render(mode);
+  render();
 }
 
-function render(mode) {
-  const body = document.getElementById("board");
-  const title = document.getElementById("modeTitle");
-  const right = document.getElementById("rightHeader");
-  body.innerHTML = "";
-
-  title.textContent = mode === "overall"
-    ? "Overall Rankings"
-    : mode.replace("_", " ").toUpperCase() + " Rankings";
-
-  right.textContent = mode === "overall" ? "Rating" : "Tier";
-
-  data[mode].forEach((p, i) => {
-    const rank = i + 1;
-    const tier =
-      rank === 1 ? "HT1" :
-      rank <= 5 ? "Tier 1" :
-      rank <= 15 ? "Tier 2" :
-      rank <= 30 ? "Tier 3" :
-      rank <= 50 ? "Tier 4" : "Tier 5";
-
-    body.innerHTML += `
-      <tr>
-        <td>#${rank}</td>
-        <td>${p.name}</td>
-        <td>${mode === "overall" ? p.rating : tier}</td>
-      </tr>
-    `;
-  });
+function getTier(index) {
+  if (index === 0) return "HT1";
+  if (index === 1) return "HT2";
+  if (index === 2) return "HT3";
+  if (index === 3) return "LT1";
+  if (index === 4) return "LT2";
+  return "LT3";
 }
 
-render("overall");
+function render() {
+  boardEl.innerHTML = `
+    <div class="row header">
+      <div>Rank</div>
+      <div>Player</div>
+      <div>${currentMode === "overall" ? "Rating" : "Tier"}</div>
+    </div>
+  `;
+
+  const q = searchEl.value.toLowerCase();
+
+  data[currentMode]
+    .filter(p => p.name.toLowerCase().includes(q))
+    .forEach((p, i) => {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="rank">#${i + 1}</div>
+        <div>${p.name}</div>
+        <div>
+          ${currentMode === "overall"
+            ? p.rating
+            : `<span class="tier ${getTier(i)}">${getTier(i)}</span>`
+          }
+        </div>
+      `;
+      boardEl.appendChild(row);
+    });
+}
+
+searchEl.addEventListener("input", render);
+
+function joinDiscord() {
+  window.open("https://discord.gg/YOUR_INVITE", "_blank");
+}
 </script>
 
 </body>
