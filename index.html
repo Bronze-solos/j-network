@@ -15,7 +15,6 @@
             --text-dim: #999;
         }
 
-        /* === ANIMATED NETHER BACKGROUND === */
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
@@ -39,75 +38,45 @@
 
         @keyframes lavaFlow { from { background-position: 0 0; } to { background-position: 0 50px; } }
 
-        .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
-        .ember {
-            position: absolute; bottom: -20px; background: var(--red-lava);
-            border-radius: 50%; filter: blur(1.5px);
-            box-shadow: 0 0 12px var(--red-lava);
-            animation: rise linear infinite;
-        }
-
-        @keyframes rise {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-110vh) translateX(40px) scale(0); opacity: 0; }
-        }
-
-        /* === UI COMPONENTS === */
         .navbar {
             background: rgba(0, 0, 0, 0.95);
             border-bottom: 3px solid var(--red-lava);
-            padding: 0 2rem; height: 90px;
+            padding: 0 2rem; height: 100px;
             display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 100;
             backdrop-filter: blur(20px);
         }
 
+        .logo-area { display: flex; flex-direction: column; }
         .logo {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 2.4rem; font-weight: 800;
+            font-size: 2.2rem; font-weight: 800;
             color: var(--red-lava);
             text-shadow: 0 0 20px var(--red-glow);
             letter-spacing: 2px;
+            line-height: 1;
         }
-
-        /* === STAFF SECTION === */
-        .staff-shoutout {
-            background: rgba(20, 0, 0, 0.8);
-            border-bottom: 1px solid #440000;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            position: relative;
-            z-index: 10;
-            font-family: 'Rajdhani', sans-serif;
+        .subtitle {
+            font-family: 'Rajdhani';
+            font-size: 0.7rem;
+            color: #666;
+            letter-spacing: 3px;
+            margin-top: 5px;
+            font-weight: 700;
         }
-
-        .staff-item { text-align: center; }
-        .staff-role { font-size: 0.7rem; color: var(--red-lava); font-weight: 800; letter-spacing: 1px; display: block; }
-        .staff-name { font-size: 1.1rem; color: #fff; font-weight: 700; }
-
-        .search-container { position: relative; width: 300px; }
-        .search-bar {
-            width: 100%; background: #111; border: 1px solid #440000;
-            padding: 12px 15px; color: #fff; border-radius: 4px;
-            font-family: 'Rajdhani'; font-size: 1rem; outline: none;
-            transition: 0.3s;
-        }
-        .search-bar:focus { border-color: var(--red-lava); box-shadow: 0 0 15px var(--red-glow); }
 
         .mode-bar {
             background: rgba(15, 0, 0, 0.9);
             padding: 18px 0; border-bottom: 1px solid #330000;
             display: flex; justify-content: center; position: relative; z-index: 10;
+            flex-wrap: wrap;
         }
 
         .mode-btn {
             background: #000; border: 1px solid #440000;
-            padding: 10px 22px; color: var(--text-dim);
+            padding: 8px 18px; color: var(--text-dim);
             font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            cursor: pointer; transition: 0.3s; margin: 0 5px;
+            cursor: pointer; transition: 0.3s; margin: 4px;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
@@ -116,86 +85,51 @@
             box-shadow: 0 0 25px var(--red-glow); border-color: var(--red-lava);
         }
 
-        /* === BOARD GRID === */
         .board {
             position: relative; z-index: 5;
             padding: 2.5rem; display: flex; gap: 20px;
             width: 100%; box-sizing: border-box; overflow-x: auto;
         }
 
-        .column {
-            background: rgba(10, 0, 0, 0.95);
-            border: 1px solid #4a0000;
-            flex: 1; min-width: 360px;
-            border-radius: 4px; overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+        /* --- STAFF CARD STYLING --- */
+        .staff-grid {
+            display: flex; justify-content: center; gap: 20px;
+            width: 100%; padding: 50px 20px; flex-wrap: wrap;
         }
-
-        .col-header {
-            padding: 20px; background: linear-gradient(to bottom, #500000, transparent);
-            border-bottom: 2px solid var(--red-lava); text-align: center;
+        .staff-card {
+            background: #000; border: 1px solid #440000;
+            padding: 30px; width: 280px; text-align: center;
+            transition: 0.4s; text-decoration: none;
         }
+        .staff-card:hover { border-color: var(--red-lava); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255,0,0,0.2); }
+        .staff-role { color: var(--red-lava); font-family: 'Rajdhani'; font-weight: 800; font-size: 0.8rem; letter-spacing: 2px; }
+        .staff-name { color: #fff; font-size: 1.5rem; font-weight: 800; display: block; margin-top: 10px; }
 
+        .column { background: rgba(10, 0, 0, 0.95); border: 1px solid #4a0000; flex: 1; min-width: 360px; border-radius: 4px; overflow: hidden; }
+        .col-header { padding: 20px; background: linear-gradient(to bottom, #500000, transparent); border-bottom: 2px solid var(--red-lava); text-align: center; }
         .col-title { font-family: 'Rajdhani'; font-size: 1.6rem; font-weight: 800; color: #fff; }
 
-        .player-card {
-            background: rgba(30, 0, 0, 0.4);
-            border: 1px solid #2a0000;
-            margin: 12px; padding: 18px;
-            transition: 0.3s; position: relative;
-        }
+        .player-card { background: rgba(30, 0, 0, 0.4); border: 1px solid #2a0000; margin: 12px; padding: 18px; transition: 0.3s; }
         .player-card:hover { transform: translateX(5px); border-color: var(--red-lava); }
-        .player-card.ht1-gold { border: 1px solid var(--ht-gold); box-shadow: inset 0 0 15px rgba(255, 204, 0, 0.15); }
-
-        .card-inner { display: flex; align-items: center; justify-content: space-between; }
-        .p-name { font-weight: 800; font-size: 1.1rem; color: #fff; }
+        .player-card.ht1-gold { border: 1px solid var(--ht-gold); }
         .p-rank { font-family: 'Rajdhani'; font-weight: 900; font-size: 1.4rem; }
-
-        .stat-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-            gap: 6px; margin-top: 15px; padding-top: 10px; border-top: 1px solid #220000;
-        }
-
-        .stat-box {
-            background: #000; padding: 5px 8px; font-size: 0.65rem;
-            display: flex; justify-content: space-between; border: 1px solid #1a0000;
-        }
-
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 6px; margin-top: 15px; border-top: 1px solid #220000; padding-top: 10px; }
+        .stat-box { background: #000; padding: 5px 8px; font-size: 0.65rem; display: flex; justify-content: space-between; border: 1px solid #1a0000; }
+        
         .community-hero { width: 100%; text-align: center; padding: 100px 20px; }
-        .discord-btn {
-            display: inline-block; background: #5865F2; color: #fff;
-            padding: 20px 50px; text-decoration: none; border-radius: 4px;
-            font-family: 'Rajdhani'; font-weight: 800; font-size: 1.8rem;
-            transition: 0.3s; box-shadow: 0 0 40px rgba(88,101,242,0.4);
-        }
+        .discord-btn { display: inline-block; background: #5865F2; color: #fff; padding: 20px 50px; text-decoration: none; border-radius: 4px; font-family: 'Rajdhani'; font-weight: 800; font-size: 1.8rem; box-shadow: 0 0 40px rgba(88,101,242,0.4); }
     </style>
 </head>
 <body>
 
 <div class="nether-floor"></div>
-<div class="embers" id="emberField"></div>
 
 <nav class="navbar">
-    <div class="logo">J-NETWORK <span>OG</span></div>
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="SEARCH PLAYER..." id="searchPlayer">
+    <div class="logo-area">
+        <div class="logo">J-NETWORK OG</div>
+        <div class="subtitle">MADE BY BRONZEHARPY80</div>
     </div>
 </nav>
-
-<div class="staff-shoutout">
-    <div class="staff-item">
-        <span class="staff-role">OWNER</span>
-        <span class="staff-name">JeffersonD44</span>
-    </div>
-    <div class="staff-item">
-        <span class="staff-role">CO-OWNER</span>
-        <span class="staff-name">BronzeHarpy80</span>
-    </div>
-    <div class="staff-item">
-        <span class="staff-role">HEAD ADMIN</span>
-        <span class="staff-name">N0tsqurmyshi</span>
-    </div>
-</div>
 
 <div class="mode-bar">
     <div id="modeList"></div>
@@ -204,20 +138,7 @@
 <div class="board" id="board">Connecting to Database...</div>
 
 <script>
-    // Ember Gen
-    const field = document.getElementById('emberField');
-    for(let i=0; i<45; i++) {
-        const e = document.createElement('div');
-        e.className = 'ember';
-        const size = Math.random() * 4 + 2;
-        e.style.width = size + 'px'; e.style.height = size + 'px';
-        e.style.left = Math.random() * 100 + 'vw';
-        e.style.animationDuration = (Math.random() * 5 + 4) + 's';
-        e.style.animationDelay = Math.random() * 5 + 's';
-        field.appendChild(e);
-    }
-
-    const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community"];
+    const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community", "Staff"];
     const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
 
     let PLAYERS = [];
@@ -258,6 +179,26 @@
             return;
         }
 
+        if(currentMode === "Staff") {
+            board.innerHTML = `
+                <div class="staff-grid">
+                    <a href="https://discord.com/users/OWNER_ID" target="_blank" class="staff-card">
+                        <span class="staff-role">OWNER</span>
+                        <span class="staff-name">JeffersonD44</span>
+                    </a>
+                    <a href="https://discord.com/users/CO_OWNER_ID" target="_blank" class="staff-card">
+                        <span class="staff-role">CO-OWNER</span>
+                        <span class="staff-name">BronzeHarpy80</span>
+                    </a>
+                    <a href="https://discord.com/users/ADMIN_ID" target="_blank" class="staff-card">
+                        <span class="staff-role">HEAD ADMIN</span>
+                        <span class="staff-name">N0tsqurmyshi</span>
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
         if(currentMode === "Overall") {
             renderOverall(board);
         } else {
@@ -272,12 +213,12 @@
                 <div class="col-header"><div class="col-title">GLOBAL PRESTIGE</div></div>
                 <div>
                     ${sorted.map((p, i) => `
-                        <div class="player-card" data-name="${p.name.toLowerCase()}">
-                            <div class="card-inner">
+                        <div class="player-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <div style="display:flex; align-items:center; gap:15px;">
                                     <div style="color:var(--red-lava); font-weight:900; font-size:1.4rem;">#${i+1}</div>
                                     <div>
-                                        <div class="p-name">${p.name}</div>
+                                        <div style="font-weight:800; font-size:1.1rem;">${p.name}</div>
                                         <div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige || 0} PTS</div>
                                     </div>
                                 </div>
@@ -303,42 +244,28 @@
         for(let t=1; t<=3; t++) {
             const inTier = eligible.filter(p => p.tiers[currentMode].includes(t.toString()));
             if(inTier.length === 0) continue;
-
             inTier.sort((a,b) => (b.prestige || 0) - (a.prestige || 0));
-
             board.innerHTML += `
                 <div class="column">
                     <div class="col-header"><div class="col-title">TIER ${t}</div></div>
                     <div>
-                        ${inTier.map((p, idx) => {
-                            let rank = p.tiers[currentMode];
-                            const isHT = rank === "HT1";
-
+                        ${inTier.map(p => {
+                            let r = p.tiers[currentMode];
                             return `
-                                <div class="player-card ${isHT ? 'ht1-gold' : ''}" data-name="${p.name.toLowerCase()}">
-                                    <div class="card-inner">
+                                <div class="player-card ${r === 'HT1' ? 'ht1-gold' : ''}">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
                                         <div>
-                                            <div class="p-name">${p.name}</div>
+                                            <div style="font-weight:800; color:#fff;">${p.name}</div>
                                             <div style="font-size:0.7rem; color:#555;">${p.region}</div>
                                         </div>
-                                        <div class="p-rank" style="color:${isHT ? 'var(--ht-gold)' : '#fff'}">${rank}</div>
+                                        <div class="p-rank" style="color:${r === 'HT1' ? 'var(--ht-gold)' : '#fff'}">${r}</div>
                                     </div>
-                                </div>
-                            `;
+                                </div>`;
                         }).join('')}
                     </div>
-                </div>
-            `;
+                </div>`;
         }
     }
-
-    document.getElementById('searchPlayer').addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        document.querySelectorAll('.player-card').forEach(card => {
-            const name = card.getAttribute('data-name');
-            card.style.display = name.includes(term) ? 'block' : 'none';
-        });
-    });
 
     loadPlayers();
     setInterval(loadPlayers, 30000);
