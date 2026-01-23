@@ -1,11 +1,40 @@
 [
     {
+        "name": "N0tsqurmyshi",
+        "region": "NA",
+        "prestige": 730,
+        "tiers": {
+            "Vanilla": "LT1",
+            "Pot": "LT1",
+            "Sword": "LT1",
+            "Iron UHC": "LT1"
+        }
+    },
+    {
         "name": "Technoblade",
         "region": "NA",
-        "prestige": 1000,
+        "prestige": 600,
         "tiers": {
-            "Sword": "HT1",
-            "Vanilla": "LT1"
+            "Vanilla": "LT1",
+            "Pot": "LT1",
+            "Sword": "LT1"
         }
+    },
+    {
+        "name": "BronzeHarpy80",
+        "region": "NA",
+        "prestige": 400,
+        "tiers": {
+            "Vanilla": "HT1",
+            "Pot": "HT1",
+            "Sword": "HT1",
+            "Iron UHC": "HT1"
+        }
+    },
+    {
+        "name": "JeffersonD44",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
