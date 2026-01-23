@@ -17,6 +17,8 @@
         "name": "JeffersonD44",
         "region": "NA",
         "prestige": 0,
-        "tiers": {}
+        "tiers": {
+            "Tnt Cart": "HT2"
+        }
     }
 ]
