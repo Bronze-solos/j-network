@@ -2,106 +2,75 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>J-NETWORK Rankings</title>
+<title>J-Network Rankings</title>
 <style>
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: radial-gradient(circle at top, #2a0f0f, #050000);
-  color: #fff;
-}
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #3b0a0a, #000);
+    color: white;
+  }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  backdrop-filter: blur(10px);
-  background: rgba(0,0,0,0.6);
-}
+  header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #400;
+  }
 
-nav button {
-  background: none;
-  border: none;
-  color: #aaa;
-  margin: 0 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
+  h1 {
+    margin: 0;
+  }
 
-nav button.active {
-  color: #fff;
-  border-bottom: 2px solid #ff4d4d;
-}
+  .rankings {
+    padding: 40px;
+    max-width: 800px;
+    margin: auto;
+  }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 24px;
-}
-
-.player {
-  background: rgba(0,0,0,0.6);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.rank {
-  font-size: 22px;
-  color: gold;
-}
-
-.tiers span {
-  margin-right: 8px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  background: #222;
-}
+  .rank {
+    background: #120000;
+    border: 1px solid #500;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
 </head>
-<body>
 
+<body>
 <header>
-  <strong>J-NETWORK</strong>
-  <nav>
-    <button class="active">Rankings</button>
-    <button onclick="window.open('https://discord.gg/zJHMadUf')">Community</button>
-  </nav>
+  <h1>J-NETWORK</h1>
+  <span>Rankings</span>
 </header>
 
-<div class="container" id="list"></div>
+<div class="rankings" id="rankings">
+  Loading rankings...
+</div>
 
 <script>
-fetch("data.json")
-  .then(r => r.json())
+fetch("/api/ranks")
+  .then(res => res.json())
   .then(data => {
-    const list = document.getElementById("list");
+    const container = document.getElementById("rankings");
+    container.innerHTML = "";
 
-    Object.entries(data.players)
-      .sort((a,b) => a[1].overallRank - b[1].overallRank)
-      .forEach(([name, info]) => {
-        const div = document.createElement("div");
-        div.className = "player";
+    const entries = Object.entries(data);
 
-        const tiers = Object.entries(info.tiers)
-          .map(([m,t]) => `<span>${m.toUpperCase()}: ${t}</span>`)
-          .join("");
+    if (entries.length === 0) {
+      container.innerHTML = "<p>No rankings yet.</p>";
+      return;
+    }
 
-        div.innerHTML = `
-          <div>
-            <div class="rank">#${info.overallRank}</div>
-            <strong>${name}</strong>
-          </div>
-          <div class="tiers">${tiers}</div>
-        `;
-        list.appendChild(div);
-      });
+    entries.forEach(([user, rank]) => {
+      const div = document.createElement("div");
+      div.className = "rank";
+      div.innerHTML = `<strong>${user}</strong><span>${rank}</span>`;
+      container.appendChild(div);
+    });
   });
 </script>
-
 </body>
 </html>
