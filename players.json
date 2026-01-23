@@ -35,6 +35,8 @@
         "name": "Arauix",
         "region": "NA",
         "prestige": 0,
-        "tiers": {}
+        "tiers": {
+            "UHC": "LT5"
+        }
     }
 ]
