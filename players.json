@@ -30,5 +30,11 @@
         "tiers": {
             "Sword": "LT5"
         }
+    },
+    {
+        "name": "Arauix",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
