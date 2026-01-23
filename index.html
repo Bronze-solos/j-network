@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>J-NETWORK Rankings</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top, #0b1d2a, #05080d 70%);
+  color: #e6faff;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+header h1 {
+  font-size: 3rem;
+  color: #00f6ff;
+  text-shadow: 0 0 20px #00f6ff;
+}
+
+header p {
+  color: #7ddcff;
+  opacity: 0.9;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+nav button {
+  background: transparent;
+  border: 2px solid #00f6ff;
+  color: #00f6ff;
+  padding: 10px 16px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+nav button:hover,
+nav button.active {
+  background: #00f6ff;
+  color: #00141a;
+  box-shadow: 0 0 15px #00f6ff;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 2px solid #00f6ff;
+  box-shadow: 0 0 30px rgba(0, 246, 255, 0.2);
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: rgba(0, 246, 255, 0.15);
+}
+
+th, td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 246, 255, 0.2);
+}
+
+th {
+  color: #00f6ff;
+}
+
+tbody tr:hover {
+  background: rgba(0, 246, 255, 0.08);
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>J-NETWORK</h1>
+  <p>Competitive Minecraft PvP Rankings</p>
+</header>
+
+<nav id="modes">
+  <button class="active" onclick="setMode('overall', this)">Overall</button>
+  <button onclick="setMode('sword', this)">Sword</button>
+  <button onclick="setMode('axe', this)">Axe</button>
+  <button onclick="setMode('crystal', this)">Crystal</button>
+  <button onclick="setMode('pot', this)">Pot</button>
+  <button onclick="setMode('netherite', this)">Netherite SMP</button>
+  <button onclick="setMode('diamond', this)">Diamond SMP</button>
+  <button onclick="setMode('uhc', this)">UHC</button>
+  <button onclick="setMode('tnt', this)">TNT Cart</button>
+</nav>
+
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
+
+<footer>
+  © J-Network • Ranked PvP Network
+</footer>
+
+<script>
+const data = {
+  overall: [
+    { name: "Notsqurmyshi", rating: 2100 },
+    { name: "BronzeHarpy80", rating: 1980 },
+    { name: "JeffersonD44", rating: 1840 }
+  ],
+  sword: [],
+  axe: [],
+  crystal: [],
+  pot: [],
+  netherite: [],
+  diamond: [],
+  uhc: [],
+  tnt: []
+};
+
+function setMode(mode, btn) {
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render(mode);
+}
+
+function render(mode) {
+  const tbody = document.getElementById("table-body");
+  tbody.innerHTML = "";
+
+  if (!data[mode] || data[mode].length === 0) {
+    tbody.innerHTML = `<tr><td colspan="3">No data yet</td></tr>`;
+    return;
+  }
+
+  data[mode].forEach((player, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>#${index + 1}</td>
+      <td>${player.name}</td>
+      <td>${player.rating}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+render("overall");
+</script>
+
+</body>
+</html>
