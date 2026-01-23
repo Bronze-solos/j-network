@@ -1,80 +1,60 @@
-let data;
-let currentMode = null;
-let currentTier = null;
-
-const modesEl = document.getElementById("modes");
-const tiersEl = document.getElementById("tiers");
-const playerList = document.getElementById("player-list");
-const playersTitle = document.getElementById("players-title");
+let data = {};
+let currentMode = "Overall";
 
 fetch("data.json")
-  .then(res => res.json())
+  .then(r => r.json())
   .then(json => {
     data = json;
-    renderModes();
+    buildModes();
+    render();
   });
 
-function renderModes() {
-  modesEl.innerHTML = "";
+function buildModes() {
+  const modes = document.getElementById("modes");
+  modes.innerHTML = "";
+
   Object.keys(data).forEach(mode => {
     const btn = document.createElement("button");
     btn.textContent = mode;
-    btn.onclick = () => selectMode(mode, btn);
-    modesEl.appendChild(btn);
+    btn.className = "mode-btn";
+    if (mode === currentMode) btn.classList.add("active");
+
+    btn.onclick = () => {
+      currentMode = mode;
+      document.querySelectorAll(".mode-btn")
+        .forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    };
+
+    modes.appendChild(btn);
   });
 }
 
-function selectMode(mode, btn) {
-  currentMode = mode;
-  currentTier = null;
-  document.querySelectorAll("#modes button").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  renderTiers();
-  playerList.innerHTML = "";
-  playersTitle.textContent = "Select a tier";
-}
+function render() {
+  const tiers = document.getElementById("tiers");
+  tiers.innerHTML = "";
 
-function renderTiers() {
-  tiersEl.innerHTML = "";
-  const tiers = [
-    "HT1","LT1",
-    "HT2","LT2",
-    "HT3","LT3",
-    "HT4","LT4",
-    "HT5","LT5"
-  ];
+  for (let i = 1; i <= 5; i++) {
+    const box = document.createElement("div");
+    box.className = "tier";
+    box.innerHTML = `<h3>Tier ${i}</h3>`;
 
-  tiers.forEach(tier => {
-    const btn = document.createElement("button");
-    btn.textContent = tier;
-    btn.onclick = () => selectTier(tier, btn);
-    tiersEl.appendChild(btn);
-  });
-}
+    (data[currentMode][i] || []).forEach(p => {
+      const el = document.createElement("div");
+      el.className = "player";
+      el.textContent = p;
+      box.appendChild(el);
+    });
 
-function selectTier(tier, btn) {
-  currentTier = tier;
-  document.querySelectorAll("#tiers button").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  renderPlayers();
-}
-
-function renderPlayers() {
-  playerList.innerHTML = "";
-  playersTitle.textContent = `${currentMode} — ${currentTier}`;
-
-  const players = data[currentMode][currentTier] || [];
-
-  if (players.length === 0) {
-    const li = document.createElement("li");
-    li.textContent = "No players ranked";
-    playerList.appendChild(li);
-    return;
+    tiers.appendChild(box);
   }
-
-  players.forEach(p => {
-    const li = document.createElement("li");
-    li.textContent = p;
-    playerList.appendChild(li);
-  });
 }
+
+document.getElementById("search").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".player").forEach(p => {
+    p.style.display = p.textContent.toLowerCase().includes(q)
+      ? "block" : "none";
+  });
+});
