@@ -1,46 +1,50 @@
-const data = {
-  overall: [
-    "NOTSQURMYSHI",
-    "BronzeHarpy80",
-    "JeffersonD44"
-  ],
-  mace: [],
-  sword: [],
-  axe: [],
-  crystal: [],
-  pot: [],
-  netherite: [],
-  diamond: [],
-  uhc: [],
-  tnt: []
-};
+let data;
+let currentMode = "overall";
 
-const tableBody = document.querySelector("#ranking-table tbody");
-const title = document.getElementById("panel-title");
-const buttons = document.querySelectorAll(".modes button");
-
-function loadMode(mode) {
-  tableBody.innerHTML = "";
-  title.textContent = mode === "overall"
-    ? "Overall Rankings"
-    : `${mode.toUpperCase()} Rankings`;
-
-  data[mode].forEach((player, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>#${index + 1}</td>
-      <td>${player}</td>
-    `;
-    tableBody.appendChild(row);
+fetch("data.json")
+  .then(res => res.json())
+  .then(json => {
+    data = json;
+    render();
   });
-}
 
-buttons.forEach(btn => {
+document.querySelectorAll(".modes button").forEach(btn => {
   btn.addEventListener("click", () => {
-    buttons.forEach(b => b.classList.remove("active"));
+    document.querySelector(".modes .active").classList.remove("active");
     btn.classList.add("active");
-    loadMode(btn.dataset.mode);
+    currentMode = btn.dataset.mode;
+    render();
   });
 });
 
-loadMode("overall");
+function render() {
+  const list = data[currentMode];
+  const featured = document.getElementById("featured");
+  const rankings = document.getElementById("rankings");
+
+  featured.innerHTML = "";
+  rankings.innerHTML = "";
+
+  if (!list || list.length === 0) return;
+
+  // FEATURED #1
+  const top = list[0];
+  featured.innerHTML = `
+    <div class="featured">
+      <div class="rank">#1</div>
+      <div class="name">${top.name}</div>
+      <div class="rating">Rating: ${top.rating}</div>
+    </div>
+  `;
+
+  // REST
+  list.slice(1).forEach((p, i) => {
+    rankings.innerHTML += `
+      <div class="rank-card">
+        <span class="pos">#${i + 2}</span>
+        <span>${p.name}</span>
+        <span>${p.rating}</span>
+      </div>
+    `;
+  });
+}
