@@ -174,7 +174,15 @@
 <div class="board" id="board"></div>
 
 <script>
-    // Ember Gen
+    // Config
+    const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community"];
+    const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
+    
+    // Global player data (will be filled by GitHub fetch)
+    const PLAYERS = [];
+    let currentMode = "Overall";
+
+    // Ember Generation
     const field = document.getElementById('emberField');
     for(let i=0; i<45; i++) {
         const e = document.createElement('div');
@@ -187,17 +195,19 @@
         field.appendChild(e);
     }
 
-    const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community"];
-    const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
-
-    const PLAYERS = [
-        { name: "Technoblade", region: "NA", prestige: 950, tiers: { "Sword": "HT1", "Vanilla": "HT1", "Pot": "HT1" } },
-        { name: "N0tsqurmyshi", region: "NA", prestige: 820, tiers: { "Sword": "HT1", "Vanilla": "HT1", "Iron UHC": "HT1" } },
-        { name: "BronzeHarpy80", region: "NA", prestige: 500, tiers: { "Sword": "LT1", "Vanilla": "HT2", "Pot": "HT3" } },
-        { name: "JeffersonD44", region: "NA", prestige: 350, tiers: { "Sword": "LT1", "Iron UHC": "LT1" } }
-    ];
-
-    let currentMode = "Overall";
+    // SYNC DATA FROM GITHUB
+    async function syncData() {
+        const url = "https://raw.githubusercontent.com/Bronze-solos/j-network/main/players.json";
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            PLAYERS.length = 0;
+            PLAYERS.push(...data);
+            setMode(currentMode); // Render the board once data arrives
+        } catch (e) {
+            console.error("Data Fetch Failed:", e);
+        }
+    }
 
     function setMode(m) {
         currentMode = m;
@@ -230,6 +240,18 @@
         }
     }
 
+    function getEnforcedRank(player, kit) {
+        let r = player.tiers[kit] || "UR";
+        if (r === "HT1") {
+            // Find everyone who claims to be HT1 in this kit
+            const rivals = PLAYERS.filter(x => x.tiers[kit] === "HT1");
+            // The one with the highest prestige points actually gets HT1
+            const winner = rivals.sort((a,b) => b.prestige - a.prestige)[0];
+            if (player.name !== winner.name) return "LT1";
+        }
+        return r;
+    }
+
     function renderOverall(board) {
         const sorted = [...PLAYERS].sort((a,b) => b.prestige - a.prestige);
         board.innerHTML = `
@@ -249,13 +271,7 @@
                             </div>
                             <div class="stat-grid">
                                 ${KITS.map(k => {
-                                    let r = p.tiers[k] || "UR";
-                                    // ENFORCE SINGLE HT1 IN OVERALL VIEW TOO
-                                    if (r === "HT1") {
-                                        const rivals = PLAYERS.filter(x => x.tiers[k] === "HT1");
-                                        const best = rivals.sort((a,b) => b.prestige - a.prestige)[0];
-                                        if (p.name !== best.name) r = "LT1";
-                                    }
+                                    const r = getEnforcedRank(p, k);
                                     return `<div class="stat-box">
                                         <span style="color:#444">${k.slice(0,3).toUpperCase()}</span>
                                         <span style="color:${r.includes('HT') ? 'var(--ht-gold)' : (r==='UR' ? '#333' : '#fff')}">${r}</span>
@@ -282,9 +298,9 @@
                     <div class="col-header"><div class="col-title">TIER ${t}</div></div>
                     <div>
                         ${inTier.map((p, idx) => {
-                            let rank = p.tiers[currentMode];
-                            // STRICT ENFORCEMENT: ONLY ONE HT1
-                            if(t === 1 && idx > 0) rank = "LT1";
+                            let rank = getEnforcedRank(p, currentMode);
+                            // Enforce demotion if they aren't the winner in the T1 column
+                            if(t === 1 && rank !== "HT1") rank = "LT1";
                             const isHT = rank === "HT1";
 
                             return `
@@ -314,7 +330,8 @@
         });
     });
 
-    setMode("Overall");
+    // Start
+    syncData();
 </script>
 </body>
 </html>
