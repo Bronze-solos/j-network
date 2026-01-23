@@ -1,309 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>J-NETWORK | PvP Rankings</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8">
+<title>J-NETWORK Rankings</title>
 <style>
-/* =====================
-   GLOBAL THEME
-===================== */
-:root {
-  --bg: #05080f;
-  --panel: #0b1220;
-  --glow: #00f7ff;
-  --text: #e6f1ff;
-  --muted: #8aa0b8;
-  --gold: #ffcc00;
-  --red: #ff4d4d;
-  --blue: #4da6ff;
-}
-
-* { box-sizing: border-box; }
-
 body {
   margin: 0;
-  font-family: Inter, system-ui, sans-serif;
-  background: radial-gradient(circle at top, #0b1220, #020409);
-  color: var(--text);
-  overflow-x: hidden;
+  font-family: Inter, Arial, sans-serif;
+  background: radial-gradient(circle at top, #2a0f0f, #050000);
+  color: #fff;
 }
 
-/* animated background */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(120deg, transparent 40%, rgba(0,247,255,.08), transparent 60%);
-  animation: bgMove 12s linear infinite;
-  pointer-events: none;
-}
-@keyframes bgMove {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(50%); }
-}
-
-/* =====================
-   NAVBAR
-===================== */
 header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(10px);
-  background: rgba(5,8,15,.7);
-  border-bottom: 1px solid rgba(255,255,255,.05);
-}
-
-.nav {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
-  gap: 20px;
+  padding: 16px 24px;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.6);
 }
 
-.logo {
-  font-weight: 900;
-  font-size: 20px;
-  color: var(--glow);
-}
-
-.nav-center {
-  display: flex;
-  gap: 16px;
-}
-
-.nav-center button,
-.mode-tabs button {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.15);
-  color: var(--text);
-  padding: 6px 14px;
+nav button {
+  background: none;
+  border: none;
+  color: #aaa;
+  margin: 0 10px;
+  font-size: 16px;
   cursor: pointer;
-  border-radius: 6px;
-  transition: .2s;
 }
 
-.nav-center button.active,
-.mode-tabs button.active {
-  border-color: var(--glow);
-  box-shadow: 0 0 12px var(--glow);
+nav button.active {
+  color: #fff;
+  border-bottom: 2px solid #ff4d4d;
 }
 
-.nav-right {
-  margin-left: auto;
-}
-
-.nav-right input {
-  background: var(--panel);
-  border: 1px solid rgba(255,255,255,.15);
-  color: var(--text);
-  padding: 6px 10px;
-  border-radius: 6px;
-}
-
-/* =====================
-   MAIN
-===================== */
-main {
-  padding: 40px 20px;
+.container {
   max-width: 1100px;
   margin: auto;
+  padding: 24px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  text-align: center;
-  color: var(--muted);
-  margin-bottom: 30px;
-}
-
-/* =====================
-   MODE TABS
-===================== */
-.mode-tabs {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-/* =====================
-   LEADERBOARD
-===================== */
-.board {
-  background: var(--panel);
-  border: 1px solid rgba(255,255,255,.1);
+.player {
+  background: rgba(0,0,0,0.6);
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(0,247,255,.08);
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 80px 1fr 120px;
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  align-items: center;
-}
-
-.row.header {
-  background: rgba(255,255,255,.03);
-  font-weight: 700;
-}
-
-.row:hover {
-  background: rgba(0,247,255,.06);
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .rank {
-  font-weight: 800;
+  font-size: 22px;
+  color: gold;
 }
 
-.tier {
-  font-weight: 800;
+.tiers span {
+  margin-right: 8px;
   padding: 4px 8px;
-  border-radius: 6px;
-  display: inline-block;
+  border-radius: 8px;
+  font-size: 12px;
+  background: #222;
 }
-
-.HT1 { color: var(--gold); box-shadow: 0 0 10px var(--gold); }
-.HT2 { color: #ff9f1a; }
-.HT3 { color: var(--red); }
-.LT1 { color: var(--blue); }
-.LT2 { color: #66ffff; }
-.LT3 { color: #aaa; }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="nav">
-    <div class="logo">J-NETWORK</div>
-
-    <div class="nav-center">
-      <button class="active">Rankings</button>
-      <button onclick="joinDiscord()">Community</button>
-    </div>
-
-    <div class="nav-right">
-      <input id="search" placeholder="Search player…" />
-    </div>
-  </div>
+  <strong>J-NETWORK</strong>
+  <nav>
+    <button class="active">Rankings</button>
+    <button onclick="window.open('https://discord.gg/zJHMadUf')">Community</button>
+  </nav>
 </header>
 
-<main>
-  <h1>Competitive PvP Rankings</h1>
-  <div class="subtitle">MCTiers-style ranked ladder</div>
-
-  <div class="mode-tabs" id="modes"></div>
-
-  <div class="board" id="board"></div>
-</main>
+<div class="container" id="list"></div>
 
 <script>
-/* =====================
-   DATA (BOT-READY)
-===================== */
-const data = {
-  overall: [
-    { name: "Notsqumyshi", rating: 2100 },
-    { name: "BronzeHarpy80", rating: 1980 },
-    { name: "JeffersonD44", rating: 1840 }
-  ],
-  sword: [
-    { name: "Notsqumyshi", rating: 2050 },
-    { name: "BronzeHarpy80", rating: 1900 },
-    { name: "JeffersonD44", rating: 1800 }
-  ],
-  mace: [
-    { name: "BronzeHarpy80", rating: 2000 },
-    { name: "Notsqumyshi", rating: 1850 }
-  ]
-};
+fetch("data.json")
+  .then(r => r.json())
+  .then(data => {
+    const list = document.getElementById("list");
 
-let currentMode = "overall";
+    Object.entries(data.players)
+      .sort((a,b) => a[1].overallRank - b[1].overallRank)
+      .forEach(([name, info]) => {
+        const div = document.createElement("div");
+        div.className = "player";
 
-/* =====================
-   INIT
-===================== */
-const modesEl = document.getElementById("modes");
-const boardEl = document.getElementById("board");
-const searchEl = document.getElementById("search");
+        const tiers = Object.entries(info.tiers)
+          .map(([m,t]) => `<span>${m.toUpperCase()}: ${t}</span>`)
+          .join("");
 
-Object.keys(data).forEach(mode => {
-  const btn = document.createElement("button");
-  btn.textContent = mode.toUpperCase();
-  btn.onclick = () => selectMode(mode, btn);
-  if (mode === currentMode) btn.classList.add("active");
-  modesEl.appendChild(btn);
-});
-
-render();
-
-/* =====================
-   FUNCTIONS
-===================== */
-function selectMode(mode, btn) {
-  currentMode = mode;
-  document.querySelectorAll(".mode-tabs button")
-    .forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  render();
-}
-
-function getTier(index) {
-  if (index === 0) return "HT1";
-  if (index === 1) return "HT2";
-  if (index === 2) return "HT3";
-  if (index === 3) return "LT1";
-  if (index === 4) return "LT2";
-  return "LT3";
-}
-
-function render() {
-  boardEl.innerHTML = `
-    <div class="row header">
-      <div>Rank</div>
-      <div>Player</div>
-      <div>${currentMode === "overall" ? "Rating" : "Tier"}</div>
-    </div>
-  `;
-
-  const q = searchEl.value.toLowerCase();
-
-  data[currentMode]
-    .filter(p => p.name.toLowerCase().includes(q))
-    .forEach((p, i) => {
-      const row = document.createElement("div");
-      row.className = "row";
-      row.innerHTML = `
-        <div class="rank">#${i + 1}</div>
-        <div>${p.name}</div>
-        <div>
-          ${currentMode === "overall"
-            ? p.rating
-            : `<span class="tier ${getTier(i)}">${getTier(i)}</span>`
-          }
-        </div>
-      `;
-      boardEl.appendChild(row);
-    });
-}
-
-searchEl.addEventListener("input", render);
-
-function joinDiscord() {
-  window.open("https://discord.gg/YOUR_INVITE", "_blank");
-}
+        div.innerHTML = `
+          <div>
+            <div class="rank">#${info.overallRank}</div>
+            <strong>${name}</strong>
+          </div>
+          <div class="tiers">${tiers}</div>
+        `;
+        list.appendChild(div);
+      });
+  });
 </script>
 
 </body>
