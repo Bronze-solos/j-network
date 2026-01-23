@@ -9,6 +9,8 @@
         "name": "BronzeHarpy80",
         "region": "NA",
         "prestige": 0,
-        "tiers": {}
+        "tiers": {
+            "Mace": "HT1"
+        }
     }
 ]
