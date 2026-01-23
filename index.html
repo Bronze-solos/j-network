@@ -11,23 +11,24 @@
             box-sizing: border-box;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        @keyframes ember {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
         }
 
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(30, 144, 255, 0.8), 0 0 40px rgba(30, 144, 255, 0.5); }
-            50% { text-shadow: 0 0 30px rgba(30, 144, 255, 1), 0 0 60px rgba(30, 144, 255, 0.8), 0 0 80px rgba(30, 144, 255, 0.5); }
+        @keyframes flicker {
+            0%, 100% { text-shadow: 0 0 20px rgba(220, 38, 38, 0.8), 0 0 40px rgba(239, 68, 68, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(220, 38, 38, 1), 0 0 60px rgba(239, 68, 68, 0.8), 0 0 80px rgba(220, 38, 38, 0.5); }
         }
 
-        @keyframes pixelate {
-            0% { background-position: 0 0; }
-            100% { background-position: 64px 64px; }
+        @keyframes lavaFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         body {
-            background: #0a0a0a;
+            background: linear-gradient(180deg, #1a0a0a 0%, #2d0f0f 50%, #1a0a0a 100%);
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
@@ -43,10 +44,9 @@
             width: 100%;
             height: 100%;
             background-image: 
-                repeating-linear-gradient(0deg, rgba(30, 144, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(30, 144, 255, 0.03) 3px),
-                repeating-linear-gradient(90deg, rgba(30, 144, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(30, 144, 255, 0.03) 3px);
-            background-size: 16px 16px;
-            animation: pixelate 8s linear infinite;
+                repeating-linear-gradient(0deg, rgba(220, 38, 38, 0.03) 0px, transparent 1px, transparent 2px, rgba(220, 38, 38, 0.03) 3px),
+                repeating-linear-gradient(90deg, rgba(220, 38, 38, 0.03) 0px, transparent 1px, transparent 2px, rgba(220, 38, 38, 0.03) 3px);
+            background-size: 32px 32px;
             pointer-events: none;
             z-index: 0;
         }
@@ -58,12 +58,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(20, 5, 5, 0.8) 100%);
             pointer-events: none;
             z-index: 0;
         }
 
-        .minecraft-blocks {
+        .ember-particles {
             position: fixed;
             width: 100%;
             height: 100%;
@@ -73,33 +73,34 @@
             z-index: 0;
         }
 
-        .block {
+        .ember {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            background: rgba(30, 144, 255, 0.1);
-            border: 2px solid rgba(30, 144, 255, 0.3);
-            animation: float 6s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.2);
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff6b35 0%, #dc2626 50%, transparent 100%);
+            border-radius: 50%;
+            animation: ember 4s ease-in-out infinite;
+            box-shadow: 0 0 10px #dc2626;
         }
 
-        .block:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; animation-duration: 7s; }
-        .block:nth-child(2) { top: 20%; left: 80%; animation-delay: 1s; animation-duration: 6s; }
-        .block:nth-child(3) { top: 60%; left: 15%; animation-delay: 2s; animation-duration: 8s; }
-        .block:nth-child(4) { top: 70%; left: 85%; animation-delay: 1.5s; animation-duration: 7s; }
-        .block:nth-child(5) { top: 40%; left: 50%; animation-delay: 3s; animation-duration: 9s; }
+        .ember:nth-child(1) { left: 10%; bottom: 0; animation-delay: 0s; animation-duration: 5s; }
+        .ember:nth-child(2) { left: 25%; bottom: 0; animation-delay: 1s; animation-duration: 6s; }
+        .ember:nth-child(3) { left: 40%; bottom: 0; animation-delay: 2s; animation-duration: 4.5s; }
+        .ember:nth-child(4) { left: 60%; bottom: 0; animation-delay: 1.5s; animation-duration: 5.5s; }
+        .ember:nth-child(5) { left: 75%; bottom: 0; animation-delay: 3s; animation-duration: 6s; }
+        .ember:nth-child(6) { left: 90%; bottom: 0; animation-delay: 2.5s; animation-duration: 5s; }
 
         .navbar {
-            background: rgba(0, 0, 0, 0.95);
+            background: linear-gradient(135deg, rgba(15, 5, 5, 0.95) 0%, rgba(30, 10, 10, 0.95) 100%);
             padding: 1.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #1e90ff;
+            border-bottom: 3px solid #dc2626;
             position: relative;
             z-index: 10;
             backdrop-filter: blur(10px);
-            box-shadow: 0 5px 30px rgba(30, 144, 255, 0.3);
+            box-shadow: 0 5px 30px rgba(220, 38, 38, 0.4), 0 0 100px rgba(220, 38, 38, 0.2);
         }
 
         .logo-container {
@@ -112,18 +113,18 @@
         .logo-icon {
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, #1e90ff 0%, #00bfff 50%, #1e90ff 100%);
-            border: 3px solid #00bfff;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #dc2626 100%);
+            border: 3px solid #ef4444;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             font-weight: 900;
-            color: #000;
-            box-shadow: 0 0 30px rgba(30, 144, 255, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.3);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.8), inset 0 0 20px rgba(255, 100, 100, 0.3);
             position: relative;
-            animation: glow 3s ease-in-out infinite;
+            animation: flicker 3s ease-in-out infinite;
         }
 
         .logo-icon::before {
@@ -133,7 +134,7 @@
             left: -3px;
             right: -3px;
             bottom: -3px;
-            background: linear-gradient(45deg, #1e90ff, #00bfff, #1e90ff);
+            background: linear-gradient(45deg, #dc2626, #ef4444, #dc2626);
             border-radius: 8px;
             z-index: -1;
             opacity: 0.7;
@@ -149,19 +150,19 @@
         .logo-main {
             font-size: 2rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #1e90ff, #00bfff, #1e90ff, #00bfff);
+            background: linear-gradient(135deg, #dc2626, #ef4444, #f87171, #ef4444, #dc2626);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: glow 3s ease-in-out infinite;
+            animation: lavaFlow 4s ease infinite, flicker 3s ease-in-out infinite;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .logo-sub {
             font-size: 0.8rem;
-            color: #8b9cb6;
+            color: #b45454;
             letter-spacing: 3px;
             font-weight: 300;
             text-transform: uppercase;
@@ -176,7 +177,7 @@
         }
 
         .nav-links a {
-            color: #8b9cb6;
+            color: #b45454;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -188,17 +189,18 @@
         }
 
         .nav-links a:hover {
-            color: #1e90ff;
-            background: rgba(30, 144, 255, 0.1);
-            border-color: #1e90ff;
+            color: #dc2626;
+            background: rgba(220, 38, 38, 0.15);
+            border-color: #dc2626;
             transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.3);
         }
 
         .search-box {
-            background: rgba(10, 14, 26, 0.8);
+            background: rgba(20, 5, 5, 0.8);
             padding: 0.5rem 1rem;
             border-radius: 5px;
-            border: 2px solid #1e90ff;
+            border: 2px solid #dc2626;
             backdrop-filter: blur(10px);
         }
 
@@ -208,6 +210,10 @@
             color: #fff;
             outline: none;
             width: 200px;
+        }
+
+        .search-box input::placeholder {
+            color: #b45454;
         }
 
         .container {
@@ -227,12 +233,12 @@
         }
 
         .mode-tab {
-            background: rgba(10, 14, 26, 0.8);
+            background: linear-gradient(135deg, rgba(20, 5, 5, 0.8) 0%, rgba(30, 10, 10, 0.8) 100%);
             padding: 1rem 2rem;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
-            border: 2px solid transparent;
+            border: 2px solid rgba(220, 38, 38, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -242,16 +248,16 @@
         }
 
         .mode-tab:hover {
-            background: rgba(26, 31, 46, 0.9);
-            border-color: #1e90ff;
+            background: linear-gradient(135deg, rgba(30, 10, 10, 0.9) 0%, rgba(40, 15, 15, 0.9) 100%);
+            border-color: #dc2626;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(30, 144, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
         }
 
         .mode-tab.active {
-            background: rgba(26, 31, 46, 0.9);
-            border-color: #1e90ff;
-            box-shadow: 0 0 30px rgba(30, 144, 255, 0.5);
+            background: linear-gradient(135deg, rgba(40, 15, 15, 0.95) 0%, rgba(50, 20, 20, 0.95) 100%);
+            border-color: #ef4444;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
         }
 
         .mode-icon {
@@ -260,20 +266,20 @@
 
         .mode-name {
             font-size: 0.9rem;
-            color: #8b9cb6;
+            color: #b45454;
         }
 
         .mode-tab.active .mode-name {
-            color: #1e90ff;
+            color: #ef4444;
         }
 
         .leaderboard {
-            background: rgba(10, 14, 26, 0.9);
+            background: linear-gradient(135deg, rgba(20, 5, 5, 0.9) 0%, rgba(30, 10, 10, 0.9) 100%);
             border-radius: 10px;
             overflow: hidden;
-            border: 2px solid #1e90ff;
+            border: 2px solid #dc2626;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 50px rgba(30, 144, 255, 0.2);
+            box-shadow: 0 10px 50px rgba(220, 38, 38, 0.3);
         }
 
         .tier-section {
@@ -281,61 +287,62 @@
         }
 
         .tier-header {
-            background: rgba(0, 0, 0, 0.9);
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(50,20,20,0.9) 50%, rgba(0,0,0,0.9) 100%);
             padding: 1rem 1.5rem;
             font-size: 1.3rem;
             font-weight: bold;
-            border-bottom: 2px solid #1e90ff;
-            color: #1e90ff;
+            border-bottom: 2px solid #dc2626;
+            color: #dc2626;
         }
 
         .tier-header.tier1 { 
             color: #ffd700; 
             border-bottom-color: #ffd700;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(255,215,0,0.1) 50%, rgba(0,0,0,0.9) 100%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(80,60,10,0.3) 50%, rgba(0,0,0,0.9) 100%);
         }
         .tier-header.tier2 { 
             color: #ff8c00; 
             border-bottom-color: #ff8c00;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(255,140,0,0.1) 50%, rgba(0,0,0,0.9) 100%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(80,40,10,0.3) 50%, rgba(0,0,0,0.9) 100%);
         }
         .tier-header.tier3 { 
             color: #ff6b35; 
             border-bottom-color: #ff6b35;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(255,107,53,0.1) 50%, rgba(0,0,0,0.9) 100%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(80,30,15,0.3) 50%, rgba(0,0,0,0.9) 100%);
         }
         .tier-header.tier4 { 
-            color: #1e90ff; 
-            border-bottom-color: #1e90ff;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(30,144,255,0.1) 50%, rgba(0,0,0,0.9) 100%);
+            color: #dc2626; 
+            border-bottom-color: #dc2626;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(80,15,15,0.3) 50%, rgba(0,0,0,0.9) 100%);
         }
         .tier-header.tier5 { 
-            color: #4169e1; 
-            border-bottom-color: #4169e1;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(65,105,225,0.1) 50%, rgba(0,0,0,0.9) 100%);
+            color: #b91c1c; 
+            border-bottom-color: #b91c1c;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(60,10,10,0.3) 50%, rgba(0,0,0,0.9) 100%);
         }
 
         .leaderboard-header {
             display: grid;
             grid-template-columns: 80px 1fr 200px 300px;
             padding: 1.5rem;
-            background: rgba(5, 8, 16, 0.9);
+            background: rgba(10, 3, 3, 0.9);
             font-weight: bold;
-            border-bottom: 2px solid rgba(26, 31, 46, 0.5);
+            border-bottom: 2px solid rgba(40, 15, 15, 0.5);
         }
 
         .player-row {
             display: grid;
             grid-template-columns: 80px 1fr 200px 300px;
             padding: 1.5rem;
-            border-bottom: 1px solid rgba(26, 31, 46, 0.5);
+            border-bottom: 1px solid rgba(40, 15, 15, 0.5);
             align-items: center;
             transition: all 0.3s;
         }
 
         .player-row:hover {
-            background: rgba(26, 31, 46, 0.8);
+            background: rgba(40, 15, 15, 0.8);
             transform: translateX(10px);
+            box-shadow: inset 5px 0 0 #dc2626;
         }
 
         .rank-number {
@@ -374,16 +381,16 @@
         .player-avatar {
             width: 48px;
             height: 48px;
-            background: rgba(26, 31, 46, 0.8);
+            background: rgba(40, 15, 15, 0.8);
             border-radius: 5px;
-            border: 2px solid #1e90ff;
-            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+            border: 2px solid #dc2626;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
         }
 
         .player-name {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #1e90ff;
+            color: #ef4444;
         }
 
         .player-title {
@@ -395,11 +402,11 @@
         }
 
         .region-badge {
-            background: #e63946;
+            background: #dc2626;
             padding: 0.3rem 0.8rem;
             border-radius: 5px;
             font-size: 0.9rem;
-            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
         }
 
         .tiers {
@@ -425,33 +432,33 @@
         }
 
         .tier.ht1 {
-            background: #ffd700;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
             color: #000;
             box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
         }
 
         .tier.ht2 {
-            background: #ff8c00;
+            background: linear-gradient(135deg, #ff8c00, #ffa500);
             color: #000;
             box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
         }
 
         .tier.ht3 {
-            background: #ff6b35;
+            background: linear-gradient(135deg, #ff6b35, #ff8561);
             color: #fff;
             box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
         }
 
         .tier.lt1 {
-            background: #1e90ff;
+            background: linear-gradient(135deg, #dc2626, #ef4444);
             color: #fff;
-            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
         }
 
         .tier.lt2 {
-            background: #4169e1;
+            background: linear-gradient(135deg, #b91c1c, #dc2626);
             color: #fff;
-            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.4);
+            box-shadow: 0 5px 15px rgba(185, 28, 28, 0.4);
         }
 
         .mode-content {
@@ -461,15 +468,23 @@
         .mode-content.active {
             display: block;
         }
+
+        .no-results {
+            padding: 3rem;
+            text-align: center;
+            color: #b45454;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
-    <div class="minecraft-blocks">
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
+    <div class="ember-particles">
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
+        <div class="ember"></div>
     </div>
 
     <nav class="navbar">
@@ -486,7 +501,7 @@
             <a href="https://discord.gg/zJHMadUf" target="_blank"><span>🎮</span> Discord</a>
             <a href="#"><span>📄</span> API Docs</a>
             <div class="search-box">
-                <input type="text" placeholder="Search player...">
+                <input type="text" id="searchInput" placeholder="Search player...">
             </div>
         </div>
     </nav>
@@ -542,10 +557,10 @@
                     <div>#</div>
                     <div>PLAYER</div>
                     <div>REGION</div>
-                    <div>TIERS</div>
+                    <div>POINTS</div>
                 </div>
 
-                <div class="player-row">
+                <div class="player-row" data-player="bronzeharpy80">
                     <div class="rank-number">
                         <span class="rank-badge">1.</span>
                     </div>
@@ -553,53 +568,18 @@
                         <div class="player-avatar"></div>
                         <div>
                             <div class="player-name">BronzeHarpy80</div>
-                            <div class="player-title">⚔️ Combat Grandmaster <span style="color: #666;">(500 points)</span></div>
+                            <div class="player-title">⚔️ Combat Grandmaster</div>
                         </div>
                     </div>
                     <div>
                         <span class="region-badge">NA</span>
                     </div>
-                    <div class="tiers">
-                        <div class="tier ht1">
-                            <div class="tier-icon">⚔️</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">🌸</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">❤️</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">🧪</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">🎮</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">⛏️</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">⚔️</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">🪓</div>
-                            <div>HT1</div>
-                        </div>
-                        <div class="tier ht1">
-                            <div class="tier-icon">🔨</div>
-                            <div>HT1</div>
-                        </div>
+                    <div style="color: #ffd700; font-weight: bold; font-size: 1.1rem;">
+                        500 points
                     </div>
                 </div>
 
-                <div class="player-row">
+                <div class="player-row" data-player="n0tsqurmyshi">
                     <div class="rank-number rank-2">
                         <span class="rank-badge">2.</span>
                     </div>
@@ -607,69 +587,414 @@
                         <div class="player-avatar"></div>
                         <div>
                             <div class="player-name">N0tsqurmyshi</div>
-                            <div class="player-title">⚔️ Combat Master <span style="color: #666;">(400 points)</span></div>
+                            <div class="player-title">⚔️ Combat Master</div>
                         </div>
                     </div>
                     <div>
                         <span class="region-badge">NA</span>
                     </div>
-                    <div class="tiers">
-                        <div class="tier lt1">
-                            <div class="tier-icon">⚔️</div>
-                            <div>LT1</div>
+                    <div style="color: #c0c0c0; font-weight: bold; font-size: 1.1rem;">
+                        400 points
+                    </div>
+                </div>
+
+                <div class="player-row" data-player="netherwarrior">
+                    <div class="rank-number rank-3">
+                        <span class="rank-badge">3.</span>
+                    </div>
+                    <div class="player-info">
+                        <div class="player-avatar"></div>
+                        <div>
+                            <div class="player-name">NetherWarrior</div>
+                            <div class="player-title">⚔️ Combat Expert</div>
                         </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">🌸</div>
-                            <div>LT1</div>
+                    </div>
+                    <div>
+                        <span class="region-badge">EU</span>
+                    </div>
+                    <div style="color: #cd7f32; font-weight: bold; font-size: 1.1rem;">
+                        350 points
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vanilla Mode -->
+        <div class="mode-content" id="vanilla">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">🌸 TIER 1 - CHERRY MASTER</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">🌸 Vanilla Master</div>
+                            </div>
                         </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">❤️</div>
-                            <div>LT1</div>
+                        <div>
+                            <span class="region-badge">NA</span>
                         </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">🧪</div>
-                            <div>LT1</div>
-                        </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">🎮</div>
-                            <div>LT1</div>
-                        </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">⛏️</div>
-                            <div>LT1</div>
-                        </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">⚔️</div>
-                            <div>LT1</div>
-                        </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">🪓</div>
-                            <div>LT1</div>
-                        </div>
-                        <div class="tier lt1">
-                            <div class="tier-icon">🔨</div>
-                            <div>LT1</div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">🌸</div>
+                                <div>HT1</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- UHC Mode -->
+        <div class="mode-content" id="uhc">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">❤️ TIER 1 - HARDCORE ELITE</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">❤️ UHC Champion</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">❤️</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pot Mode -->
+        <div class="mode-content" id="pot">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">🧪 TIER 1 - POTION MASTER</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">🧪 Pot Legend</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">🧪</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NetherOP Mode -->
+        <div class="mode-content" id="netherop">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">🎮 TIER 1 - NETHER OVERLORD</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">🎮 NetherOP King</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">🎮</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SMP Mode -->
+        <div class="mode-content" id="smp">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">⛏️ TIER 1 - SURVIVAL EXPERT</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">⛏️ SMP Legend</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">⛏️</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sword Mode -->
+        <div class="mode-content" id="sword">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">⚔️ TIER 1 - BLADE MASTER</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">⚔️ Sword Master</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">⚔️</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Axe Mode -->
+        <div class="mode-content" id="axe">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">🪓 TIER 1 - AXE LEGEND</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">🪓 Axe Champion</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">🪓</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mace Mode -->
+        <div class="mode-content" id="mace">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">🔨 TIER 1 - MACE TITAN</div>
+                    <div class="leaderboard-header">
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>TIER</div>
+                    </div>
+                    <div class="player-row" data-player="bronzeharpy80">
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">🔨 Mace Master</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">🔨</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mode switching functionality
+        const modeTabs = document.querySelectorAll('.mode-tab');
+        const modeContents = document.querySelectorAll('.mode-content');
+        
+        modeTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                modeTabs.forEach(t => t.classList.remove('active'));
+                modeContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const mode = tab.dataset.mode;
+                const content = document.getElementById(mode);
+                if (content) {
+                    content.classList.add('active');
+                }
+                
+                // Reset search when switching modes
+                document.getElementById('searchInput').value = '';
+                filterPlayers('');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        
+        searchInput.addEventListener('input', (e) => {
+            filterPlayers(e.target.value);
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = e.target.value.trim().toLowerCase();
+                if (searchTerm) {
+                    highlightAndScrollToPlayer(searchTerm);
+                }
+            }
+        });
+        
+        function filterPlayers(searchTerm) {
+            const term = searchTerm.toLowerCase().trim();
+            const activeContent = document.querySelector('.mode-content.active');
+            
+            if (!activeContent) return;
+            
+            const playerRows = activeContent.querySelectorAll('.player-row');
+            let visibleCount = 0;
+            
+            playerRows.forEach(row => {
+                const playerName = row.querySelector('.player-name');
+                if (playerName) {
+                    const name = playerName.textContent.toLowerCase();
+                    
+                    if (term === '' || name.includes(term)) {
+                        row.style.display = 'grid';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Show/hide "no results" message
+            let noResults = activeContent.querySelector('.no-results');
+            if (visibleCount === 0 && term !== '') {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.textContent = `No players found matching "${searchTerm}"`;
+                    activeContent.querySelector('.leaderboard').appendChild(noResults);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+        
+        function highlightAndScrollToPlayer(searchTerm) {
+            const activeContent = document.querySelector('.mode-content.active');
+            if (!activeContent) return;
+            
+            const playerRows = activeContent.querySelectorAll('.player-row');
+            
+            // Remove previous highlights
+            playerRows.forEach(row => {
+                row.style.backgroundColor = '';
+            });
+            
+            // Find and highlight matching player
+            for (const row of playerRows) {
+                const playerName = row.querySelector('.player-name');
+                if (playerName && playerName.textContent.toLowerCase().includes(searchTerm)) {
+                    row.style.backgroundColor = 'rgba(220, 38, 38, 0.3)';
+                    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Remove highlight after 3 seconds
+                    setTimeout(() => {
+                        row.style.backgroundColor = '';
+                    }, 3000);
+                    break;
+                }
+            }
+        }
+    </script>
+
         <!-- LTMs Mode -->
         <div class="mode-content" id="ltms">
             <div class="leaderboard">
                 <div class="tier-section">
-                    <div class="tier-header tier1">TIER 1</div>
+                    <div class="tier-header tier1">🔥 TIER 1 - INFERNO</div>
                     <div class="leaderboard-header">
-                        <div>#</div>
                         <div>PLAYER</div>
                         <div>REGION</div>
-                        <div>RANK</div>
+                        <div>TIER</div>
                     </div>
-                    <div class="player-row">
-                        <div class="rank-number">
-                            <span class="rank-badge">1.</span>
-                        </div>
+                    <div class="player-row" data-player="bronzeharpy80">
                         <div class="player-info">
                             <div class="player-avatar"></div>
                             <div>
@@ -690,17 +1015,13 @@
                 </div>
 
                 <div class="tier-section">
-                    <div class="tier-header tier2">TIER 2</div>
+                    <div class="tier-header tier2">🔥 TIER 2 - BLAZE</div>
                     <div class="leaderboard-header">
-                        <div>#</div>
                         <div>PLAYER</div>
                         <div>REGION</div>
-                        <div>RANK</div>
+                        <div>TIER</div>
                     </div>
-                    <div class="player-row">
-                        <div class="rank-number rank-2">
-                            <span class="rank-badge">2.</span>
-                        </div>
+                    <div class="player-row" data-player="n0tsqurmyshi">
                         <div class="player-info">
                             <div class="player-avatar"></div>
                             <div>
@@ -721,62 +1042,28 @@
                 </div>
 
                 <div class="tier-section">
-                    <div class="tier-header tier3">TIER 3</div>
+                    <div class="tier-header tier3">🔥 TIER 3 - MAGMA</div>
                     <div class="leaderboard-header">
-                        <div>#</div>
                         <div>PLAYER</div>
                         <div>REGION</div>
-                        <div>RANK</div>
+                        <div>TIER</div>
                     </div>
-                </div>
-
-                <div class="tier-section">
-                    <div class="tier-header tier4">TIER 4</div>
-                    <div class="leaderboard-header">
-                        <div>#</div>
-                        <div>PLAYER</div>
-                        <div>REGION</div>
-                        <div>RANK</div>
-                    </div>
-                </div>
-
-                <div class="tier-section">
-                    <div class="tier-header tier5">TIER 5</div>
-                    <div class="leaderboard-header">
-                        <div>#</div>
-                        <div>PLAYER</div>
-                        <div>REGION</div>
-                        <div>RANK</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Vanilla Mode -->
-        <div class="mode-content" id="vanilla">
-            <div class="leaderboard">
-                <div class="tier-section">
-                    <div class="tier-header tier1">TIER 1</div>
-                    <div class="leaderboard-header">
-                        <div>#</div>
-                        <div>PLAYER</div>
-                        <div>REGION</div>
-                        <div>RANK</div>
-                    </div>
-                    <div class="player-row">
-                        <div class="rank-number">
-                            <span class="rank-badge">1.</span>
-                        </div>
+                    <div class="player-row" data-player="netherwarrior">
                         <div class="player-info">
                             <div class="player-avatar"></div>
                             <div>
-                                <div class="player-name">BronzeHarpy80</div>
-                                <div class="player-title">🌸 Vanilla Master</div>
+                                <div class="player-name">NetherWarrior</div>
+                                <div class="player-title">⚔️ LTM Specialist</div>
                             </div>
                         </div>
                         <div>
-                            <span class="region-badge">NA</span>
+                            <span class="region-badge">EU</span>
                         </div>
                         <div class="tiers">
-                            <div class="tier ht1">
-                                <div class="tier-icon">
+                            <div class="tier ht3">
+                                <div class="tier-icon">⚔️</div>
+                                <div>HT3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
