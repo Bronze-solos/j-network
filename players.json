@@ -1,1 +1,11 @@
-
+[
+    {
+        "name": "Technoblade",
+        "region": "NA",
+        "prestige": 1000,
+        "tiers": {
+            "Sword": "HT1",
+            "Vanilla": "LT1"
+        }
+    }
+]
