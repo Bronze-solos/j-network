@@ -10,8 +10,8 @@ fetch("data.json")
   });
 
 function buildModes() {
-  const modes = document.getElementById("modes");
-  modes.innerHTML = "";
+  const bar = document.getElementById("modes");
+  bar.innerHTML = "";
 
   Object.keys(data).forEach(mode => {
     const btn = document.createElement("button");
@@ -27,11 +27,12 @@ function buildModes() {
       render();
     };
 
-    modes.appendChild(btn);
+    bar.appendChild(btn);
   });
 }
 
 function render() {
+  document.getElementById("modeTitle").textContent = currentMode;
   const tiers = document.getElementById("tiers");
   tiers.innerHTML = "";
 
@@ -50,11 +51,3 @@ function render() {
     tiers.appendChild(box);
   }
 }
-
-document.getElementById("search").addEventListener("input", e => {
-  const q = e.target.value.toLowerCase();
-  document.querySelectorAll(".player").forEach(p => {
-    p.style.display = p.textContent.toLowerCase().includes(q)
-      ? "block" : "none";
-  });
-});
