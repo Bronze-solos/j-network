@@ -1,76 +1,782 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>J-Network Rankings</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at top, #3b0a0a, #000);
-    color: white;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J-Network - Minecraft Rankings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  header {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #400;
-  }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
 
-  h1 {
-    margin: 0;
-  }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(30, 144, 255, 0.8), 0 0 40px rgba(30, 144, 255, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(30, 144, 255, 1), 0 0 60px rgba(30, 144, 255, 0.8), 0 0 80px rgba(30, 144, 255, 0.5); }
+        }
 
-  .rankings {
-    padding: 40px;
-    max-width: 800px;
-    margin: auto;
-  }
+        @keyframes pixelate {
+            0% { background-position: 0 0; }
+            100% { background-position: 64px 64px; }
+        }
 
-  .rank {
-    background: #120000;
-    border: 1px solid #500;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-  }
-</style>
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(30, 144, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(30, 144, 255, 0.03) 3px),
+                repeating-linear-gradient(90deg, rgba(30, 144, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(30, 144, 255, 0.03) 3px);
+            background-size: 16px 16px;
+            animation: pixelate 8s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .minecraft-blocks {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .block {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(30, 144, 255, 0.1);
+            border: 2px solid rgba(30, 144, 255, 0.3);
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.2);
+        }
+
+        .block:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; animation-duration: 7s; }
+        .block:nth-child(2) { top: 20%; left: 80%; animation-delay: 1s; animation-duration: 6s; }
+        .block:nth-child(3) { top: 60%; left: 15%; animation-delay: 2s; animation-duration: 8s; }
+        .block:nth-child(4) { top: 70%; left: 85%; animation-delay: 1.5s; animation-duration: 7s; }
+        .block:nth-child(5) { top: 40%; left: 50%; animation-delay: 3s; animation-duration: 9s; }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #1e90ff;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(30, 144, 255, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e90ff 0%, #00bfff 50%, #1e90ff 100%);
+            border: 3px solid #00bfff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #000;
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.3);
+            position: relative;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #1e90ff, #00bfff, #1e90ff);
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(10px);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e90ff, #00bfff, #1e90ff, #00bfff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo-sub {
+            font-size: 0.8rem;
+            color: #8b9cb6;
+            letter-spacing: 3px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-links a {
+            color: #8b9cb6;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: #1e90ff;
+            background: rgba(30, 144, 255, 0.1);
+            border-color: #1e90ff;
+            transform: translateY(-2px);
+        }
+
+        .search-box {
+            background: rgba(10, 14, 26, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 2px solid #1e90ff;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            width: 200px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .game-modes {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+
+        .mode-tab {
+            background: rgba(10, 14, 26, 0.8);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            backdrop-filter: blur(10px);
+        }
+
+        .mode-tab:hover {
+            background: rgba(26, 31, 46, 0.9);
+            border-color: #1e90ff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(30, 144, 255, 0.3);
+        }
+
+        .mode-tab.active {
+            background: rgba(26, 31, 46, 0.9);
+            border-color: #1e90ff;
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.5);
+        }
+
+        .mode-icon {
+            font-size: 2rem;
+        }
+
+        .mode-name {
+            font-size: 0.9rem;
+            color: #8b9cb6;
+        }
+
+        .mode-tab.active .mode-name {
+            color: #1e90ff;
+        }
+
+        .leaderboard {
+            background: rgba(10, 14, 26, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #1e90ff;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 50px rgba(30, 144, 255, 0.2);
+        }
+
+        .tier-section {
+            margin-bottom: 0;
+        }
+
+        .tier-header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-bottom: 2px solid #1e90ff;
+            color: #1e90ff;
+        }
+
+        .tier-header.tier1 { 
+            color: #ffd700; 
+            border-bottom-color: #ffd700;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(255,215,0,0.1) 50%, rgba(0,0,0,0.9) 100%);
+        }
+        .tier-header.tier2 { 
+            color: #ff8c00; 
+            border-bottom-color: #ff8c00;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(255,140,0,0.1) 50%, rgba(0,0,0,0.9) 100%);
+        }
+        .tier-header.tier3 { 
+            color: #ff6b35; 
+            border-bottom-color: #ff6b35;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(255,107,53,0.1) 50%, rgba(0,0,0,0.9) 100%);
+        }
+        .tier-header.tier4 { 
+            color: #1e90ff; 
+            border-bottom-color: #1e90ff;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(30,144,255,0.1) 50%, rgba(0,0,0,0.9) 100%);
+        }
+        .tier-header.tier5 { 
+            color: #4169e1; 
+            border-bottom-color: #4169e1;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(65,105,225,0.1) 50%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 200px 300px;
+            padding: 1.5rem;
+            background: rgba(5, 8, 16, 0.9);
+            font-weight: bold;
+            border-bottom: 2px solid rgba(26, 31, 46, 0.5);
+        }
+
+        .player-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 200px 300px;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(26, 31, 46, 0.5);
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .player-row:hover {
+            background: rgba(26, 31, 46, 0.8);
+            transform: translateX(10px);
+        }
+
+        .rank-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .rank-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .rank-number.rank-2 .rank-badge {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            box-shadow: 0 5px 15px rgba(192, 192, 192, 0.4);
+        }
+
+        .rank-number.rank-3 .rank-badge {
+            background: linear-gradient(135deg, #cd7f32, #e8a87c);
+            box-shadow: 0 5px 15px rgba(205, 127, 50, 0.4);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-avatar {
+            width: 48px;
+            height: 48px;
+            background: rgba(26, 31, 46, 0.8);
+            border-radius: 5px;
+            border: 2px solid #1e90ff;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
+        }
+
+        .player-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1e90ff;
+        }
+
+        .player-title {
+            color: #ffd700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .region-badge {
+            background: #e63946;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .tiers {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tier {
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 50px;
+        }
+
+        .tier-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .tier.ht1 {
+            background: #ffd700;
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .tier.ht2 {
+            background: #ff8c00;
+            color: #000;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .tier.ht3 {
+            background: #ff6b35;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .tier.lt1 {
+            background: #1e90ff;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.4);
+        }
+
+        .tier.lt2 {
+            background: #4169e1;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.4);
+        }
+
+        .mode-content {
+            display: none;
+        }
+
+        .mode-content.active {
+            display: block;
+        }
+    </style>
 </head>
-
 <body>
-<header>
-  <h1>J-NETWORK</h1>
-  <span>Rankings</span>
-</header>
+    <div class="minecraft-blocks">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+    </div>
 
-<div class="rankings" id="rankings">
-  Loading rankings...
-</div>
+    <nav class="navbar">
+        <div class="logo-container">
+            <div class="logo-icon">J</div>
+            <div class="logo-text">
+                <div class="logo-main">J-Network</div>
+                <div class="logo-sub">Ranked PvP Arena</div>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#"><span>🏠</span> Home</a>
+            <a href="#"><span>🏆</span> Rankings</a>
+            <a href="https://discord.gg/zJHMadUf" target="_blank"><span>🎮</span> Discord</a>
+            <a href="#"><span>📄</span> API Docs</a>
+            <div class="search-box">
+                <input type="text" placeholder="Search player...">
+            </div>
+        </div>
+    </nav>
 
-<script>
-fetch("/api/ranks")
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("rankings");
-    container.innerHTML = "";
+    <div class="container">
+        <div class="game-modes">
+            <div class="mode-tab active" data-mode="overall">
+                <div class="mode-icon">🏆</div>
+                <div class="mode-name">Overall</div>
+            </div>
+            <div class="mode-tab" data-mode="ltms">
+                <div class="mode-icon">⚔️</div>
+                <div class="mode-name">LTMs</div>
+            </div>
+            <div class="mode-tab" data-mode="vanilla">
+                <div class="mode-icon">🌸</div>
+                <div class="mode-name">Vanilla</div>
+            </div>
+            <div class="mode-tab" data-mode="uhc">
+                <div class="mode-icon">❤️</div>
+                <div class="mode-name">UHC</div>
+            </div>
+            <div class="mode-tab" data-mode="pot">
+                <div class="mode-icon">🧪</div>
+                <div class="mode-name">Pot</div>
+            </div>
+            <div class="mode-tab" data-mode="netherop">
+                <div class="mode-icon">🎮</div>
+                <div class="mode-name">NetherOP</div>
+            </div>
+            <div class="mode-tab" data-mode="smp">
+                <div class="mode-icon">⛏️</div>
+                <div class="mode-name">SMP</div>
+            </div>
+            <div class="mode-tab" data-mode="sword">
+                <div class="mode-icon">⚔️</div>
+                <div class="mode-name">Sword</div>
+            </div>
+            <div class="mode-tab" data-mode="axe">
+                <div class="mode-icon">🪓</div>
+                <div class="mode-name">Axe</div>
+            </div>
+            <div class="mode-tab" data-mode="mace">
+                <div class="mode-icon">🔨</div>
+                <div class="mode-name">Mace</div>
+            </div>
+        </div>
 
-    const entries = Object.entries(data);
+        <!-- Overall Mode -->
+        <div class="mode-content active" id="overall">
+            <div class="leaderboard">
+                <div class="leaderboard-header">
+                    <div>#</div>
+                    <div>PLAYER</div>
+                    <div>REGION</div>
+                    <div>TIERS</div>
+                </div>
 
-    if (entries.length === 0) {
-      container.innerHTML = "<p>No rankings yet.</p>";
-      return;
-    }
+                <div class="player-row">
+                    <div class="rank-number">
+                        <span class="rank-badge">1.</span>
+                    </div>
+                    <div class="player-info">
+                        <div class="player-avatar"></div>
+                        <div>
+                            <div class="player-name">BronzeHarpy80</div>
+                            <div class="player-title">⚔️ Combat Grandmaster <span style="color: #666;">(500 points)</span></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="region-badge">NA</span>
+                    </div>
+                    <div class="tiers">
+                        <div class="tier ht1">
+                            <div class="tier-icon">⚔️</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">🌸</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">❤️</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">🧪</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">🎮</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">⛏️</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">⚔️</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">🪓</div>
+                            <div>HT1</div>
+                        </div>
+                        <div class="tier ht1">
+                            <div class="tier-icon">🔨</div>
+                            <div>HT1</div>
+                        </div>
+                    </div>
+                </div>
 
-    entries.forEach(([user, rank]) => {
-      const div = document.createElement("div");
-      div.className = "rank";
-      div.innerHTML = `<strong>${user}</strong><span>${rank}</span>`;
-      container.appendChild(div);
-    });
-  });
-</script>
-</body>
-</html>
+                <div class="player-row">
+                    <div class="rank-number rank-2">
+                        <span class="rank-badge">2.</span>
+                    </div>
+                    <div class="player-info">
+                        <div class="player-avatar"></div>
+                        <div>
+                            <div class="player-name">N0tsqurmyshi</div>
+                            <div class="player-title">⚔️ Combat Master <span style="color: #666;">(400 points)</span></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="region-badge">NA</span>
+                    </div>
+                    <div class="tiers">
+                        <div class="tier lt1">
+                            <div class="tier-icon">⚔️</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">🌸</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">❤️</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">🧪</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">🎮</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">⛏️</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">⚔️</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">🪓</div>
+                            <div>LT1</div>
+                        </div>
+                        <div class="tier lt1">
+                            <div class="tier-icon">🔨</div>
+                            <div>LT1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LTMs Mode -->
+        <div class="mode-content" id="ltms">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">TIER 1</div>
+                    <div class="leaderboard-header">
+                        <div>#</div>
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>RANK</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="rank-number">
+                            <span class="rank-badge">1.</span>
+                        </div>
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">⚔️ LTM Champion</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">⚔️</div>
+                                <div>HT1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tier-section">
+                    <div class="tier-header tier2">TIER 2</div>
+                    <div class="leaderboard-header">
+                        <div>#</div>
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>RANK</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="rank-number rank-2">
+                            <span class="rank-badge">2.</span>
+                        </div>
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">N0tsqurmyshi</div>
+                                <div class="player-title">⚔️ LTM Expert</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht2">
+                                <div class="tier-icon">⚔️</div>
+                                <div>HT2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tier-section">
+                    <div class="tier-header tier3">TIER 3</div>
+                    <div class="leaderboard-header">
+                        <div>#</div>
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>RANK</div>
+                    </div>
+                </div>
+
+                <div class="tier-section">
+                    <div class="tier-header tier4">TIER 4</div>
+                    <div class="leaderboard-header">
+                        <div>#</div>
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>RANK</div>
+                    </div>
+                </div>
+
+                <div class="tier-section">
+                    <div class="tier-header tier5">TIER 5</div>
+                    <div class="leaderboard-header">
+                        <div>#</div>
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>RANK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vanilla Mode -->
+        <div class="mode-content" id="vanilla">
+            <div class="leaderboard">
+                <div class="tier-section">
+                    <div class="tier-header tier1">TIER 1</div>
+                    <div class="leaderboard-header">
+                        <div>#</div>
+                        <div>PLAYER</div>
+                        <div>REGION</div>
+                        <div>RANK</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="rank-number">
+                            <span class="rank-badge">1.</span>
+                        </div>
+                        <div class="player-info">
+                            <div class="player-avatar"></div>
+                            <div>
+                                <div class="player-name">BronzeHarpy80</div>
+                                <div class="player-title">🌸 Vanilla Master</div>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="region-badge">NA</span>
+                        </div>
+                        <div class="tiers">
+                            <div class="tier ht1">
+                                <div class="tier-icon">
