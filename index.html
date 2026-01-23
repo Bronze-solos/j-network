@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>J-Network Rankings</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>J-Network</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>J-NETWORK</h1>
-    <p>Competitive PvP Rankings</p>
-  </header>
-
-  <!-- SEARCH -->
-  <div class="search-wrap">
-    <input id="search" placeholder="Search player..." />
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="logo">J-NETWORK</div>
+    <div id="modes" class="modes"></div>
   </div>
 
-  <!-- MODE NAVBAR -->
-  <nav id="modes"></nav>
-
-  <!-- TIERS -->
-  <main id="tiers"></main>
+  <!-- MAIN CARD -->
+  <div class="container">
+    <h2 id="modeTitle">Overall</h2>
+    <div id="tiers" class="tiers"></div>
+  </div>
 
   <script src="app.js"></script>
 </body>
