@@ -1,24 +1,11 @@
 {
-  "modes": {
-    "Mace": {
-      "Tier 1": ["PlayerOne", "PlayerTwo"],
-      "Tier 2": ["PlayerThree"],
-      "Tier 3": [],
-      "Tier 4": [],
-      "Tier 5": []
-    },
-    "Diamond SMP": {
-      "Tier 1": [],
-      "Tier 2": [],
-      "Tier 3": [],
-      "Tier 4": [],
-      "Tier 5": []
-    }
-  },
-
-  "staff": {
-    "Owner": ["JeffersonD44"],
-    "Co-Owner": ["BronzeHarpy80"],
-    "Head Admin": ["N0TSQURMYSHI"]
-  }
+  "Mace": {},
+  "Sword": {},
+  "Axe": {},
+  "Crystal": {},
+  "Pot": {},
+  "Netherite SMP": {},
+  "Diamond SMP": {},
+  "UHC": {},
+  "TNT Cart": {}
 }
