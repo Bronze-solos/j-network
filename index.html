@@ -1,26 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>J-Network Rankings</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>J-NETWORK</title>
+
+<style>
+* { box-sizing:border-box; margin:0; padding:0; font-family:monospace; }
+
+body {
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.9)),
+    url("https://i.imgur.com/7Y9WJzR.png");
+  background-size:cover;
+  color:#fff;
+}
+
+.header {
+  text-align:center;
+  padding:25px;
+  background:rgba(0,0,0,.9);
+  border-bottom:3px solid #ff5555;
+}
+
+.header h1 {
+  font-size:44px;
+  color:#ff5555;
+  text-shadow:0 0 14px #ff0000;
+}
+
+.nav {
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:20px;
+}
+
+.nav button {
+  background:rgba(0,0,0,.85);
+  border:2px solid #444;
+  color:#fff;
+  padding:10px 22px;
+  cursor:pointer;
+}
+
+.nav button.active, .nav button:hover {
+  border-color:#ff5555;
+}
+
+.section {
+  display:none;
+  max-width:1100px;
+  margin:auto;
+  padding:25px;
+  background:rgba(0,0,0,.75);
+  border:2px solid #333;
+}
+
+.section.active { display:block; }
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+  margin-top:20px;
+}
+
+.card {
+  padding:15px;
+  background:rgba(0,0,0,.9);
+  border:2px solid;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.card:hover { transform:translateY(-4px); box-shadow:0 0 12px #000; }
+
+.owner{border-color:#ff3333;color:#ff3333}
+.coowner{border-color:#ff8844;color:#ff8844}
+.headadmin{border-color:#aa55ff;color:#aa55ff}
+.mythic{border-color:#00ffaa;color:#00ffaa}
+.elite{border-color:#55aaff;color:#55aaff}
+.veterin{border-color:#ffaa00;color:#ffaa00}
+
+.tiers {
+  margin-top:15px;
+  padding:10px;
+  border-top:1px solid #444;
+  color:#ccc;
+  display:none;
+}
+
+.discord {
+  margin-top:25px;
+  padding:25px;
+  text-align:center;
+  background:rgba(0,0,0,.85);
+  border:2px solid #5865F2;
+}
+
+.discord a {
+  display:inline-block;
+  margin-top:10px;
+  padding:12px 26px;
+  background:#5865F2;
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.discord a:hover { background:#4752c4; }
+
+.footer {
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+  color:#aaa;
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>J-NETWORK</h1>
-    <p>Competitive PvP Rankings</p>
-  </header>
+<div class="header">
+  <h1>J-NETWORK</h1>
+</div>
 
-  <section id="modes"></section>
+<div class="nav">
+  <button class="active" onclick="showTab('ranks')">Ranks</button>
+  <button onclick="showTab('modes')">Gamemodes</button>
+  <button onclick="showTab('community')">Community</button>
+</div>
 
-  <section id="tiers"></section>
+<!-- RANKS -->
+<!-- RANKS -->
+<div id="ranks" class="section active">
+  <h2>Staff & Ranks</h2>
+  <div class="grid">
+    <div class="card owner">OWNER<br>JeffersonD44</div>
+    <div class="card coowner">CO-OWNER<br>BronzeHarpy80</div>
+    <div class="card headadmin">HEAD ADMIN<br>N0TSQURMYSHI</div>
+    <div class="card mythic">MYTHIC</div>
+    <div class="card elite">ELITE</div>
+    <div class="card veterin">VETERAN</div>
+  </div>
+</div>
 
-  <section id="players">
-    <h2 id="players-title">Select a tier</h2>
-    <ul id="player-list"></ul>
-  </section>
+<!-- GAMEMODES -->
+<div id="modes" class="section">
+  <h2>Ranked Kits</h2>
 
-  <script src="app.js"></script>
+  <div class="nav" style="margin-bottom:15px">
+    <button class="active" onclick="showKit('ltms')">LTMs</button>
+    <button onclick="showKit('uhc')">UHC</button>
+    <button onclick="showKit('pot')">Pot</button>
+    <button onclick="showKit('sword')">Sword</button>
+    <button onclick="showKit('axe')">Axe</button>
+    <button onclick="showKit('diamond')">Diamond SMP</button>
+    <button onclick="showKit('mace')">Mace SMP</button>
+  </div>
+
+  <div id="ltms" class="kit active">
+    <div class="tier-grid">
+      <div class="tier t1">Tier 1</div>
+      <div class="tier t2">Tier 2</div>
+      <div class="tier t3">Tier 3</div>
+      <div class="tier t4">Tier 4</div>
+      <div class="tier t5">Tier 5</div>
+    </div>
+  </div>
+
+  <div id="uhc" class="kit">
+    <div class="tier-grid">
+      <div class="tier t1">Tier 1</div>
+      <div class="tier t2">Tier 2</div>
+      <div class="tier t3">Tier 3</div>
+      <div class="tier t4">Tier 4</div>
+      <div class="tier t5">Tier 5</div>
+    </div>
+  </div>
+
+  <div id="pot" class="kit"><div class="tier-grid"><div class="tier t1">Tier 1</div><div class="tier t2">Tier 2</div><div class="tier t3">Tier 3</div><div class="tier t4">Tier 4</div><div class="tier t5">Tier 5</div></div></div>
+  <div id="sword" class="kit"><div class="tier-grid"><div class="tier t1">Tier 1</div><div class="tier t2">Tier 2</div><div class="tier t3">Tier 3</div><div class="tier t4">Tier 4</div><div class="tier t5">Tier 5</div></div></div>
+  <div id="axe" class="kit"><div class="tier-grid"><div class="tier t1">Tier 1</div><div class="tier t2">Tier 2</div><div class="tier t3">Tier 3</div><div class="tier t4">Tier 4</div><div class="tier t5">Tier 5</div></div></div>
+  <div id="diamond" class="kit"><div class="tier-grid"><div class="tier t1">Tier 1</div><div class="tier t2">Tier 2</div><div class="tier t3">Tier 3</div><div class="tier t4">Tier 4</div><div class="tier t5">Tier 5</div></div></div>
+  <div id="mace" class="kit"><div class="tier-grid"><div class="tier t1">Tier 1</div><div class="tier t2">Tier 2</div><div class="tier t3">Tier 3</div><div class="tier t4">Tier 4</div><div class="tier t5">Tier 5</div></div></div>
+</div>
+
+<!-- COMMUNITY -->
+<div id="community" class="section">
+  <h2>Community</h2>
+  <div class="discord">
+    <h3>Join the J-Network Discord</h3>
+    <p>Ranked PvP · Events · Staff Applications</p>
+    <a href="https://discord.gg/zJHMadUf" target="_blank">Join Discord</a>
+  </div>
+</div>
+
+<div class="footer">J-Network © 2026</div>
+
+<script>
+function showTab(tab){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showKit(id){
+  document.querySelectorAll('.kit').forEach(k=>k.classList.remove('active'));
+  document.querySelectorAll('#modes .nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
 </body>
 </html>
