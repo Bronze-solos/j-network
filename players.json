@@ -26,6 +26,8 @@
         "name": "Dj Trim7281",
         "region": "NA",
         "prestige": 0,
-        "tiers": {}
+        "tiers": {
+            "Sword": "LT5"
+        }
     }
 ]
