@@ -3,63 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Network | Elite Minecraft Rankings</title>
+    <title>J-NETWORK | Elite Competitive Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #dc2626;
             --primary-glow: rgba(220, 38, 38, 0.7);
-            --bg-dark: #0a0505;
-            --panel-bg: rgba(10, 5, 5, 0.95);
-            --text-gold: #ffd700;
+            --gold: #ffd700;
+            --panel-bg: rgba(10, 3, 3, 0.95);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        /* ===== ANIMATED LAVA BACKGROUND ===== */
         body {
             background: #000;
             color: #fff;
             font-family: 'Segoe UI', sans-serif;
+            margin: 0;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ===== ANIMATED BACKGROUND ===== */
-        .bg-animate {
+        .lava-bg {
             position: fixed;
             inset: 0;
-            z-index: -1;
-            background: linear-gradient(45deg, #0f0505, #1a0505, #000);
+            background: linear-gradient(135deg, #0a0000 0%, #1a0505 50%, #000000 100%);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: lavaMove 15s ease infinite;
+            z-index: -2;
         }
 
-        @keyframes gradientBG {
+        @keyframes lavaMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        .embers {
+        .ember-overlay {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            inset: 0;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.3;
             z-index: -1;
+            pointer-events: none;
         }
 
         /* ===== HEADER & SEARCH ===== */
         header {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 1.5rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
             border-bottom: 4px solid var(--primary);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        .nav-container {
+        .header-main {
             max-width: 1600px;
             margin: 0 auto;
             display: flex;
@@ -71,300 +71,258 @@
             font-family: 'Press Start 2P', cursive;
             font-size: 1.8rem;
             color: var(--primary);
-            text-shadow: 2px 2px #550000;
+            text-shadow: 3px 3px 0px #400;
+            letter-spacing: -2px;
         }
 
-        .search-wrapper { position: relative; width: 350px; }
+        .search-container { position: relative; width: 400px; }
 
-        .search-input {
+        .search-bar {
             width: 100%;
             background: #111;
             border: 2px solid #333;
-            padding: 12px;
+            padding: 12px 20px;
             color: #fff;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
+            transition: 0.3s;
         }
 
-        #search-results {
+        .search-bar:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 15px var(--primary-glow); }
+
+        #search-dropdown {
             position: absolute;
             top: 100%;
             left: 0;
             width: 100%;
             background: var(--panel-bg);
             border: 2px solid var(--primary);
+            margin-top: 5px;
             display: none;
             padding: 15px;
-            margin-top: 5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            box-shadow: 0 10px 40px #000;
         }
 
-        /* ===== COMPACT OVERALL MENU ===== */
-        .gamemode-bar {
+        /* ===== NAVIGATION TABS ===== */
+        .tab-bar {
             display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 15px 0;
+            gap: 10px;
             max-width: 1600px;
-            margin: 0 auto;
+            margin: 1.5rem auto 0;
+            overflow-x: auto;
+            padding-bottom: 10px;
             scrollbar-width: none;
         }
 
-        .mode-tab {
-            padding: 10px 18px;
+        .tab {
+            padding: 10px 20px;
             background: #150505;
             border: 1px solid #333;
+            cursor: pointer;
             font-family: 'Press Start 2P', cursive;
             font-size: 0.55rem;
-            cursor: pointer;
-            transition: 0.2s;
             color: #666;
             white-space: nowrap;
+            transition: 0.2s;
         }
 
-        .mode-tab.active {
+        .tab.active {
             background: var(--primary);
             color: #fff;
             border-color: #fff;
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
 
-        /* Compact styling for 'Overall' specifically */
-        .mode-tab:first-child {
-            border: 1px solid var(--text-gold);
-            color: var(--text-gold);
-            padding: 10px 14px;
-        }
+        .tab-overall { border: 1px solid var(--gold) !important; color: var(--gold); }
 
-        /* ===== LEADERBOARD UI ===== */
-        .container {
+        /* ===== RANKING CONTAINER ===== */
+        .main-content {
             max-width: 1600px;
-            margin: 30px auto;
+            margin: 40px auto;
             padding: 0 20px;
         }
 
-        .tier-group {
+        .tier-card {
             background: var(--panel-bg);
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
         }
 
         .tier-header {
-            padding: 15px 25px;
-            background: rgba(220, 38, 38, 0.15);
+            padding: 20px 30px;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9rem;
-            color: #fff;
+            background: rgba(220, 38, 38, 0.1);
             border-bottom: 2px solid var(--primary);
-        }
-
-        /* Peak Tier HT1 Unique Styling */
-        .tier-header.ht1-header {
-            background: linear-gradient(90deg, #600, #b00, #600);
-            color: var(--text-gold);
-            text-align: center;
-            letter-spacing: 4px;
-        }
-
-        .player-list { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); 
-        }
-
-        .player-card {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .mc-head {
-            width: 48px;
-            height: 48px;
-            margin-right: 15px;
-            image-rendering: pixelated;
-            border: 2px solid #444;
-            background: #222;
-        }
-
-        .player-name { font-size: 1.1rem; font-weight: bold; color: #eee; }
-
-        .tier-tag {
-            margin-left: auto;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
-            padding: 4px 8px;
-            border-radius: 2px;
-        }
-
-        .ht-tag { background: rgba(220, 38, 38, 0.2); color: #ff2a2a; border: 1px solid #ff2a2a; }
-        .lt-tag { background: rgba(255, 154, 0, 0.1); color: #ff9a00; border: 1px solid #ff9a00; }
-
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .kit-stat {
-            background: #222;
-            padding: 6px;
-            font-size: 0.65rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
+
+        /* Unique HT1 Styling */
+        .ht1-exclusive {
+            background: linear-gradient(90deg, #400 0%, #900 50%, #400 100%);
+            border-bottom: 2px solid var(--gold);
+            color: var(--gold);
+            text-align: center;
+            justify-content: center;
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+
+        .player-row {
+            display: flex;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: 0.2s;
+        }
+
+        .player-row:hover { background: rgba(220, 38, 38, 0.05); }
+
+        .mc-skin {
+            width: 64px;
+            height: 64px;
+            image-rendering: pixelated;
+            border: 3px solid #333;
+            margin-right: 20px;
+            background: #111;
+        }
+
+        .player-name { font-size: 1.3rem; font-weight: 800; color: #ddd; flex-grow: 1; }
+
+        .tier-badge {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+
+        .ht-badge { color: var(--primary); border: 1px solid var(--primary); }
+        .lt-badge { color: #888; border: 1px solid #444; }
+
+        .points-box { color: var(--gold); font-family: 'Press Start 2P', cursive; font-size: 0.7rem; }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-animate"></div>
-    <div class="embers" id="embers"></div>
+<div class="lava-bg"></div>
+<div class="ember-overlay"></div>
 
-    <header>
-        <div class="nav-container">
-            <div class="logo">J-NETWORK</div>
-            <div class="search-wrapper">
-                <input type="text" class="search-input" id="playerSearch" placeholder="SEARCH PLAYER..." oninput="handleSearch()">
-                <div id="search-results"></div>
-            </div>
+<header>
+    <div class="header-main">
+        <div class="logo">J-NETWORK</div>
+        <div class="search-container">
+            <input type="text" class="search-bar" id="pSearch" placeholder="SEARCH PLAYER..." oninput="doSearch()">
+            <div id="search-dropdown"></div>
         </div>
-        <div class="gamemode-bar" id="kitTabs"></div>
-    </header>
-
-    <div class="container">
-        <section id="main-view"></section>
     </div>
+    <div class="tab-bar" id="tabContainer"></div>
+</header>
 
-    <script>
-        const kits = ["Overall", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Sword", "Axe", "Mace", "tnt Cart", "LTMs", "Diamond SMP", "Iron UHC"];
-        
-        // POINT SYSTEM
-        const tierPoints = {
-            "HT1": 200, "HT2": 150, "HT3": 130, "HT4": 110, "HT5": 100,
-            "LT1": 80, "LT2": 70, "LT3": 60, "LT4": 50, "LT5": 40, "UR": 0
+<div class="main-content" id="rankingView"></div>
+
+<script>
+    // 1. DYNAMIC DATA (Bot will push to this)
+    const kits = ["Overall", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Sword", "Axe", "Mace", "tnt Cart", "LTMs"];
+    const players = [
+        { name: "N0tsqurmyshi", stats: { "Overall": 500, "Vanilla": "HT1", "Sword": "HT2", "Pot": "LT1" } },
+        { name: "JeffersonD44", stats: { "Overall": 350, "Vanilla": "LT1", "SMP": "HT1", "UHC": "LT1" } },
+        { name: "BronzeHarpy80", stats: { "Overall": 320, "Sword": "HT1", "Axe": "LT2" } },
+        { name: "NetherWarrior", stats: { "Overall": 190, "NetherOP": "HT1" } }
+    ];
+
+    let activeKit = "Overall";
+
+    // 2. TABS INIT
+    const tCon = document.getElementById('tabContainer');
+    kits.forEach(k => {
+        const btn = document.createElement('div');
+        btn.className = `tab ${k === activeKit ? 'active' : ''} ${k === 'Overall' ? 'tab-overall' : ''}`;
+        btn.innerText = k.toUpperCase();
+        btn.onclick = () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            activeKit = k;
+            renderView();
         };
+        tCon.appendChild(btn);
+    });
 
-        // MOCK DATA (Use real Minecraft Usernames for skin loading)
-        const players = [
-            { name: "N0tsqurmyshi", stats: { "Vanilla": "HT1", "Sword": "HT2", "Pot": "LT1" } },
-            { name: "JeffersonD44", stats: { "Vanilla": "HT2", "SMP": "HT1", "UHC": "LT1" } },
-            { name: "BronzeHarpy80", stats: { "Sword": "HT1", "Axe": "LT2", "Vanilla": "HT3" } },
-            { name: "Notch", stats: { "Vanilla": "LT5", "Pot": "HT4" } },
-            { name: "Technoblade", stats: { "Sword": "HT1", "Vanilla": "HT1" } }
-        ];
+    // 3. SEARCH LOGIC
+    function doSearch() {
+        const q = document.getElementById('pSearch').value.toLowerCase();
+        const dd = document.getElementById('search-dropdown');
+        if (q.length < 2) { dd.style.display = 'none'; return; }
 
-        let currentKit = "Overall";
-
-        // TAB GENERATOR
-        const kitTabs = document.getElementById('kitTabs');
-        kits.forEach(k => {
-            const div = document.createElement('div');
-            div.className = `mode-tab ${k === currentKit ? 'active' : ''}`;
-            div.innerText = k;
-            div.onclick = () => {
-                document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
-                div.classList.add('active');
-                currentKit = k;
-                render();
-            };
-            kitTabs.appendChild(div);
-        });
-
-        // SKIN PROVIDER (Crafatar is reliable and free)
-        const getHeadUrl = (name) => `https://crafatar.com/avatars/${name}?size=64&overlay`;
-
-        // SEARCH ENGINE
-        function handleSearch() {
-            const query = document.getElementById('playerSearch').value.toLowerCase();
-            const resultsDiv = document.getElementById('search-results');
-            if (query.length < 2) { resultsDiv.style.display = 'none'; return; }
-
-            const player = players.find(p => p.name.toLowerCase().includes(query));
-            if (player) {
-                resultsDiv.style.display = 'block';
-                let statsHtml = '';
-                kits.filter(k => k !== 'Overall').forEach(k => {
-                    const tier = player.stats[k] || "UR";
-                    statsHtml += `<div class="kit-stat"><span>${k}</span><span>${tier}</span></div>`;
-                });
-                resultsDiv.innerHTML = `
-                    <div style="display:flex; align-items:center; border-bottom:1px solid #333; padding-bottom:10px;">
-                        <img class="mc-head" src="${getHeadUrl(player.name)}">
-                        <div><div class="player-name">${player.name}</div></div>
+        const found = players.find(p => p.name.toLowerCase().includes(q));
+        if (found) {
+            dd.style.display = 'block';
+            dd.innerHTML = `
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <img src="https://crafatar.com/avatars/${found.name}?size=64&overlay" class="mc-skin">
+                    <div>
+                        <div class="player-name">${found.name}</div>
+                        <div style="font-size:0.6rem; color:var(--gold)">GLOBAL PRESTIGE: ${found.stats.Overall} PTS</div>
                     </div>
-                    <div class="profile-grid">${statsHtml}</div>`;
-            } else {
-                resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = `<div style="text-align:center; font-size:0.5rem;">PLAYER NOT FOUND</div>`;
-            }
+                </div>
+            `;
+        } else {
+            dd.innerHTML = `<div style="font-size:0.5rem; text-align:center;">PLAYER NOT FOUND</div>`;
         }
+    }
 
-        // RENDER LOGIC
-        function render() {
-            const view = document.getElementById('main-view');
-            view.innerHTML = '';
+    // 4. MAIN RENDERER
+    function renderView() {
+        const container = document.getElementById('rankingView');
+        container.innerHTML = '';
 
-            if (currentKit === "Overall") {
-                renderOverall(view);
-            } else {
-                renderTiered(view);
-            }
-        }
-
-        function renderOverall(view) {
-            const sorted = players.map(p => {
-                let total = 0;
-                Object.values(p.stats).forEach(t => total += (tierPoints[t] || 0));
-                return { ...p, total };
-            }).sort((a,b) => b.total - a.total);
-
-            let html = `<div class="tier-group"><div class="tier-header" style="color:var(--text-gold)">GLOBAL PRESTIGE</div><div class="player-list">`;
+        if (activeKit === "Overall") {
+            const sorted = [...players].sort((a,b) => b.stats.Overall - a.stats.Overall);
+            let html = `<div class="tier-card"><div class="tier-header ht1-exclusive">GLOBAL PRESTIGE</div><div class="player-grid">`;
             sorted.forEach(p => {
                 html += `
-                    <div class="player-card">
-                        <img class="mc-head" src="${getHeadUrl(p.name)}">
+                    <div class="player-row">
+                        <img src="https://crafatar.com/avatars/${p.name}?size=64&overlay" class="mc-skin">
                         <div class="player-name">${p.name}</div>
-                        <div class="tier-tag lt-tag">${p.total} PTS</div>
+                        <div class="points-box">${p.stats.Overall} PTS</div>
                     </div>`;
             });
-            html += `</div></div>`;
-            view.innerHTML = html;
-        }
-
-        function renderTiered(view) {
-            // Logic: HT1 is unique (usually only one player or very few)
-            // T1 through T5 group both HT and LT counterparts
+            container.innerHTML = html + `</div></div>`;
+        } else {
+            // TIERED LOGIC: 1 HT1 per kit, multiple Tier 1s (the rest are LT1s)
             for (let i = 1; i <= 5; i++) {
-                const hTier = `HT${i}`;
-                const lTier = `LT${i}`;
-                const inTier = players.filter(p => p.stats[currentKit] === hTier || p.stats[currentKit] === lTier);
-
-                if (inTier.length > 0) {
-                    const isTop = (i === 1);
-                    let html = `<div class="tier-group">
-                        <div class="tier-header ${isTop ? 'ht1-header' : ''}">
-                            ${isTop ? '⭐ ' : ''}TIER ${i}${isTop ? ' ⭐' : ''}
+                const isHT1 = (i === 1);
+                const currentTierPlayers = players.filter(p => p.stats[activeKit] === `HT${i}` || p.stats[activeKit] === `LT${i}`);
+                
+                if (currentTierPlayers.length > 0) {
+                    let html = `<div class="tier-card">
+                        <div class="tier-header ${isHT1 ? 'ht1-exclusive' : ''}">
+                            ${isHT1 ? '👑 THE ELITE HT1' : 'TIER ' + i}
                         </div>
-                        <div class="player-list">`;
+                        <div class="player-grid">`;
                     
-                    inTier.forEach(p => {
-                        const actualTier = p.stats[currentKit];
-                        const tagClass = actualTier.startsWith('HT') ? 'ht-tag' : 'lt-tag';
+                    currentTierPlayers.forEach(p => {
+                        const t = p.stats[activeKit];
                         html += `
-                            <div class="player-card">
-                                <img class="mc-head" src="${getHeadUrl(p.name)}">
+                            <div class="player-row">
+                                <img src="https://crafatar.com/avatars/${p.name}?size=64&overlay" class="mc-skin">
                                 <div class="player-name">${p.name}</div>
-                                <div class="tier-tag ${tagClass}">${actualTier}</div>
+                                <div class="tier-badge ${t.startsWith('HT') ? 'ht-badge' : 'lt-badge'}">${t}</div>
                             </div>`;
                     });
-                    html += `</div></div>`;
-                    view.innerHTML += html;
+                    container.innerHTML += html + `</div></div>`;
                 }
             }
         }
+    }
 
-        render();
-    </script>
+    renderView();
+</script>
+
 </body>
 </html>
