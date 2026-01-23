@@ -12,5 +12,11 @@
         "tiers": {
             "Mace": "HT1"
         }
+    },
+    {
+        "name": "JeffersonD44",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
