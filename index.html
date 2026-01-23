@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>J-Network Rankings</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header class="top">
+<header class="top-bar">
   <h1>J-NETWORK</h1>
-
-  <nav class="modes">
-    <button data-mode="overall" class="active">Overall</button>
-    <button data-mode="mace">Mace</button>
-    <button data-mode="sword">Sword</button>
-    <button data-mode="axe">Axe</button>
-    <button data-mode="crystal">Crystal</button>
-    <button data-mode="pot">Pot</button>
-    <button data-mode="netherite">Netherite SMP</button>
-    <button data-mode="diamond">Diamond SMP</button>
-    <button data-mode="uhc">UHC</button>
-    <button data-mode="tnt">TNT Cart</button>
-  </nav>
+  <p>Competitive PvP Rankings</p>
 </header>
 
-<main class="panel">
-  <h2 id="panel-title">Overall Rankings</h2>
+<nav class="modes">
+  <button data-mode="overall" class="active">Overall</button>
+  <button data-mode="mace">Mace</button>
+  <button data-mode="sword">Sword</button>
+  <button data-mode="axe">Axe</button>
+  <button data-mode="crystal">Crystal</button>
+  <button data-mode="pot">Pot</button>
+  <button data-mode="netherite">Netherite SMP</button>
+  <button data-mode="diamond">Diamond SMP</button>
+  <button data-mode="uhc">UHC</button>
+  <button data-mode="tnt">TNT Cart</button>
+</nav>
 
-  <table id="ranking-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Player</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- JS fills this -->
-    </tbody>
-  </table>
+<main class="container">
+  <section id="featured"></section>
+  <section id="rankings"></section>
 </main>
 
 <script src="script.js"></script>
