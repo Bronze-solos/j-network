@@ -71,6 +71,23 @@
             letter-spacing: 2px;
         }
 
+        /* === STAFF SECTION === */
+        .staff-shoutout {
+            background: rgba(20, 0, 0, 0.8);
+            border-bottom: 1px solid #440000;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: relative;
+            z-index: 10;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .staff-item { text-align: center; }
+        .staff-role { font-size: 0.7rem; color: var(--red-lava); font-weight: 800; letter-spacing: 1px; display: block; }
+        .staff-name { font-size: 1.1rem; color: #fff; font-weight: 700; }
+
         .search-container { position: relative; width: 300px; }
         .search-bar {
             width: 100%; background: #111; border: 1px solid #440000;
@@ -121,7 +138,6 @@
 
         .col-title { font-family: 'Rajdhani'; font-size: 1.6rem; font-weight: 800; color: #fff; }
 
-        /* === PLAYER CARDS === */
         .player-card {
             background: rgba(30, 0, 0, 0.4);
             border: 1px solid #2a0000;
@@ -145,7 +161,6 @@
             display: flex; justify-content: space-between; border: 1px solid #1a0000;
         }
 
-        /* COMMUNITY SECTION */
         .community-hero { width: 100%; text-align: center; padding: 100px 20px; }
         .discord-btn {
             display: inline-block; background: #5865F2; color: #fff;
@@ -166,6 +181,21 @@
         <input type="text" class="search-bar" placeholder="SEARCH PLAYER..." id="searchPlayer">
     </div>
 </nav>
+
+<div class="staff-shoutout">
+    <div class="staff-item">
+        <span class="staff-role">OWNER</span>
+        <span class="staff-name">JeffersonD44</span>
+    </div>
+    <div class="staff-item">
+        <span class="staff-role">CO-OWNER</span>
+        <span class="staff-name">BronzeHarpy80</span>
+    </div>
+    <div class="staff-item">
+        <span class="staff-role">HEAD ADMIN</span>
+        <span class="staff-name">N0tsqurmyshi</span>
+    </div>
+</div>
 
 <div class="mode-bar">
     <div id="modeList"></div>
@@ -193,10 +223,8 @@
     let PLAYERS = [];
     let currentMode = "Overall";
 
-    // FETCH FROM GITHUB
     async function loadPlayers() {
         try {
-            // Using timestamp to bypass cache
             const response = await fetch(`https://raw.githubusercontent.com/Bronze-solos/j-network/main/players.json?t=${new Date().getTime()}`);
             PLAYERS = await response.json();
             renderTabs();
@@ -238,7 +266,7 @@
     }
 
     function renderOverall(board) {
-        const sorted = [...PLAYERS].sort((a,b) => b.prestige - a.prestige);
+        const sorted = [...PLAYERS].sort((a,b) => (b.prestige || 0) - (a.prestige || 0));
         board.innerHTML = `
             <div class="column" style="min-width:100%">
                 <div class="col-header"><div class="col-title">GLOBAL PRESTIGE</div></div>
@@ -250,7 +278,7 @@
                                     <div style="color:var(--red-lava); font-weight:900; font-size:1.4rem;">#${i+1}</div>
                                     <div>
                                         <div class="p-name">${p.name}</div>
-                                        <div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige} PTS</div>
+                                        <div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige || 0} PTS</div>
                                     </div>
                                 </div>
                             </div>
@@ -276,7 +304,7 @@
             const inTier = eligible.filter(p => p.tiers[currentMode].includes(t.toString()));
             if(inTier.length === 0) continue;
 
-            inTier.sort((a,b) => b.prestige - a.prestige);
+            inTier.sort((a,b) => (b.prestige || 0) - (a.prestige || 0));
 
             board.innerHTML += `
                 <div class="column">
@@ -304,7 +332,6 @@
         }
     }
 
-    // Search Feature
     document.getElementById('searchPlayer').addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
         document.querySelectorAll('.player-card').forEach(card => {
@@ -313,9 +340,7 @@
         });
     });
 
-    // Start
     loadPlayers();
-    // Auto-refresh every 30 seconds
     setInterval(loadPlayers, 30000);
 </script>
 </body>
