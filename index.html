@@ -3,72 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Network | Elite Rankings</title>
+    <title>J-Network | Official Rankings</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-red: #dc2626;
-            --ht1-gold: #ffd700;
-            --lt1-gray: #8a8a8a;
-            --bg-obsidian: #080202;
+            --ht-gold: #ffd700;
+            --lt-silver: #c0c0c0;
+            --bg-dark: #070202;
+            --panel-bg: rgba(15, 5, 5, 0.98);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ===== ANIMATED LAVA FLOW BACKGROUND ===== */
+        /* ===== IMPROVED LAVA ANIMATION ===== */
         body {
-            background: var(--bg-obsidian);
+            background: var(--bg-dark);
             color: #fff;
-            font-family: 'Segoe UI', sans-serif;
-            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .lava-flow {
+        .lava-bg {
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: linear-gradient(180deg, #000 0%, #200 25%, #400 50%, #200 75%, #000 100%);
+            background: linear-gradient(0deg, #000 0%, #200 40%, #500 50%, #200 60%, #000 100%);
             background-size: 100% 400%;
-            animation: flow 10s linear infinite;
+            animation: lavaSmooth 12s ease-in-out infinite;
         }
 
-        @keyframes flow {
+        @keyframes lavaSmooth {
             0% { background-position: 0% 0%; }
-            100% { background-position: 0% 100%; }
+            50% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
-        .vignette {
+        .glow-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.9) 100%);
-            z-index: -1;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.8) 100%);
             pointer-events: none;
+            z-index: -1;
         }
 
         /* ===== NAVIGATION ===== */
         header {
             background: rgba(0, 0, 0, 0.95);
             padding: 1.5rem 3rem;
-            border-bottom: 4px solid var(--primary-red);
+            border-bottom: 3px solid var(--primary-red);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             backdrop-filter: blur(15px);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
+        .logo-main {
             font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
             color: var(--primary-red);
-            font-size: 1.4rem;
-            text-shadow: 4px 4px 0px #300;
+            text-shadow: 3px 3px 0px #300;
         }
 
+        nav a {
+            color: #888;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            margin-left: 25px;
+            transition: 0.3s;
+        }
+
+        nav a.active, nav a:hover { color: var(--primary-red); }
+
+        /* ===== GAME MODES ===== */
         .tab-scroller {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             padding: 15px 0;
             border-bottom: 1px solid #222;
         }
@@ -77,212 +91,274 @@
             max-width: 1400px;
             margin: 0 auto;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             overflow-x: auto;
             padding: 0 20px;
             scrollbar-width: none;
         }
 
-        .mode-btn {
+        .mode-tab {
             padding: 10px 18px;
             background: #111;
-            border: 2px solid #333;
+            border: 1px solid #333;
             font-family: 'Press Start 2P', cursive;
             font-size: 0.55rem;
-            color: #555;
             cursor: pointer;
+            color: #666;
             white-space: nowrap;
-            transition: 0.2s;
         }
 
-        .mode-btn.active {
-            background: var(--primary-red);
-            color: #fff;
-            border-color: #fff;
-            box-shadow: 0 0 15px var(--primary-red);
-        }
+        .mode-tab.active { background: var(--primary-red); color: #fff; border-color: #fff; }
 
-        /* ===== RANKING BOARD ===== */
-        .main-content {
-            max-width: 1300px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+        /* ===== LEADERBOARD LAYOUT ===== */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
 
-        .tier-card {
-            background: rgba(12, 4, 4, 0.98);
+        .tier-section {
+            margin-bottom: 50px;
+            background: var(--panel-bg);
             border: 1px solid #222;
-            margin-bottom: 40px;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
         }
 
-        /* HT1 BANNER (1 MAX) */
-        .ht1-header {
-            background: linear-gradient(90deg, #300 0%, #a00 50%, #300 100%);
-            border-bottom: 3px solid var(--ht1-gold);
-            padding: 18px;
-            text-align: center;
+        .tier-header {
+            padding: 15px 25px;
             font-family: 'Press Start 2P', cursive;
-            color: var(--ht1-gold);
-            font-size: 0.9rem;
-            letter-spacing: 5px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
         }
 
-        /* LT1 BANNER (REST) */
-        .lt1-header {
-            background: #151515;
-            border-bottom: 1px solid #333;
-            padding: 14px 25px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.7rem;
-            color: var(--lt1-gray);
-        }
+        .tier-header.t1 { background: linear-gradient(90deg, #300, #111); color: var(--ht-gold); border-bottom-color: var(--ht-gold); }
+        .tier-header.t2 { background: #1a1a1a; color: #ff8c00; border-bottom-color: #ff8c00; }
+        .tier-header.t3 { background: #1a1a1a; color: #ff6b35; border-bottom-color: #ff6b35; }
+        .tier-header.t4 { background: #1a1a1a; color: #dc2626; border-bottom-color: #dc2626; }
+        .tier-header.t5 { background: #1a1a1a; color: #881337; border-bottom-color: #881337; }
+
+        .player-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); }
 
         .player-row {
             display: flex;
             align-items: center;
-            padding: 25px;
+            padding: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
-            transition: 0.3s;
+            position: relative;
         }
 
-        .player-row:hover { background: rgba(220, 38, 38, 0.05); }
-
-        /* mcprofile.io Skin Logic */
-        .player-skin {
-            width: 64px;
-            height: 64px;
+        .avatar {
+            width: 48px;
+            height: 48px;
             image-rendering: pixelated;
-            border: 3px solid #333;
-            margin-right: 25px;
+            border: 2px solid #333;
+            margin-right: 20px;
             background: #111;
         }
 
-        .player-name {
-            font-size: 1.4rem;
-            font-weight: 800;
-            flex-grow: 1;
-        }
+        .player-name { font-size: 1.1rem; font-weight: bold; flex-grow: 1; }
 
-        .ht1-text { color: var(--ht1-gold); text-shadow: 0 0 10px rgba(255,215,0,0.2); }
-        .lt1-text { color: #ccc; }
-
-        .tier-badge {
+        .badge {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
-            padding: 6px 14px;
+            font-size: 0.5rem;
+            padding: 4px 8px;
             border-radius: 2px;
         }
 
-        .badge-ht1 { border: 1px solid var(--ht1-gold); color: var(--ht1-gold); }
-        .badge-lt1 { border: 1px solid #444; color: var(--lt1-gray); }
+        .badge-ht { color: var(--ht-gold); border: 1px solid var(--ht-gold); }
+        .badge-lt { color: var(--lt-silver); border: 1px solid #444; }
 
+        .expand-icon { color: #444; font-size: 1.2rem; cursor: default; }
+
+        /* Overall Special Styling */
+        .points-text { font-family: 'Press Start 2P', cursive; font-size: 0.6rem; color: var(--primary-red); }
+
+        /* Community Styles */
+        .comm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .comm-box { background: var(--panel-bg); border: 1px solid #333; padding: 20px; }
     </style>
 </head>
 <body>
 
-<div class="lava-flow"></div>
-<div class="vignette"></div>
+    <div class="lava-bg"></div>
+    <div class="glow-overlay"></div>
 
-<header>
-    <div class="logo">J-NETWORK</div>
-    <div style="font-family:'Press Start 2P'; font-size:0.5rem; color:#666">ELITE HUB</div>
-</header>
+    <header>
+        <div class="logo-main">J-NETWORK</div>
+        <nav>
+            <a href="#" class="active" onclick="showPage('rankings')">RANKINGS</a>
+            <a href="#" onclick="showPage('community')">COMMUNITY</a>
+            <a href="https://discord.gg/zJHMadUf" target="_blank">DISCORD</a>
+        </nav>
+    </header>
 
-<div class="tab-scroller">
-    <div class="tab-container" id="modeTabs"></div>
-</div>
+    <div id="ranking-view">
+        <div class="tab-scroller">
+            <div class="tab-container" id="modeTabs"></div>
+        </div>
+        <div class="container" id="mainBoard"></div>
+    </div>
 
-<div class="main-content" id="rankingBoard"></div>
+    <div id="community-view" class="container" style="display:none;">
+        <h2 style="font-family:'Press Start 2P'; margin-bottom:30px; color:var(--primary-red);">COMMUNITY HUB</h2>
+        <div class="comm-grid">
+            <div class="comm-box">
+                <h3 style="font-family:'Press Start 2P'; font-size:0.7rem; margin-bottom:20px;">NOTABLE MEMBERS</h3>
+                <div id="notable-list"></div>
+            </div>
+            <div class="comm-box">
+                <h3 style="font-family:'Press Start 2P'; font-size:0.7rem; margin-bottom:20px;">ACTIVE EVENTS</h3>
+                <p style="color:#666; font-size:0.9rem;">Season 1 Ranking Race is currently LIVE. Top HT1 in Sword takes the Mythic role.</p>
+            </div>
+        </div>
+    </div>
 
-<script>
-    // 1. ALL GAMEMODES INCLUDED
-    const modes = ["Overall", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Sword", "Axe", "Mace", "tnt Cart", "LTMs"];
-    
-    // 2. TIER DATABASE (Logic: First HT1 is exclusive, the rest become LT1)
-    const database = [
-        { name: "BronzeHarpy80", tiers: { "Vanilla": "HT1", "Overall": "HT1", "Sword": "LT1" } },
-        { name: "N0tsqurmyshi", tiers: { "Vanilla": "LT1", "Sword": "HT1", "Overall": "LT1" } },
-        { name: "JeffersonD44", tiers: { "Pot": "HT1", "Overall": "LT1" } },
-        { name: "NetherWarrior", tiers: { "NetherOP": "HT1", "UHC": "LT1" } }
-    ];
+    <script>
+        // 1. DATA STRUCTURE (Ready for Bot API)
+        const modes = ["Overall", "LTMs", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Sword", "Axe", "Mace", "tnt Cart"];
+        
+        // Tier to Point Values for Overall Calculation
+        const pointMap = {
+            "HT1": 1000, "LT1": 800,
+            "HT2": 600,  "LT2": 500,
+            "HT3": 400,  "LT3": 300,
+            "HT4": 200,  "LT4": 150,
+            "HT5": 100,  "LT5": 50
+        };
 
-    let currentMode = "Overall";
+        const players = [
+            { name: "BronzeHarpy80", region: "NA", ranks: { "Vanilla": "HT1", "Sword": "LT1", "Pot": "HT2" } },
+            { name: "N0tsqurmyshi", region: "NA", ranks: { "Vanilla": "LT1", "Sword": "HT1", "Pot": "LT1" } },
+            { name: "JeffersonD44", region: "NA", ranks: { "Vanilla": "HT1", "Sword": "LT2" } },
+            { name: "NetherWarrior", region: "EU", ranks: { "NetherOP": "HT1", "Vanilla": "LT2" } }
+        ];
 
-    // 3. TAB RENDERER
-    function renderTabs() {
-        const container = document.getElementById('modeTabs');
-        container.innerHTML = '';
-        modes.forEach(m => {
-            const div = document.createElement('div');
-            div.className = `mode-btn ${m === currentMode ? 'active' : ''}`;
-            div.innerText = m.toUpperCase();
-            div.onclick = () => { 
-                currentMode = m; 
-                renderTabs(); 
-                renderBoard(); 
-            };
-            container.appendChild(div);
-        });
-    }
+        let activeMode = "Overall";
 
-    // 4. MCPROFILE.IO SKIN FETCHER
-    function getSkin(username) {
-        // Correct mcprofile.io avatar endpoint
-        return `https://mcprofile.io/avatar/${username}`;
-    }
-
-    // 5. RANKING LOGIC (1 HT1 Exclusive)
-    function renderBoard() {
-        const board = document.getElementById('rankingBoard');
-        board.innerHTML = '';
-
-        let ht1 = null;
-        let lt1s = [];
-
-        database.forEach(p => {
-            const rank = p.tiers[currentMode];
-            if (!rank) return;
-
-            // Enforcement: If multiple HT1s are found in data, only the first gets the slot
-            if (rank === "HT1" && !ht1) {
-                ht1 = p;
-            } else if (rank === "HT1" || rank === "LT1") {
-                lt1s.push(p);
-            }
-        });
-
-        // HT1 Section
-        if (ht1) {
-            board.innerHTML += `
-                <div class="tier-card">
-                    <div class="ht1-header">HIGH TIER 1</div>
-                    <div class="player-row">
-                        <img src="${getSkin(ht1.name)}" class="player-skin">
-                        <div class="player-name ht1-text">${ht1.name}</div>
-                        <div class="tier-badge badge-ht1">HT1</div>
-                    </div>
-                </div>`;
+        // 2. CORE LOGIC
+        function getSkin(user) {
+            return `https://mcprofile.io/avatar/${user}`;
         }
 
-        // LT1 Section (No standard Tier 1)
-        if (lt1s.length > 0) {
-            let html = `<div class="tier-card"><div class="lt1-header">LOW TIER 1</div>`;
-            lt1s.forEach(p => {
-                html += `
-                    <div class="player-row">
-                        <img src="${getSkin(p.name)}" class="player-skin">
-                        <div class="player-name lt1-text">${p.name}</div>
-                        <div class="tier-badge badge-lt1">LT1</div>
-                    </div>`;
+        function handleImgError(img) {
+            img.onerror = null;
+            img.src = 'https://mcprofile.io/avatar/steve';
+        }
+
+        function calculateOverall() {
+            return players.map(p => {
+                let total = 0;
+                Object.values(p.ranks).forEach(r => total += (pointMap[r] || 0));
+                return { ...p, totalPoints: total };
+            }).sort((a, b) => b.totalPoints - a.totalPoints);
+        }
+
+        // 3. RENDERERS
+        function showPage(page) {
+            document.getElementById('ranking-view').style.display = page === 'rankings' ? 'block' : 'none';
+            document.getElementById('community-view').style.display = page === 'community' ? 'block' : 'none';
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('modeTabs');
+            container.innerHTML = '';
+            modes.forEach(m => {
+                const btn = document.createElement('div');
+                btn.className = `mode-tab ${m === activeMode ? 'active' : ''}`;
+                btn.innerText = m.toUpperCase();
+                btn.onclick = () => { activeMode = m; renderTabs(); renderBoard(); };
+                container.appendChild(btn);
             });
-            board.innerHTML += html + `</div>`;
         }
-    }
 
-    renderTabs();
-    renderBoard();
-</script>
+        function renderBoard() {
+            const board = document.getElementById('mainBoard');
+            board.innerHTML = '';
 
+            if (activeMode === "Overall") {
+                renderOverall(board);
+            } else {
+                renderKitLeaderboard(board, activeMode);
+            }
+        }
+
+        function renderOverall(board) {
+            const ranked = calculateOverall();
+            let html = `
+            <div class="tier-section">
+                <div class="tier-header t1">🏆 OVERALL LEADERBOARD</div>
+                <div class="player-list">`;
+            
+            ranked.forEach((p, i) => {
+                html += `
+                <div class="player-row">
+                    <div style="margin-right:15px; font-family:'Press Start 2P'; font-size:0.6rem; color:#444;">#${i+1}</div>
+                    <img src="${getSkin(p.name)}" class="avatar" onerror="handleImgError(this)">
+                    <div class="player-name">${p.name}</div>
+                    <div class="points-text">${p.totalPoints} PTS</div>
+                </div>`;
+            });
+            board.innerHTML = html + `</div></div>`;
+        }
+
+        function renderKitLeaderboard(board, kit) {
+            // Group players into Tiers 1-5
+            const tierGroups = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+            
+            // Step 1: Filter and group
+            players.forEach(p => {
+                const r = p.ranks[kit];
+                if (!r) return;
+                const tierNum = r.match(/\d/)[0];
+                tierGroups[tierNum].push({ ...p, currentRank: r });
+            });
+
+            // Step 2: Enforce Single HT1 logic and render
+            for (let i = 1; i <= 5; i++) {
+                const group = tierGroups[i];
+                if (group.length === 0) continue;
+
+                // Sort: HT comes first. Only 1 HT1 per kit allowed as per instructions.
+                // If the data has two HT1s, the logic demotes the second one to LT1.
+                let htFound = false;
+                const sortedGroup = group.sort((a, b) => (a.currentRank.startsWith('HT') ? -1 : 1));
+
+                let html = `<div class="tier-section">
+                    <div class="tier-header t${i}">TIER ${i}</div>
+                    <div class="player-list">`;
+
+                sortedGroup.forEach(p => {
+                    let displayRank = p.currentRank;
+                    
+                    // HT1 Uniqueness Enforcer
+                    if (i === 1) {
+                        if (displayRank === "HT1") {
+                            if (htFound) displayRank = "LT1"; // Demote extra HT1s
+                            else htFound = true;
+                        }
+                    }
+
+                    const isHT = displayRank.startsWith("HT");
+                    html += `
+                    <div class="player-row">
+                        <img src="${getSkin(p.name)}" class="avatar" onerror="handleImgError(this)">
+                        <div class="player-name ${isHT ? 'ht-text' : ''}">${p.name}</div>
+                        <div class="badge ${isHT ? 'badge-ht' : 'badge-lt'}">${displayRank}</div>
+                        <div class="expand-icon" style="margin-left:15px;">›</div>
+                    </div>`;
+                });
+                board.innerHTML += html + `</div></div>`;
+            }
+        }
+
+        // Initialize
+        renderTabs();
+        renderBoard();
+        
+        // Community Placeholder
+        document.getElementById('notable-list').innerHTML = players.slice(0,3).map(p => 
+            `<div style="margin-bottom:10px; font-size:0.8rem;">• ${p.name} (${p.region})</div>`
+        ).join('');
+    </script>
 </body>
 </html>
