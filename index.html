@@ -15,7 +15,6 @@
             --text-dim: #999;
         }
 
-        /* === ANIMATED NETHER BACKGROUND === */
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
@@ -25,6 +24,7 @@
             background: radial-gradient(circle at center, #220000 0%, #050000 100%);
         }
 
+        /* === ANIMATED NETHER BACKGROUND === */
         .nether-floor {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 60%;
             background-image: 
@@ -36,7 +36,6 @@
             z-index: 0; opacity: 0.3;
             animation: lavaFlow 8s linear infinite;
         }
-
         @keyframes lavaFlow { from { background-position: 0 0; } to { background-position: 0 50px; } }
 
         .embers { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
@@ -46,14 +45,13 @@
             box-shadow: 0 0 12px var(--red-lava);
             animation: rise linear infinite;
         }
-
         @keyframes rise {
             0% { transform: translateY(0) scale(1); opacity: 0; }
             20% { opacity: 1; }
             100% { transform: translateY(-110vh) translateX(40px) scale(0); opacity: 0; }
         }
 
-        /* === UI COMPONENTS === */
+        /* === UI === */
         .navbar {
             background: rgba(0, 0, 0, 0.95);
             border-bottom: 3px solid var(--red-lava);
@@ -62,97 +60,33 @@
             position: sticky; top: 0; z-index: 100;
             backdrop-filter: blur(20px);
         }
-
-        .logo {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2.4rem; font-weight: 800;
-            color: var(--red-lava);
-            text-shadow: 0 0 20px var(--red-glow);
-            letter-spacing: 2px;
-        }
-
-        .search-container { position: relative; width: 300px; }
+        .logo { font-family: 'Rajdhani'; font-size: 2.4rem; font-weight: 800; color: var(--red-lava); text-shadow: 0 0 20px var(--red-glow); }
+        
         .search-bar {
-            width: 100%; background: #111; border: 1px solid #440000;
+            background: #111; border: 1px solid #440000;
             padding: 12px 15px; color: #fff; border-radius: 4px;
-            font-family: 'Rajdhani'; font-size: 1rem; outline: none;
-            transition: 0.3s;
-        }
-        .search-bar:focus { border-color: var(--red-lava); box-shadow: 0 0 15px var(--red-glow); }
-
-        .mode-bar {
-            background: rgba(15, 0, 0, 0.9);
-            padding: 18px 0; border-bottom: 1px solid #330000;
-            display: flex; justify-content: center; position: relative; z-index: 10;
+            font-family: 'Rajdhani'; width: 250px; outline: none;
         }
 
+        .mode-bar { background: rgba(15, 0, 0, 0.9); padding: 18px 0; display: flex; justify-content: center; position: relative; z-index: 10; border-bottom: 1px solid #330000; }
         .mode-btn {
-            background: #000; border: 1px solid #440000;
-            padding: 10px 22px; color: var(--text-dim);
-            font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            cursor: pointer; transition: 0.3s; margin: 0 5px;
+            background: #000; border: 1px solid #440000; padding: 10px 22px; color: var(--text-dim);
+            font-family: 'Rajdhani'; font-weight: 700; cursor: pointer; margin: 0 5px;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
+        .mode-btn.active { background: var(--red-lava); color: #000; box-shadow: 0 0 20px var(--red-glow); }
 
-        .mode-btn.active, .mode-btn:hover {
-            background: var(--red-lava); color: #000;
-            box-shadow: 0 0 25px var(--red-glow); border-color: var(--red-lava);
-        }
-
-        /* === BOARD GRID === */
-        .board {
-            position: relative; z-index: 5;
-            padding: 2.5rem; display: flex; gap: 20px;
-            width: 100%; box-sizing: border-box; overflow-x: auto;
-        }
-
-        .column {
-            background: rgba(10, 0, 0, 0.95);
-            border: 1px solid #4a0000;
-            flex: 1; min-width: 360px;
-            border-radius: 4px; overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-        }
-
-        .col-header {
-            padding: 20px; background: linear-gradient(to bottom, #500000, transparent);
-            border-bottom: 2px solid var(--red-lava); text-align: center;
-        }
-
-        .col-title { font-family: 'Rajdhani'; font-size: 1.6rem; font-weight: 800; color: #fff; }
-
-        /* === PLAYER CARDS === */
-        .player-card {
-            background: rgba(30, 0, 0, 0.4);
-            border: 1px solid #2a0000;
-            margin: 12px; padding: 18px;
-            transition: 0.3s; position: relative;
-        }
-        .player-card:hover { transform: translateX(5px); border-color: var(--red-lava); }
-        .player-card.ht1-gold { border: 1px solid var(--ht-gold); box-shadow: inset 0 0 15px rgba(255, 204, 0, 0.15); }
-
-        .card-inner { display: flex; align-items: center; justify-content: space-between; }
+        .board { position: relative; z-index: 5; padding: 2.5rem; display: flex; gap: 20px; width: 100%; box-sizing: border-box; overflow-x: auto; }
+        .column { background: rgba(10, 0, 0, 0.95); border: 1px solid #4a0000; flex: 1; min-width: 340px; border-radius: 4px; overflow: hidden; }
+        .col-header { padding: 20px; background: linear-gradient(to bottom, #500000, transparent); border-bottom: 2px solid var(--red-lava); text-align: center; }
+        
+        .player-card { background: rgba(30, 0, 0, 0.4); border: 1px solid #2a0000; margin: 12px; padding: 18px; position: relative; }
+        .player-card.ht1-gold { border: 1px solid var(--ht-gold); box-shadow: inset 0 0 15px rgba(255, 204, 0, 0.1); }
         .p-name { font-weight: 800; font-size: 1.1rem; color: #fff; }
         .p-rank { font-family: 'Rajdhani'; font-weight: 900; font-size: 1.4rem; }
 
-        .stat-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-            gap: 6px; margin-top: 15px; padding-top: 10px; border-top: 1px solid #220000;
-        }
-
-        .stat-box {
-            background: #000; padding: 5px 8px; font-size: 0.65rem;
-            display: flex; justify-content: space-between; border: 1px solid #1a0000;
-        }
-
-        /* COMMUNITY SECTION */
-        .community-hero { width: 100%; text-align: center; padding: 100px 20px; }
-        .discord-btn {
-            display: inline-block; background: #5865F2; color: #fff;
-            padding: 20px 50px; text-decoration: none; border-radius: 4px;
-            font-family: 'Rajdhani'; font-weight: 800; font-size: 1.8rem;
-            transition: 0.3s; box-shadow: 0 0 40px rgba(88,101,242,0.4);
-        }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 5px; margin-top: 10px; border-top: 1px solid #220000; padding-top: 10px; }
+        .stat-box { background: #000; padding: 4px 6px; font-size: 0.65rem; display: flex; justify-content: space-between; border: 1px solid #1a0000; }
     </style>
 </head>
 <body>
@@ -162,175 +96,124 @@
 
 <nav class="navbar">
     <div class="logo">J-NETWORK <span>OG</span></div>
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="SEARCH PLAYER..." id="searchPlayer">
-    </div>
+    <input type="text" class="search-bar" placeholder="SEARCH PLAYER..." id="searchPlayer">
 </nav>
 
-<div class="mode-bar">
-    <div id="modeList"></div>
+<div class="mode-bar" id="modeList"></div>
+<div class="board" id="board">
+    <div style="color:white; text-align:center; width:100%; font-family:'Rajdhani'; font-size:2rem; margin-top:50px;">
+        CONNECTING TO NETHER CORE...
+    </div>
 </div>
 
-<div class="board" id="board"></div>
-
 <script>
-    // Config
     const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community"];
     const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
-    
-    // Global player data (will be filled by GitHub fetch)
-    const PLAYERS = [];
+    let PLAYERS = [];
     let currentMode = "Overall";
 
-    // Ember Generation
+    // Particles
     const field = document.getElementById('emberField');
-    for(let i=0; i<45; i++) {
+    for(let i=0; i<30; i++) {
         const e = document.createElement('div');
         e.className = 'ember';
-        const size = Math.random() * 4 + 2;
-        e.style.width = size + 'px'; e.style.height = size + 'px';
-        e.style.left = Math.random() * 100 + 'vw';
-        e.style.animationDuration = (Math.random() * 5 + 4) + 's';
-        e.style.animationDelay = Math.random() * 5 + 's';
+        e.style.width = e.style.height = (Math.random()*4+2)+'px';
+        e.style.left = Math.random()*100+'vw';
+        e.style.animationDuration = (Math.random()*5+4)+'s';
         field.appendChild(e);
     }
 
-    // SYNC DATA FROM GITHUB
+    // DATA SYNC
     async function syncData() {
+        // Updated Link to your specific Repo
         const url = "https://raw.githubusercontent.com/Bronze-solos/j-network/main/players.json";
         try {
             const response = await fetch(url);
+            if (!response.ok) throw new Error("File not found");
             const data = await response.json();
-            PLAYERS.length = 0;
-            PLAYERS.push(...data);
-            setMode(currentMode); // Render the board once data arrives
+            PLAYERS = data;
         } catch (e) {
-            console.error("Data Fetch Failed:", e);
+            console.error("Fetch error, using dummy data:", e);
+            // Fallback so it's not blank if your GitHub isn't ready yet
+            PLAYERS = [{ name: "Database_Empty", region: "NA", prestige: 0, tiers: {} }];
         }
-    }
-
-    function setMode(m) {
-        currentMode = m;
         renderTabs();
         renderBoard();
     }
 
     function renderTabs() {
         document.getElementById('modeList').innerHTML = MODES.map(m => `
-            <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">${m}</button>
+            <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="changeMode('${m}')">${m}</button>
         `).join('');
+    }
+
+    function changeMode(m) {
+        currentMode = m;
+        renderTabs();
+        renderBoard();
+    }
+
+    function getRank(p, kit) {
+        let r = p.tiers[kit] || "UR";
+        if (r === "HT1") {
+            const rivals = PLAYERS.filter(x => x.tiers[kit] === "HT1");
+            const winner = rivals.sort((a,b) => b.prestige - a.prestige)[0];
+            if (p.name !== winner.name) return "LT1";
+        }
+        return r;
     }
 
     function renderBoard() {
         const board = document.getElementById('board');
         board.innerHTML = '';
 
-        if(currentMode === "Community") {
-            board.innerHTML = `<div class="community-hero">
-                <h1 style="font-family:'Rajdhani'; font-size:4rem; color:#fff;">JOIN THE NETWORK</h1>
-                <a href="https://discord.gg/zJHMadUf" target="_blank" class="discord-btn">JOIN DISCORD</a>
-            </div>`;
-            return;
-        }
-
         if(currentMode === "Overall") {
-            renderOverall(board);
-        } else {
-            renderKitTiers(board);
-        }
-    }
-
-    function getEnforcedRank(player, kit) {
-        let r = player.tiers[kit] || "UR";
-        if (r === "HT1") {
-            // Find everyone who claims to be HT1 in this kit
-            const rivals = PLAYERS.filter(x => x.tiers[kit] === "HT1");
-            // The one with the highest prestige points actually gets HT1
-            const winner = rivals.sort((a,b) => b.prestige - a.prestige)[0];
-            if (player.name !== winner.name) return "LT1";
-        }
-        return r;
-    }
-
-    function renderOverall(board) {
-        const sorted = [...PLAYERS].sort((a,b) => b.prestige - a.prestige);
-        board.innerHTML = `
-            <div class="column" style="min-width:100%">
+            const sorted = [...PLAYERS].sort((a,b) => b.prestige - a.prestige);
+            board.innerHTML = `<div class="column" style="min-width:100%">
                 <div class="col-header"><div class="col-title">GLOBAL PRESTIGE</div></div>
-                <div>
-                    ${sorted.map((p, i) => `
-                        <div class="player-card" data-name="${p.name.toLowerCase()}">
-                            <div class="card-inner">
-                                <div style="display:flex; align-items:center; gap:15px;">
-                                    <div style="color:var(--red-lava); font-weight:900; font-size:1.4rem;">#${i+1}</div>
-                                    <div>
-                                        <div class="p-name">${p.name}</div>
-                                        <div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige} PTS</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stat-grid">
-                                ${KITS.map(k => {
-                                    const r = getEnforcedRank(p, k);
-                                    return `<div class="stat-box">
-                                        <span style="color:#444">${k.slice(0,3).toUpperCase()}</span>
-                                        <span style="color:${r.includes('HT') ? 'var(--ht-gold)' : (r==='UR' ? '#333' : '#fff')}">${r}</span>
-                                    </div>`;
-                                }).join('')}
-                            </div>
+                <div>${sorted.map((p, i) => `
+                    <div class="player-card" data-name="${p.name.toLowerCase()}">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div><span style="color:red">#${i+1}</span> <span class="p-name">${p.name}</span></div>
+                            <div style="font-size:0.8rem; color:#666;">${p.prestige} PTS</div>
                         </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-
-    function renderKitTiers(board) {
-        const eligible = PLAYERS.filter(p => p.tiers[currentMode] && p.tiers[currentMode] !== "UR");
-        for(let t=1; t<=3; t++) {
-            const inTier = eligible.filter(p => p.tiers[currentMode].includes(t.toString()));
-            if(inTier.length === 0) continue;
-
-            inTier.sort((a,b) => b.prestige - a.prestige);
-
-            board.innerHTML += `
-                <div class="column">
-                    <div class="col-header"><div class="col-title">TIER ${t}</div></div>
-                    <div>
-                        ${inTier.map((p, idx) => {
-                            let rank = getEnforcedRank(p, currentMode);
-                            // Enforce demotion if they aren't the winner in the T1 column
-                            if(t === 1 && rank !== "HT1") rank = "LT1";
-                            const isHT = rank === "HT1";
-
-                            return `
-                                <div class="player-card ${isHT ? 'ht1-gold' : ''}" data-name="${p.name.toLowerCase()}">
-                                    <div class="card-inner">
-                                        <div>
-                                            <div class="p-name">${p.name}</div>
-                                            <div style="font-size:0.7rem; color:#555;">${p.region}</div>
-                                        </div>
-                                        <div class="p-rank" style="color:${isHT ? 'var(--ht-gold)' : '#fff'}">${rank}</div>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
+                        <div class="stat-grid">${KITS.map(k => {
+                            const r = getRank(p, k);
+                            return `<div class="stat-box"><span>${k.slice(0,3)}</span><span style="color:${r.includes('HT')?'gold':'white'}">${r}</span></div>`;
+                        }).join('')}</div>
                     </div>
-                </div>
-            `;
+                `).join('')}</div>
+            </div>`;
+        } else if (currentMode === "Community") {
+            board.innerHTML = `<div style="text-align:center; width:100%; padding:50px;">
+                <a href="https://discord.gg/zJHMadUf" style="color:white; font-size:2rem; text-decoration:none; border:2px solid red; padding:20px;">JOIN DISCORD</a>
+            </div>`;
+        } else {
+            for(let t=1; t<=3; t++) {
+                const inTier = PLAYERS.filter(p => (p.tiers[currentMode]||'').includes(t.toString()));
+                if(inTier.length === 0) continue;
+                inTier.sort((a,b) => b.prestige - a.prestige);
+                board.innerHTML += `<div class="column">
+                    <div class="col-header"><div class="col-title">TIER ${t}</div></div>
+                    ${inTier.map((p, idx) => {
+                        let r = getRank(p, currentMode);
+                        if(t === 1 && r !== "HT1") r = "LT1";
+                        return `<div class="player-card ${r==='HT1'?'ht1-gold':''}" data-name="${p.name.toLowerCase()}">
+                            <div style="display:flex; justify-content:space-between;">
+                                <span class="p-name">${p.name}</span><span class="p-rank" style="color:${r==='HT1'?'gold':'white'}">${r}</span>
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>`;
+            }
         }
     }
 
-    // Search Feature
     document.getElementById('searchPlayer').addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        document.querySelectorAll('.player-card').forEach(card => {
-            const name = card.getAttribute('data-name');
-            card.style.display = name.includes(term) ? 'block' : 'none';
-        });
+        const val = e.target.value.toLowerCase();
+        document.querySelectorAll('.player-card').forEach(c => c.style.display = c.dataset.name.includes(val) ? 'block' : 'none');
     });
 
-    // Start
     syncData();
 </script>
 </body>
