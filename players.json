@@ -8,9 +8,10 @@
     {
         "name": "BronzeHarpy80",
         "region": "NA",
-        "prestige": 0,
+        "prestige": 200,
         "tiers": {
-            "Mace": "HT1"
+            "Mace": "HT1",
+            "Sword": "HT1"
         }
     },
     {
