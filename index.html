@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Network | Ranked PvP</title>
+    <title>J-Network | Elite Rankings</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-red: #dc2626;
             --ht1-gold: #ffd700;
-            --lt1-gray: #aaaaaa;
-            --bg-dark: #0a0202;
+            --lt1-gray: #8a8a8a;
+            --bg-obsidian: #080202;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ===== ANIMATED LAVA BACKGROUND ===== */
+        /* ===== ANIMATED LAVA FLOW BACKGROUND ===== */
         body {
-            background: var(--bg-dark);
+            background: var(--bg-obsidian);
             color: #fff;
             font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
@@ -28,73 +28,71 @@
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: linear-gradient(180deg, #000 0%, #200 35%, #400 50%, #200 65%, #000 100%);
+            background: linear-gradient(180deg, #000 0%, #200 25%, #400 50%, #200 75%, #000 100%);
             background-size: 100% 400%;
-            animation: lavaMove 12s ease-in-out infinite;
+            animation: flow 10s linear infinite;
         }
 
-        @keyframes lavaMove {
+        @keyframes flow {
             0% { background-position: 0% 0%; }
-            50% { background-position: 0% 100%; }
-            100% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
         }
 
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.9) 100%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* ===== NAVBAR ===== */
-        .navbar {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 1.5rem 2rem;
+        /* ===== NAVIGATION ===== */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1.5rem 3rem;
             border-bottom: 4px solid var(--primary-red);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
             font-family: 'Press Start 2P', cursive;
             color: var(--primary-red);
-            font-size: 1.2rem;
-            text-shadow: 3px 3px 0px #400;
+            font-size: 1.4rem;
+            text-shadow: 4px 4px 0px #300;
         }
 
-        /* ===== GAME MODES (SCROLLER) ===== */
-        .mode-container {
-            background: rgba(0,0,0,0.6);
+        .tab-scroller {
+            background: rgba(0, 0, 0, 0.7);
             padding: 15px 0;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #222;
         }
 
-        .mode-list {
+        .tab-container {
             max-width: 1400px;
             margin: 0 auto;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             overflow-x: auto;
             padding: 0 20px;
             scrollbar-width: none;
         }
 
         .mode-btn {
-            padding: 10px 20px;
+            padding: 10px 18px;
             background: #111;
             border: 2px solid #333;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
-            color: #666;
+            font-size: 0.55rem;
+            color: #555;
             cursor: pointer;
             white-space: nowrap;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         .mode-btn.active {
@@ -104,35 +102,37 @@
             box-shadow: 0 0 15px var(--primary-red);
         }
 
-        /* ===== RANKINGS ===== */
-        .content {
-            max-width: 1200px;
+        /* ===== RANKING BOARD ===== */
+        .main-content {
+            max-width: 1300px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
         .tier-card {
-            background: rgba(15, 5, 5, 0.95);
-            border: 1px solid #333;
-            margin-bottom: 30px;
+            background: rgba(12, 4, 4, 0.98);
+            border: 1px solid #222;
+            margin-bottom: 40px;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
         }
 
-        /* HT1 SPECIFIC STYLING */
+        /* HT1 BANNER (1 MAX) */
         .ht1-header {
-            background: linear-gradient(90deg, #400, #900, #400);
+            background: linear-gradient(90deg, #300 0%, #a00 50%, #300 100%);
             border-bottom: 3px solid var(--ht1-gold);
-            padding: 15px;
+            padding: 18px;
             text-align: center;
             font-family: 'Press Start 2P', cursive;
             color: var(--ht1-gold);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            letter-spacing: 5px;
         }
 
-        /* LT1 SPECIFIC STYLING */
+        /* LT1 BANNER (REST) */
         .lt1-header {
-            background: #1a1a1a;
-            border-bottom: 1px solid #444;
-            padding: 12px;
+            background: #151515;
+            border-bottom: 1px solid #333;
+            padding: 14px 25px;
             font-family: 'Press Start 2P', cursive;
             font-size: 0.7rem;
             color: var(--lt1-gray);
@@ -141,31 +141,41 @@
         .player-row {
             display: flex;
             align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: 0.3s;
         }
 
-        .skin-icon {
-            width: 50px;
-            height: 50px;
+        .player-row:hover { background: rgba(220, 38, 38, 0.05); }
+
+        /* mcprofile.io Skin Logic */
+        .player-skin {
+            width: 64px;
+            height: 64px;
             image-rendering: pixelated;
-            background: #222;
-            border: 2px solid #444;
-            margin-right: 20px;
+            border: 3px solid #333;
+            margin-right: 25px;
+            background: #111;
         }
 
-        .player-name { font-size: 1.2rem; font-weight: bold; flex-grow: 1; }
-        .ht1-name { color: var(--ht1-gold); text-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        .player-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            flex-grow: 1;
+        }
+
+        .ht1-text { color: var(--ht1-gold); text-shadow: 0 0 10px rgba(255,215,0,0.2); }
+        .lt1-text { color: #ccc; }
 
         .tier-badge {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.5rem;
-            padding: 6px 12px;
-            border-radius: 3px;
+            font-size: 0.6rem;
+            padding: 6px 14px;
+            border-radius: 2px;
         }
 
-        .badge-ht1 { color: var(--ht1-gold); border: 1px solid var(--ht1-gold); }
-        .badge-lt1 { color: var(--lt1-gray); border: 1px solid var(--lt1-gray); }
+        .badge-ht1 { border: 1px solid var(--ht1-gold); color: var(--ht1-gold); }
+        .badge-lt1 { border: 1px solid #444; color: var(--lt1-gray); }
 
     </style>
 </head>
@@ -174,88 +184,95 @@
 <div class="lava-flow"></div>
 <div class="vignette"></div>
 
-<nav class="navbar">
+<header>
     <div class="logo">J-NETWORK</div>
-    <div style="font-family:'Press Start 2P'; font-size:0.5rem; color:var(--primary-red)">RANKED ARENA</div>
-</nav>
+    <div style="font-family:'Press Start 2P'; font-size:0.5rem; color:#666">ELITE HUB</div>
+</header>
 
-<div class="mode-container">
-    <div class="mode-list" id="modeList"></div>
+<div class="tab-scroller">
+    <div class="tab-container" id="modeTabs"></div>
 </div>
 
-<div class="content" id="rankingBoard"></div>
+<div class="main-content" id="rankingBoard"></div>
 
 <script>
-    // 1. ADDED ALL MODES
+    // 1. ALL GAMEMODES INCLUDED
     const modes = ["Overall", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Sword", "Axe", "Mace", "tnt Cart", "LTMs"];
     
-    // 2. TIER LOGIC DATA
-    // Note: If you add more than one HT1, the logic will push extras to LT1 automatically.
+    // 2. TIER DATABASE (Logic: First HT1 is exclusive, the rest become LT1)
     const database = [
-        { name: "BronzeHarpy80", tiers: { "Vanilla": "HT1", "Sword": "LT1", "Overall": "HT1" } },
+        { name: "BronzeHarpy80", tiers: { "Vanilla": "HT1", "Overall": "HT1", "Sword": "LT1" } },
         { name: "N0tsqurmyshi", tiers: { "Vanilla": "LT1", "Sword": "HT1", "Overall": "LT1" } },
-        { name: "JeffersonD44", tiers: { "Vanilla": "LT1", "Overall": "LT1" } },
-        { name: "NetherWarrior", tiers: { "NetherOP": "HT1", "Overall": "LT1" } }
+        { name: "JeffersonD44", tiers: { "Pot": "HT1", "Overall": "LT1" } },
+        { name: "NetherWarrior", tiers: { "NetherOP": "HT1", "UHC": "LT1" } }
     ];
 
-    let activeMode = "Vanilla";
+    let currentMode = "Overall";
 
     // 3. TAB RENDERER
     function renderTabs() {
-        const container = document.getElementById('modeList');
+        const container = document.getElementById('modeTabs');
         container.innerHTML = '';
         modes.forEach(m => {
-            const btn = document.createElement('div');
-            btn.className = `mode-btn ${m === activeMode ? 'active' : ''}`;
-            btn.innerText = m.toUpperCase();
-            btn.onclick = () => { activeMode = m; renderTabs(); renderBoard(); };
-            container.appendChild(btn);
+            const div = document.createElement('div');
+            div.className = `mode-btn ${m === currentMode ? 'active' : ''}`;
+            div.innerText = m.toUpperCase();
+            div.onclick = () => { 
+                currentMode = m; 
+                renderTabs(); 
+                renderBoard(); 
+            };
+            container.appendChild(div);
         });
     }
 
-    // 4. MAIN RANKING LOGIC (HT1 vs LT1 Only)
+    // 4. MCPROFILE.IO SKIN FETCHER
+    function getSkin(username) {
+        // Correct mcprofile.io avatar endpoint
+        return `https://mcprofile.io/avatar/${username}`;
+    }
+
+    // 5. RANKING LOGIC (1 HT1 Exclusive)
     function renderBoard() {
         const board = document.getElementById('rankingBoard');
         board.innerHTML = '';
 
-        let ht1Player = null;
-        let lt1Players = [];
+        let ht1 = null;
+        let lt1s = [];
 
         database.forEach(p => {
-            const rank = p.tiers[activeMode];
+            const rank = p.tiers[currentMode];
             if (!rank) return;
 
-            // Enforce "Only 1 HT1" rule: First one found is HT1, rest are LT1
-            if (rank === "HT1" && !ht1Player) {
-                ht1Player = p;
+            // Enforcement: If multiple HT1s are found in data, only the first gets the slot
+            if (rank === "HT1" && !ht1) {
+                ht1 = p;
             } else if (rank === "HT1" || rank === "LT1") {
-                lt1Players.push(p);
+                lt1s.push(p);
             }
         });
 
-        // Render HT1 Section
-        if (ht1Player) {
+        // HT1 Section
+        if (ht1) {
             board.innerHTML += `
                 <div class="tier-card">
                     <div class="ht1-header">HIGH TIER 1</div>
                     <div class="player-row">
-                        <img src="https://crafatar.com/avatars/steve?size=64" class="skin-icon">
-                        <div class="player-name ht1-name">${ht1Player.name}</div>
+                        <img src="${getSkin(ht1.name)}" class="player-skin">
+                        <div class="player-name ht1-text">${ht1.name}</div>
                         <div class="tier-badge badge-ht1">HT1</div>
                     </div>
                 </div>`;
         }
 
-        // Render LT1 Section
-        if (lt1Players.length > 0) {
+        // LT1 Section (No standard Tier 1)
+        if (lt1s.length > 0) {
             let html = `<div class="tier-card"><div class="lt1-header">LOW TIER 1</div>`;
-            lt1Players.forEach(p => {
-                // Alternating Steve and Alex skins for variety
-                const skin = (p.name.length % 2 === 0) ? "steve" : "alex";
+            lt1s.forEach(p => {
                 html += `
                     <div class="player-row">
-                        <img src="https://crafatar.com/avatars/${skin}?size=64" class="skin-icon">
-                        <div class="player-name">${p.name}</div>
+                        <img src="${getSkin(p.name)}" class="player-skin">
+                        <div class="player-name lt1-text">${p.name}</div>
                         <div class="tier-badge badge-lt1">LT1</div>
                     </div>`;
             });
