@@ -1,24 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>J-Network</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>J-Network | Competitive PvP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070b14;
+      --panel: rgba(8, 20, 35, 0.85);
+      --cyan: #00f6ff;
+      --cyan-soft: rgba(0, 246, 255, 0.35);
+      --yellow: #ffd000;
+      --orange: #ff9f1a;
+      --red: #ff3b3b;
+      --purple: #c63bff;
+      --green: #00ff9d;
+      --text: #e8faff;
+      --muted: #7aa3b2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', monospace;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(5,10,25,0.95), rgba(5,10,25,0.95)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(0,255,255,0.05) 0px,
+          rgba(0,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(0,255,255,0.05) 0px,
+          rgba(0,255,255,0.05) 1px,
+          transparent 1px,
+          transparent 40px
+        );
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 48px 20px 28px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 4px;
+      color: var(--orange);
+      text-shadow: 0 0 20px rgba(255,159,26,0.6);
+    }
+
+    header p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* TOP NAV */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin: 26px 0 40px;
+    }
+
+    .nav button {
+      background: transparent;
+      border: 2px solid var(--cyan);
+      color: var(--cyan);
+      padding: 12px 26px;
+      font-family: inherit;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 0 0 transparent, 0 0 15px rgba(0,246,255,0.15);
+    }
+
+    .nav button.active,
+    .nav button:hover {
+      background: var(--cyan);
+      color: #00151a;
+      box-shadow: 0 0 30px var(--cyan);
+    }
+
+    /* MAIN PANEL */
+    .panel {
+      width: min(1100px, 92%);
+      margin: 0 auto 80px;
+      background: var(--panel);
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 40px rgba(0,246,255,0.25);
+      padding: 28px 28px 34px;
+    }
+
+    .panel-title {
+      font-size: 16px;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    /* LEADERBOARD */
+    .top-player {
+      margin-bottom: 22px;
+      color: var(--yellow);
+      font-size: 18px;
+      text-shadow: 0 0 12px rgba(255,208,0,0.6);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--cyan-soft);
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    th {
+      color: var(--cyan);
+      font-weight: 600;
+      background: rgba(0,246,255,0.08);
+    }
+
+    tr:hover td {
+      background: rgba(0,246,255,0.05);
+    }
+
+    .rank-1 { color: var(--yellow); }
+
+    /* STAFF / RANK CARDS */
+    .rank-box {
+      border: 2px solid;
+      padding: 18px 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.08);
+    }
+
+    .rank-label {
+      font-size: 12px;
+      opacity: 0.85;
+      letter-spacing: 1px;
+    }
+
+    .rank-name {
+      margin-top: 6px;
+      font-size: 20px;
+    }
+
+    .owner { border-color: var(--red); color: var(--red); }
+    .coowner { border-color: var(--orange); color: var(--orange); }
+    .admin { border-color: var(--yellow); color: var(--yellow); }
+    .mythic { border-color: var(--purple); color: var(--purple); }
+    .elite { border-color: var(--green); color: var(--green); }
+
+    footer {
+      text-align: center;
+      padding-bottom: 40px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="logo">J-NETWORK</div>
-    <div id="modes" class="modes"></div>
+<header>
+  <h1>J-NETWORK</h1>
+  <p>Competitive Minecraft PvP • Ranked Arena</p>
+</header>
+
+<div class="nav">
+  <button class="active">LEADERBOARD</button>
+  <button>RANKS</button>
+  <button>COMMUNITY</button>
+</div>
+
+<!-- LEADERBOARD PANEL -->
+<section class="panel">
+  <div class="panel-title">GLOBAL TOP PLAYER</div>
+  <div class="top-player">#1 — NOTSQURMYSHI</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>PLAYER</th>
+        <th>KILLS</th>
+        <th>K/D</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="rank-1">
+        <td>1</td>
+        <td>NOTSQURMYSHI</td>
+        <td>???</td>
+        <td>???</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>---</td>
+        <td>---</td>
+        <td>---</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>---</td>
+        <td>---</td>
+        <td>---</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- RANKS PANEL -->
+<section class="panel">
+  <div class="panel-title">STAFF & RANKS</div>
+
+  <div class="rank-box owner">
+    <div class="rank-label">OWNER</div>
+    <div class="rank-name">JeffersonD44</div>
   </div>
 
-  <!-- MAIN CARD -->
-  <div class="container">
-    <h2 id="modeTitle">Overall</h2>
-    <div id="tiers" class="tiers"></div>
+  <div class="rank-box coowner">
+    <div class="rank-label">CO-OWNER</div>
+    <div class="rank-name">BronzeHarpy80</div>
   </div>
 
-  <script src="app.js"></script>
+  <div class="rank-box admin">
+    <div class="rank-label">HEAD ADMIN</div>
+    <div class="rank-name">NOTSQURMYSHI</div>
+  </div>
+
+  <div class="rank-box mythic">
+    <div class="rank-label">MYTHIC</div>
+    <div class="rank-name">—</div>
+  </div>
+
+  <div class="rank-box elite">
+    <div class="rank-label">ELITE</div>
+    <div class="rank-name">—</div>
+  </div>
+</section>
+
+<footer>
+  © J-Network • Ranked PvP Network
+</footer>
+
 </body>
 </html>
