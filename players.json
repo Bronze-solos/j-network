@@ -64,5 +64,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "CrazyLogan",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
