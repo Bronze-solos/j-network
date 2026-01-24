@@ -40,7 +40,8 @@
         "tiers": {
             "UHC": "LT5",
             "Sword": "LT5",
-            "Axe": "LT5"
+            "Axe": "LT5",
+            "Mace": "LT5"
         }
     }
 ]
