@@ -14,5 +14,11 @@
             "Pot": "LT5",
             "SMP": "LT5"
         }
+    },
+    {
+        "name": "BronzeHarpy80",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
