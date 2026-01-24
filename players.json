@@ -1,21 +1,5 @@
 [
     {
-        "name": "Arauix",
-        "region": "NA",
-        "prestige": 0,
-        "tiers": {
-            "UHC": "LT5",
-            "Sword": "LT5",
-            "Axe": "LT5",
-            "Mace": "LT5",
-            "Vanilla": "LT5",
-            "Iron UHC": "LT5",
-            "NetherOP": "LT5",
-            "Pot": "LT5",
-            "SMP": "LT5"
-        }
-    },
-    {
         "name": "BronzeHarpy80",
         "region": "NA",
         "prestige": 0,
