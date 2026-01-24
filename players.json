@@ -2,8 +2,10 @@
     {
         "name": "N0tsqurmyshi",
         "region": "NA",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 75,
+        "tiers": {
+            "Mace": "LT1"
+        }
     },
     {
         "name": "BronzeHarpy80",
