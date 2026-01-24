@@ -10,8 +10,10 @@
     {
         "name": "JeffersonD44",
         "region": "NA",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 5,
+        "tiers": {
+            "Vanilla": "HT5"
+        }
     },
     {
         "name": "Dj Trim7281",
