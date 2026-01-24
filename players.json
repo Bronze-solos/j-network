@@ -46,5 +46,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "Master B",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
