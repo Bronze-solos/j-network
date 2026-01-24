@@ -19,10 +19,10 @@
     {
         "name": "JeffersonD44",
         "region": "NA",
-        "prestige": 0,
+        "prestige": 50,
         "tiers": {
             "Tnt Cart": "HT2",
-            "Sword": "HT5"
+            "Sword": "UR"
         }
     },
     {
