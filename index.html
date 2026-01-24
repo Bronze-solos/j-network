@@ -6,141 +6,48 @@
     <title>J-NETWORK | RED OG</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep: #050000;
-            --red-lava: #ff0000;
-            --red-glow: rgba(255, 0, 0, 0.6);
-            --ht-gold: #ffcc00;
-            --text-main: #ffffff;
-            --text-dim: #999;
-        }
-
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-            background: radial-gradient(circle at center, #220000 0%, #050000 100%);
-        }
-
-        .nether-floor {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 60%;
-            background-image: 
-                linear-gradient(var(--red-glow) 1.5px, transparent 1.5px), 
-                linear-gradient(90deg, var(--red-glow) 1.5px, transparent 1.5px);
-            background-size: 50px 50px;
-            transform: perspective(400px) rotateX(65deg);
-            transform-origin: bottom;
-            z-index: 0; opacity: 0.3;
-            animation: lavaFlow 8s linear infinite;
-        }
-
+        :root { --bg-deep: #050000; --red-lava: #ff0000; --red-glow: rgba(255, 0, 0, 0.6); --ht-gold: #ffcc00; --text-main: #ffffff; --text-dim: #999; }
+        body { background-color: var(--bg-deep); color: var(--text-main); font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; background: radial-gradient(circle at center, #220000 0%, #050000 100%); }
+        .nether-floor { position: fixed; bottom: 0; left: 0; width: 100%; height: 60%; background-image: linear-gradient(var(--red-glow) 1.5px, transparent 1.5px), linear-gradient(90deg, var(--red-glow) 1.5px, transparent 1.5px); background-size: 50px 50px; transform: perspective(400px) rotateX(65deg); transform-origin: bottom; z-index: 0; opacity: 0.2; animation: lavaFlow 8s linear infinite; }
         @keyframes lavaFlow { from { background-position: 0 0; } to { background-position: 0 50px; } }
-
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 3px solid var(--red-lava);
-            padding: 0 2rem; height: 100px;
-            display: flex; align-items: center; justify-content: space-between;
-            position: sticky; top: 0; z-index: 100;
-            backdrop-filter: blur(20px);
-        }
-
+        .navbar { background: rgba(0, 0, 0, 0.95); border-bottom: 3px solid var(--red-lava); padding: 0 2rem; height: 100px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
         .logo-area { display: flex; flex-direction: column; }
-        .logo {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2.2rem; font-weight: 800;
-            color: var(--red-lava);
-            text-shadow: 0 0 20px var(--red-glow);
-            letter-spacing: 2px;
-            line-height: 1;
-        }
-        .subtitle {
-            font-family: 'Rajdhani';
-            font-size: 0.7rem;
-            color: #666;
-            letter-spacing: 3px;
-            margin-top: 5px;
-            font-weight: 700;
-        }
-
-        .mode-bar {
-            background: rgba(15, 0, 0, 0.9);
-            padding: 18px 0; border-bottom: 1px solid #330000;
-            display: flex; justify-content: center; position: relative; z-index: 10;
-            flex-wrap: wrap;
-        }
-
-        .mode-btn {
-            background: #000; border: 1px solid #440000;
-            padding: 8px 18px; color: var(--text-dim);
-            font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            cursor: pointer; transition: 0.3s; margin: 4px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-        }
-
-        .mode-btn.active, .mode-btn:hover {
-            background: var(--red-lava); color: #000;
-            box-shadow: 0 0 25px var(--red-glow); border-color: var(--red-lava);
-        }
-
-        .board {
-            position: relative; z-index: 5;
-            padding: 2.5rem; display: flex; gap: 20px;
-            width: 100%; box-sizing: border-box; overflow-x: auto;
-        }
-
-        /* --- STAFF CARD STYLING --- */
-        .staff-grid {
-            display: flex; justify-content: center; gap: 20px;
-            width: 100%; padding: 50px 20px; flex-wrap: wrap;
-        }
-        .staff-card {
-            background: #000; border: 1px solid #440000;
-            padding: 30px; width: 280px; text-align: center;
-            transition: 0.4s; text-decoration: none;
-        }
-        .staff-card:hover { border-color: var(--red-lava); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255,0,0,0.2); }
-        .staff-role { color: var(--red-lava); font-family: 'Rajdhani'; font-weight: 800; font-size: 0.8rem; letter-spacing: 2px; }
-        .staff-name { color: #fff; font-size: 1.5rem; font-weight: 800; display: block; margin-top: 10px; }
-
-        .column { background: rgba(10, 0, 0, 0.95); border: 1px solid #4a0000; flex: 1; min-width: 360px; border-radius: 4px; overflow: hidden; }
+        .logo { font-family: 'Rajdhani', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--red-lava); text-shadow: 0 0 20px var(--red-glow); letter-spacing: 2px; line-height: 1; }
+        .subtitle { font-family: 'Rajdhani'; font-size: 0.7rem; color: #666; letter-spacing: 3px; margin-top: 5px; font-weight: 700; }
+        .mode-bar { background: rgba(15, 0, 0, 0.9); padding: 18px 0; border-bottom: 1px solid #330000; display: flex; justify-content: center; position: relative; z-index: 10; flex-wrap: wrap; }
+        .mode-btn { background: #000; border: 1px solid #440000; padding: 8px 18px; color: var(--text-dim); font-family: 'Rajdhani', sans-serif; font-weight: 700; cursor: pointer; transition: 0.3s; margin: 4px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
+        .mode-btn.active, .mode-btn:hover { background: var(--red-lava); color: #000; box-shadow: 0 0 25px var(--red-glow); border-color: var(--red-lava); }
+        .board { position: relative; z-index: 5; padding: 2.5rem; display: flex; gap: 20px; width: 100%; box-sizing: border-box; overflow-x: auto; }
+        .column { background: rgba(10, 0, 0, 0.95); border: 1px solid #4a0000; flex: 1; min-width: 320px; border-radius: 4px; overflow: hidden; }
         .col-header { padding: 20px; background: linear-gradient(to bottom, #500000, transparent); border-bottom: 2px solid var(--red-lava); text-align: center; }
         .col-title { font-family: 'Rajdhani'; font-size: 1.6rem; font-weight: 800; color: #fff; }
-
         .player-card { background: rgba(30, 0, 0, 0.4); border: 1px solid #2a0000; margin: 12px; padding: 18px; transition: 0.3s; }
         .player-card:hover { transform: translateX(5px); border-color: var(--red-lava); }
-        .player-card.ht1-gold { border: 1px solid var(--ht-gold); }
+        .player-card.ht1-gold { border: 1px solid var(--ht-gold); box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.1); }
         .p-rank { font-family: 'Rajdhani'; font-weight: 900; font-size: 1.4rem; }
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 6px; margin-top: 15px; border-top: 1px solid #220000; padding-top: 10px; }
-        .stat-box { background: #000; padding: 5px 8px; font-size: 0.65rem; display: flex; justify-content: space-between; border: 1px solid #1a0000; }
-        
-        .community-hero { width: 100%; text-align: center; padding: 100px 20px; }
-        .discord-btn { display: inline-block; background: #5865F2; color: #fff; padding: 20px 50px; text-decoration: none; border-radius: 4px; font-family: 'Rajdhani'; font-weight: 800; font-size: 1.8rem; box-shadow: 0 0 40px rgba(88,101,242,0.4); }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 6px; margin-top: 15px; border-top: 1px solid #220000; padding-top: 10px; }
+        .stat-box { background: #000; padding: 5px 8px; font-size: 0.6rem; display: flex; justify-content: space-between; border: 1px solid #1a0000; }
+        .staff-grid { display: flex; justify-content: center; gap: 20px; width: 100%; padding: 50px 20px; flex-wrap: wrap; }
+        .staff-card { background: #000; border: 1px solid #440000; padding: 30px; width: 280px; text-align: center; transition: 0.4s; text-decoration: none; }
+        .staff-card:hover { border-color: var(--red-lava); transform: translateY(-10px); }
+        .staff-role { color: var(--red-lava); font-family: 'Rajdhani'; font-weight: 800; font-size: 0.8rem; letter-spacing: 2px; }
+        .staff-name { color: #fff; font-size: 1.5rem; font-weight: 800; display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
-
 <div class="nether-floor"></div>
-
 <nav class="navbar">
     <div class="logo-area">
         <div class="logo">J-NETWORK OG</div>
         <div class="subtitle">MADE BY BRONZEHARPY80</div>
     </div>
 </nav>
-
-<div class="mode-bar">
-    <div id="modeList"></div>
-</div>
-
-<div class="board" id="board">Connecting to Database...</div>
+<div class="mode-bar"><div id="modeList"></div></div>
+<div class="board" id="board">Loading Database...</div>
 
 <script>
     const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community", "Staff"];
     const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
-
     let PLAYERS = [];
     let currentMode = "Overall";
 
@@ -150,16 +57,10 @@
             PLAYERS = await response.json();
             renderTabs();
             renderBoard();
-        } catch (err) {
-            document.getElementById('board').innerHTML = "Error loading database...";
-        }
+        } catch (err) { document.getElementById('board').innerHTML = "Failed to load rankings."; }
     }
 
-    function setMode(m) {
-        currentMode = m;
-        renderTabs();
-        renderBoard();
-    }
+    function setMode(m) { currentMode = m; renderTabs(); renderBoard(); }
 
     function renderTabs() {
         document.getElementById('modeList').innerHTML = MODES.map(m => `
@@ -170,100 +71,39 @@
     function renderBoard() {
         const board = document.getElementById('board');
         board.innerHTML = '';
-
         if(currentMode === "Community") {
-            board.innerHTML = `<div class="community-hero">
-                <h1 style="font-family:'Rajdhani'; font-size:4rem; color:#fff;">JOIN THE NETWORK</h1>
-                <a href="https://discord.gg/zJHMadUf" target="_blank" class="discord-btn">JOIN DISCORD</a>
+            board.innerHTML = `<div style="text-align:center; width:100%; padding:100px;"><a href="https://discord.gg/zJHMadUf" target="_blank" style="background:#5865F2; color:white; padding:20px 40px; text-decoration:none; font-family:'Rajdhani'; font-weight:800; font-size:2rem; border-radius:4px;">JOIN DISCORD</a></div>`;
+            return;
+        }
+        if(currentMode === "Staff") {
+            board.innerHTML = `<div class="staff-grid">
+                <a href="#" class="staff-card"><span class="staff-role">OWNER</span><span class="staff-name">JeffersonD44</span></a>
+                <a href="#" class="staff-card"><span class="staff-role">CO-OWNER</span><span class="staff-name">BronzeHarpy80</span></a>
+                <a href="#" class="staff-card"><span class="staff-role">HEAD ADMIN</span><span class="staff-name">N0tsqurmyshi</span></a>
             </div>`;
             return;
         }
-
-        if(currentMode === "Staff") {
-            board.innerHTML = `
-                <div class="staff-grid">
-                    <a href="https://discord.com/users/OWNER_ID" target="_blank" class="staff-card">
-                        <span class="staff-role">OWNER</span>
-                        <span class="staff-name">JeffersonD44</span>
-                    </a>
-                    <a href="https://discord.com/users/CO_OWNER_ID" target="_blank" class="staff-card">
-                        <span class="staff-role">CO-OWNER</span>
-                        <span class="staff-name">BronzeHarpy80</span>
-                    </a>
-                    <a href="https://discord.com/users/ADMIN_ID" target="_blank" class="staff-card">
-                        <span class="staff-role">HEAD ADMIN</span>
-                        <span class="staff-name">N0tsqurmyshi</span>
-                    </a>
-                </div>
-            `;
-            return;
-        }
-
-        if(currentMode === "Overall") {
-            renderOverall(board);
-        } else {
-            renderKitTiers(board);
-        }
+        if(currentMode === "Overall") renderOverall(board);
+        else renderKitTiers(board);
     }
 
     function renderOverall(board) {
         const sorted = [...PLAYERS].sort((a,b) => (b.prestige || 0) - (a.prestige || 0));
-        board.innerHTML = `
-            <div class="column" style="min-width:100%">
-                <div class="col-header"><div class="col-title">GLOBAL PRESTIGE</div></div>
-                <div>
-                    ${sorted.map((p, i) => `
-                        <div class="player-card">
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <div style="display:flex; align-items:center; gap:15px;">
-                                    <div style="color:var(--red-lava); font-weight:900; font-size:1.4rem;">#${i+1}</div>
-                                    <div>
-                                        <div style="font-weight:800; font-size:1.1rem;">${p.name}</div>
-                                        <div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige || 0} PTS</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stat-grid">
-                                ${KITS.map(k => {
-                                    let r = (p.tiers && p.tiers[k]) ? p.tiers[k] : "UR";
-                                    return `<div class="stat-box">
-                                        <span style="color:#444">${k.slice(0,3).toUpperCase()}</span>
-                                        <span style="color:${r.includes('HT') ? 'var(--ht-gold)' : (r==='UR' ? '#333' : '#fff')}">${r}</span>
-                                    </div>`;
-                                }).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
+        board.innerHTML = `<div class="column" style="min-width:100%"><div class="col-header"><div class="col-title">GLOBAL PRESTIGE</div></div><div>
+            ${sorted.map((p, i) => `<div class="player-card"><div style="display:flex; justify-content:space-between; align-items:center;"><div style="display:flex; align-items:center; gap:15px;"><div style="color:var(--red-lava); font-weight:900; font-size:1.4rem;">#${i+1}</div><div><div style="font-weight:800;">${p.name}</div><div style="font-size:0.7rem; color:#666;">${p.region} • ${p.prestige || 0} PTS</div></div></div></div><div class="stat-grid">
+            ${KITS.map(k => { let r = (p.tiers && p.tiers[k]) ? p.tiers[k] : "UR"; return `<div class="stat-box"><span style="color:#444">${k.slice(0,3).toUpperCase()}</span><span style="color:${r.includes('HT') ? 'var(--ht-gold)' : (r==='UR' ? '#333' : '#fff')}">${r}</span></div>` }).join('')}
+            </div></div>`).join('')}</div></div>`;
     }
 
     function renderKitTiers(board) {
         const eligible = PLAYERS.filter(p => p.tiers && p.tiers[currentMode] && p.tiers[currentMode] !== "UR");
-        for(let t=1; t<=3; t++) {
+        for(let t=1; t<=5; t++) {
             const inTier = eligible.filter(p => p.tiers[currentMode].includes(t.toString()));
             if(inTier.length === 0) continue;
             inTier.sort((a,b) => (b.prestige || 0) - (a.prestige || 0));
-            board.innerHTML += `
-                <div class="column">
-                    <div class="col-header"><div class="col-title">TIER ${t}</div></div>
-                    <div>
-                        ${inTier.map(p => {
-                            let r = p.tiers[currentMode];
-                            return `
-                                <div class="player-card ${r === 'HT1' ? 'ht1-gold' : ''}">
-                                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                                        <div>
-                                            <div style="font-weight:800; color:#fff;">${p.name}</div>
-                                            <div style="font-size:0.7rem; color:#555;">${p.region}</div>
-                                        </div>
-                                        <div class="p-rank" style="color:${r === 'HT1' ? 'var(--ht-gold)' : '#fff'}">${r}</div>
-                                    </div>
-                                </div>`;
-                        }).join('')}
-                    </div>
-                </div>`;
+            board.innerHTML += `<div class="column"><div class="col-header"><div class="col-title">TIER ${t}</div></div><div>
+                ${inTier.map(p => { let r = p.tiers[currentMode]; return `<div class="player-card ${r === 'HT1' ? 'ht1-gold' : ''}"><div style="display:flex; justify-content:space-between; align-items:center;"><div><div style="font-weight:800;">${p.name}</div><div style="font-size:0.7rem; color:#555;">${p.region}</div></div><div class="p-rank" style="color:${r === 'HT1' ? 'var(--ht-gold)' : '#fff'}">${r}</div></div></div>` }).join('')}
+            </div></div>`;
         }
     }
 
