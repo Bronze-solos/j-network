@@ -38,7 +38,8 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {
-            "UHC": "LT5"
+            "UHC": "LT5",
+            "Sword": "LT5"
         }
     }
 ]
