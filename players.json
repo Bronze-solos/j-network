@@ -98,7 +98,9 @@
     {
         "name": "Mw4k1278",
         "region": "NA",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 50,
+        "tiers": {
+            "Mace": "HT2"
+        }
     }
 ]
