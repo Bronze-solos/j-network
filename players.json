@@ -10,9 +10,9 @@
     {
         "name": "JeffersonD44",
         "region": "NA",
-        "prestige": 5,
+        "prestige": 0,
         "tiers": {
-            "Vanilla": "HT5",
+            "Vanilla": "UR",
             "SMP": "UR"
         }
     },
