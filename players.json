@@ -110,9 +110,10 @@
     {
         "name": "Aqua3179",
         "region": "NA",
-        "prestige": 2,
+        "prestige": 4,
         "tiers": {
-            "Sword": "LT5"
+            "Sword": "LT5",
+            "Axe": "LT5"
         }
     }
 ]
