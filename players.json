@@ -106,5 +106,11 @@
         "tiers": {
             "Mace": "HT2"
         }
+    },
+    {
+        "name": "Aqua3179",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
