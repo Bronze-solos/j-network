@@ -110,14 +110,15 @@
     {
         "name": "Aqua3179",
         "region": "NA",
-        "prestige": 12,
+        "prestige": 14,
         "tiers": {
             "Sword": "LT5",
             "Axe": "LT5",
             "Mace": "LT5",
             "UHC": "LT5",
             "Iron UHC": "LT5",
-            "Vallina": "LT5"
+            "Vallina": "LT5",
+            "Pot": "LT5"
         }
     }
 ]
