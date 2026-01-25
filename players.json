@@ -125,5 +125,11 @@
             "SMP": "LT5",
             "Vanilla": "LT5"
         }
+    },
+    {
+        "name": "SeaEmEss",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
