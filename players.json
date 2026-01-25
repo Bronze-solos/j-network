@@ -2,9 +2,9 @@
     {
         "name": "BronzeHarpy80",
         "region": "NA",
-        "prestige": 100,
+        "prestige": 0,
         "tiers": {
-            "Sword": "HT1"
+            "Sword": "UR"
         }
     },
     {
