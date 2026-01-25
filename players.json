@@ -103,9 +103,10 @@
     {
         "name": "Mw4k1278",
         "region": "NA",
-        "prestige": 50,
+        "prestige": 150,
         "tiers": {
-            "Mace": "HT2"
+            "Mace": "HT2",
+            "Sword": "HT1"
         }
     },
     {
