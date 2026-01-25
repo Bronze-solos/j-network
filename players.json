@@ -111,14 +111,14 @@
     {
         "name": "Aqua3179",
         "region": "NA",
-        "prestige": 18,
+        "prestige": 16,
         "tiers": {
             "Sword": "LT5",
             "Axe": "LT5",
             "Mace": "LT5",
             "UHC": "LT5",
             "Iron UHC": "LT5",
-            "Vallina": "LT5",
+            "Vallina": "UR",
             "Pot": "LT5",
             "NetherOP": "LT5",
             "SMP": "LT5"
