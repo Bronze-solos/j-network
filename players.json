@@ -136,7 +136,9 @@
     {
         "name": "Bronze Is Better",
         "region": "NA",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 5,
+        "tiers": {
+            "Sword": "HT5"
+        }
     }
 ]
