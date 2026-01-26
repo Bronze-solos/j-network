@@ -132,5 +132,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "Bronze Is Better",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
