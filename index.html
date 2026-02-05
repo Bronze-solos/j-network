@@ -85,6 +85,12 @@
         
         /* Enhanced Logo */
         .logo-area { display: flex; flex-direction: column; position: relative; }
+        .sync-indicator { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.65rem; color: #666; font-family: 'Rajdhani'; font-weight: 700; letter-spacing: 2px; }
+        .sync-dot { width: 6px; height: 6px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 10px #00ff00; animation: pulse-sync 2s ease-in-out infinite; }
+        @keyframes pulse-sync {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
         .logo-container { position: relative; display: inline-block; }
         .logo { font-family: 'Rajdhani', sans-serif; font-size: 3rem; font-weight: 900; color: var(--red-lava); letter-spacing: 4px; line-height: 1; position: relative; text-transform: uppercase; background: linear-gradient(180deg, #ff0000 0%, #cc0000 50%, #990000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 40px rgba(255, 0, 0, 0.4)); animation: logo-pulse 3s ease-in-out infinite; }
         @keyframes logo-pulse {
@@ -185,6 +191,10 @@
             <div class="network-badge">OG</div>
         </div>
         <div class="subtitle">Made by BronzeHarpy80</div>
+        <div class="sync-indicator">
+            <div class="sync-dot"></div>
+            <span>SYNCED WITH DISCORD BOT</span>
+        </div>
     </div>
     <div class="search-container">
         <input type="text" id="searchInput" class="search-box" placeholder="Search player..." onkeypress="if(event.key==='Enter')searchPlayer()">
@@ -294,18 +304,29 @@
             </div></div>`).join('')}</div></div>`;
     }
     
+    // Render kit-specific tier columns (Tier 1 through Tier 5)
+    // Data synced from Discord bot JSON at: https://raw.githubusercontent.com/Bronze-solos/j-network/main/players.json
+    // Tier structure: Players have tiers like "HT1", "T1", "T2", "HT2", etc.
+    // The number in the tier name (1-5) determines which column they appear in
     function renderKitTiers(board) {
         const eligible = PLAYERS.filter(p => p.tiers && p.tiers[currentMode] && p.tiers[currentMode] !== "UR");
+        
+        // Always show all 5 tiers
         for(let t=1; t<=5; t++) {
             const inTier = eligible.filter(p => p.tiers[currentMode].includes(t.toString()));
-            if(inTier.length === 0) continue;
             inTier.sort((a,b) => (b.prestige || 0) - (a.prestige || 0));
-            board.innerHTML += `<div class="column"><div class="col-header"><div class="col-title">TIER ${t}</div></div><div>
-                ${inTier.map(p => { 
+            
+            let tierContent = '';
+            if(inTier.length === 0) {
+                tierContent = `<div style="padding:40px; text-align:center; color:#444; font-family:'Rajdhani'; font-size:0.9rem;">NO RANKED PLAYERS</div>`;
+            } else {
+                tierContent = inTier.map(p => { 
                     let r = p.tiers[currentMode]; 
                     return `<div class="player-card ${r === 'HT1' ? 'ht1-gold' : ''}" onclick="showPlayerDetails('${p.name}')"><div style="display:flex; justify-content:space-between; align-items:center;"><div><div style="font-weight:800;">${p.name}</div><div style="font-size:0.7rem; color:#555;">${p.region}</div></div><div class="p-rank" style="color:${r === 'HT1' ? 'var(--ht-gold)' : '#fff'}">${r}</div></div></div>` 
-                }).join('')}
-            </div></div>`;
+                }).join('');
+            }
+            
+            board.innerHTML += `<div class="column"><div class="col-header"><div class="col-title">TIER ${t}</div><div style="font-size:0.7rem; color:#666; margin-top:5px; font-weight:600;">${currentMode.toUpperCase()}</div></div><div>${tierContent}</div></div>`;
         }
     }
     
