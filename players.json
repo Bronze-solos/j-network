@@ -156,5 +156,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "Testplayer EU",
+        "region": "EU",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
