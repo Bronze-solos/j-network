@@ -174,14 +174,14 @@
     {
         "name": "Testplayer NA",
         "region": "NA",
-        "prestige": 16,
+        "prestige": 14,
         "tiers": {
             "Sword": "LT5",
             "Axe": "LT5",
             "Iron UHC": "LT5",
             "Vanilla": "LT5",
             "Mace": "LT5",
-            "Diamond Pot": "LT5",
+            "Diamond Pot": "UR",
             "Pot": "LT5",
             "SMP": "LT5"
         }
