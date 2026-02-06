@@ -160,10 +160,11 @@
     {
         "name": "Testplayer EU",
         "region": "EU",
-        "prestige": 4,
+        "prestige": 6,
         "tiers": {
             "Sword": "LT5",
-            "Axe": "LT5"
+            "Axe": "LT5",
+            "Iron UHC": "LT5"
         }
     },
     {
