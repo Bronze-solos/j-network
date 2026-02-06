@@ -174,7 +174,7 @@
     {
         "name": "Testplayer NA",
         "region": "NA",
-        "prestige": 14,
+        "prestige": 16,
         "tiers": {
             "Sword": "LT5",
             "Axe": "LT5",
@@ -184,7 +184,7 @@
             "Diamond Pot": "UR",
             "Pot": "LT5",
             "SMP": "LT5",
-            "UHC": "NA"
+            "UHC": "LT5"
         }
     }
 ]
