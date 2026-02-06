@@ -160,7 +160,7 @@
     {
         "name": "Testplayer EU",
         "region": "EU",
-        "prestige": 14,
+        "prestige": 16,
         "tiers": {
             "Sword": "LT5",
             "Axe": "LT5",
@@ -168,7 +168,8 @@
             "Vanilla": "LT5",
             "Mace": "LT5",
             "Pot": "LT5",
-            "SMP": "LT5"
+            "SMP": "LT5",
+            "UHC": "LT5"
         }
     },
     {
