@@ -168,7 +168,9 @@
     {
         "name": "Testplayer NA",
         "region": "NA",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 2,
+        "tiers": {
+            "Sword": "LT5"
+        }
     }
 ]
