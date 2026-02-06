@@ -172,12 +172,13 @@
     {
         "name": "Testplayer NA",
         "region": "NA",
-        "prestige": 8,
+        "prestige": 10,
         "tiers": {
             "Sword": "LT5",
             "Axe": "LT5",
             "Iron UHC": "LT5",
-            "Vanilla": "LT5"
+            "Vanilla": "LT5",
+            "Mace": "LT5"
         }
     }
 ]
