@@ -160,8 +160,10 @@
     {
         "name": "Testplayer EU",
         "region": "EU",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 2,
+        "tiers": {
+            "Sword": "LT5"
+        }
     },
     {
         "name": "Testplayer NA",
