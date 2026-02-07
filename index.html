@@ -171,7 +171,7 @@
             min-width: min-content;
         }
         
-        /* Enhanced Mode Button with Minecraft Icons */
+        /* Enhanced Mode Button */
         .mode-btn { 
             background: linear-gradient(135deg, rgba(30, 0, 0, 0.9) 0%, rgba(15, 0, 0, 0.9) 100%);
             border: 2px solid #440000; 
@@ -215,20 +215,18 @@
             transform: translateY(-3px) scale(1.05);
         }
         
-        /* Minecraft-style pixel art icons */
+        /* Emoji icons */
         .mode-icon { 
-            width: 40px;
-            height: 40px;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            filter: brightness(0.7) drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
+            font-size: 2rem;
+            filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.7;
         }
         
         .mode-btn.active .mode-icon, .mode-btn:hover .mode-icon { 
-            filter: brightness(1) drop-shadow(0 0 12px rgba(0, 0, 0, 0.8));
-            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.8));
+            opacity: 1;
+            transform: scale(1.2) rotate(5deg);
         }
         
         .mode-label {
@@ -316,6 +314,152 @@
         .staff-card:hover { border-color: var(--red-lava); transform: translateY(-10px); }
         .staff-role { color: var(--red-lava); font-family: 'Rajdhani'; font-weight: 800; font-size: 0.8rem; letter-spacing: 2px; }
         .staff-name { color: #fff; font-size: 1.5rem; font-weight: 800; display: block; margin-top: 10px; }
+        
+        /* Community Hub Styles */
+        .community-hub {
+            width: 100%;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            position: relative;
+            background: linear-gradient(135deg, rgba(20, 0, 0, 0.8) 0%, rgba(5, 0, 0, 0.95) 100%);
+        }
+        
+        .community-title {
+            font-family: 'Rajdhani';
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--red-lava);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px var(--red-glow), 0 0 60px var(--red-glow);
+            animation: title-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes title-pulse {
+            0%, 100% { text-shadow: 0 0 30px var(--red-glow), 0 0 60px var(--red-glow); }
+            50% { text-shadow: 0 0 40px var(--red-glow), 0 0 80px var(--red-glow), 0 0 100px var(--red-glow); }
+        }
+        
+        .community-subtitle {
+            font-family: 'Rajdhani';
+            font-size: 1.2rem;
+            color: #999;
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .discord-button {
+            background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+            color: white;
+            padding: 25px 60px;
+            text-decoration: none;
+            font-family: 'Rajdhani';
+            font-weight: 800;
+            font-size: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(88, 101, 242, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+        
+        .discord-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 60px rgba(88, 101, 242, 0.6);
+        }
+        
+        .discord-icon {
+            font-size: 2.5rem;
+        }
+        
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: rgba(30, 0, 0, 0.6);
+            border: 2px solid #440000;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .stat-card:hover {
+            border-color: var(--red-lava);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+        
+        .stat-number {
+            font-family: 'Rajdhani';
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--red-lava);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-family: 'Rajdhani';
+            font-size: 1rem;
+            color: #999;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .community-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(15, 0, 0, 0.8);
+            border: 1px solid #330000;
+            padding: 25px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--red-lava);
+            transform: translateY(-3px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-family: 'Rajdhani';
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #999;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -371,20 +515,20 @@
     const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community", "Staff"];
     const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
     
-    // Base64 encoded Minecraft-style icons from uploaded images
+    // Corrected icon mappings
     const MODE_ICONS = {
-        "Overall": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2ElEQVR4nGNgGCbAkYGB4T8DAz4w2IB7DA8Z/v//TxUDHjH8Y2BgYEBmmAz+z8DwHyz2n4GB4QEDAwMTMgOZwczAwMDAwPCfgYGBAVkMpgGZgWwAugFgDcgGwA1ANgCmAZmBbADcAGQGsgFwA5AZyAbADUBmIBsANwCZQQ8DoAbANFBkAEwjUQZg00ipASANQJeAugAZIBvwhQHbODEYGCZQME7+MzAwMKC7BJmBagBYA7IBcAOQGcgGwA1AZiAbADcAmYFsANwAZAayAXADkBlDbQBYAzIDXQwsgO4FfAYAAJSLZrz6WzPSAAAAAElFTkSuQmCC",
-        "Sword": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVR4nO2WsW3DMBBFn+RAhhs3rkw4a2QLr+AtlD28hUdQZsAW3sJTKE1WcGNAQCQKPPIoURIFqcgP/EYgj/eO/CMlIiIiIvpnBGAFPAEf4HNwNXRbA0+pBl6BNfDSaOxX4Aq8A5vBSBfgTqxhMngPnIDf1HgB7lvNW2S0C3Bv5Kdh+x1YtZq3yGgXYO85Xz8Zm80aZLQLsEt8/+lx3iqjXYCj5/zY47xVRrsAqXx+9zjXnlN7TtsEeCTbr/C8VUa7AE/AMmzvBv77utW8RUa7AMn2u8AReAf2wNnJ55rgYe4BUhvt2nMT4AxcgB2wcPK5G7x0AXZOPm+Nw1YBpjVvkdFZgJm15y0yOgswsfa8RUZnASbWnrfI6CzAxNpzK4uM9Df8Ay5qXTcjO99iAAAAAElFTkSuQmCC",
-        "Vanilla": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+ElEQVR4nO2UwQ2CQBCGP42FaAeWYAl0IBVYgp3YiZ1YAh1YgnZACdKBJVCC/slcjAkHZjkM8SX7J5vM7s7u7MxKSkpKelgB18CNULIHJkCR5VAtKmAL3IEngH+k+Eq+ASYxYz4lX4w6fQxsHOsqKP8SOEfaxxbyqeBc89hNQQG0QemtiPMTnBN6rJuiGiCvdVnEuQ/0Qd1fyjvnXaZr+m3ygIqBIB+w/y8B44D9l/ICBuE08OOPP/J5YOT0v9Vd5E/eAtoe+x3QCbT/F1X0F1AA18Bu6F3RvF68DgGeJ8oqbSp7PZ4LYEq95L5xOyq8JSUlJWn4ADv9WOSW8zjiAAAAAElFTkSuQmCC",
-        "UHC": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2UvU7DMBSFT8hTILEhsSGxIbGxMbKxMTGysbExsrGxMbKxMTGysbExsrGxMbKxMTGy8RC8BK7UKlVp4jpO1Q5wpaO0ub7fPf7JbTRarVarNTDWwBV4AnfgFXwB3+ATfIAX8AjuwAW4AEvgqAiW4AK8g1dGJ0XwBl7AM7gF58A8B+bgHNyBZ/ACXlMF4Ra8AziA63JfG1yAz44fwv0+gnV5/grcg/UAAtiAH/AJrkElHMAzeAe/YAdOQAmcgB+wAwW4AE/gA3yBrwiBHfBbnn0Dx+D4kMAx+AbfFQKxBj8VEjuKwqngFDyCs7Id7IF98AjOwYmic9CHX6X4GeyAWdmO8+EcnICfku8HHJbHTRFeJXECdvV/SgYnYAPuagR+VAmU4Kb+37u5/6ZardZq/Q0vLN5+kGOQ4gAAAABJRU5ErkJggg==",
-        "Pot": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABfElEQVR4nO2WvU7DMBSFP8hTIDEhMSGxILEgsSDYGNkY2RjZWJBYkFiQ2BjZWJBYkNgY2RjZWJBYkFiQWJB4CV6Cq1SpStPGdqp0gCsdqYnj+517f+xIkiRJkiRJ/w4BHIEnwAfwBvwC/8Af8A28Am/AO3AL3AE34BrYA1s5sAd24Ba4A/fAB/AOvAHfAr3D/Al8Cm0ewL1AfwY+gBfgBXgGnoAn4Bl4EXz14lMv9n3xXQR34I44KrZRa6QeL+t5gPvG+wH3dfI/Ff9VPLdqPZ+3HnkArAv0r+ADeBVxX77fAY/Ah0DvE/gg2qrtCqwK9K/AI/Ak0PsEPokxq/ac1oHGzsBFz68L9C/Ak0DvE/gk4KPWc6LvS+rWyoG+Xwv0L8Aj8CTQ+wQ+CfioeV7U+wI7A5v8nzx0G47AETgWaLmH2k9rgbZb3y1vN7PuFOxp3m4BN3nvWB+3jv0TcAq+BHqf0BdwCk7/KvxcL6bBSdEz4K5VfL9G+nxQkiRJ+n8pnmKhhlmgWWwAAAAASUVORK5CYII=",
-        "NetherOP": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+ElEQVR4nO2UwQ2CQBCGP42FaAeWYAl0IBVYgp3YiZ1YAh1YgnZACdKBJVCC/slcjAkHZjkM8SX7J5vM7s7u7MxKSkpKelgB18CNULIHJkCR5VAtKmAL3IEngH+k+Eq+ASYxYz4lX4w6fQxsHOsqKP8SOEfaxxbyqeBc89hNQQG0QemtiPMTnBN6rJuiGiCvdVnEuQ/0Qd1fyjvnXaZr+m3ygIqBIB+w/y8B44D9l/ICBuE08OOPP/J5YOT0v9Vd5E/eAtoe+x3QCbT/F1X0F1AA18Bu6F3RvF68DgGeJ8oqbSp7PZ4LYEq95L5xOyq8JSUlJWn4ADv9WOSW8zjiAAAAAElFTkSuQmCC",
-        "SMP": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABfUlEQVR4nO2YvW7CMBSFv4AnaNoObR+BJ2DqULVD1Q5VO1Qd2DJU7VC1Q9UObR+Bqh2qdqjaB+AleAmuVKVqSOKfOFQc6Uhn8L3n+No/iSRJkiRJ0v8BARwBHwAf4BP4Bn6BX+ATeBewfwI+gSPgogjOgBfgFXgD/gD/QbgF78Ar8AKcAycFcAy8A2/AH+M/EG7AO3AEnHdVYAa8pzzyAtwCx1mxBG6BV+AZ+EiJ92AvZyZbgenwAdwDV4Z4r3YjFZgDF8BD1mVp+wJc6j+3Hh+Xs5dJvEuALMAtwJwZ8Aw8mjgP+jd3nTjxLgGWwB1wb4gbvLU6KzAbPoA74AaYW+I94/iXIu7/9PQMYAl8ZcTB1RnQtwQLHffIELcED+0HLIGvIfRK7+YtoasI7JqXDYrVeBdCl1GsX/m0GtxFYPf8nxbf+xUi3qPjXYos/yoQHB2/3rdKEydeQ0MX7xZgCXwNZ8L3+qMR30VgV2Vv/p/uWiVJkiRJGt0fU4+EaBiIDUsAAAAASUVORK5CYII=",
-        "Axe": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABGklEQVR4nO2WQU7DMBCG/wVegCN7uAAn4AhLOEJ6hCN0yxG65QhwBC7AEY7AES7QJVJIJVU0TmwnaZEqfqmSrXH+/54ZO44kSZIkSdK/RABr4Al4BT6AD+Ab+AW+gE/gA3gH3oBX4BnYAOsygA2wBd6A9+AT+AI+gRfgGTgBJ8AGWJbJ6Ap4Br6BH+C3gfDz/gFOwBFYlMnoCvgE/oB/A+EnfAInwGGZjK4y4nDgY0BORlcZ8fLAx4CcjK4y4u2BjwE5GV1lxKsDHwNyMrrKiFcFxatm9C3wVDC+9Yw/FhRv7Rl/Lije0zP+VFC8h2f8vqB4d8/4bUHxbp7xm4Li3TzjNwXFu3nGbwqKd/OMXxcU7+oZvy4o3tUzflVQvEudf5ckSZIk/SdOAPo2dKAxOJEEAAAAAElFTkSuQmCC",
-        "Mace": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO2WQQ6CMBCG/4VewKN61KN6VG/gUb2BR/WoHtWjegOP6lG9gUf1Bh7VG/gSJiZbUyC0E0xM+qVNof1+Zqa0hBBCCCGE+B8AOAAvAF8AX1V9AXgAuAGYeXF0ygzADcAjJ/4A7lV9ATgBeBMwAXACcPZoqe4fKn4KcAVwzYl/AWgBNF0ZalU3KvcbcHGtdgagjZvbLACYl8Wfx83Nx8lnMfFndjxubjpO3g2x8W4IfOwRtQCaPiY+xI+7OTmnL/k5J4QQQgghJMwXbM8+aw4iUYEAAAAASUVORK5CYII=",
-        "Iron UHC": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2XvU4CQRSGP8RnsRNL0BK0hBJ6O+3EEuzETuzETuzETuzETuzETuzETuzETuzEEuwsTeElfAm+xCRkN+yPszPDDhdI9ksmmV2+c6Z8zMzG8iyLMuyrP8BAewAn8AH8AV8A9/AD/AFfAIfwDvwBrwCL8AzcAfsNMEzcAccgHtgF9gD9v8oewCPwB1wu0mAI+AF+AR+M+IP4BX4kv8JeMsxfwaegKNNAhwCb8An8Jsh/hO4AN6BT+ANuAROgH1gNwdwAJwCN8A18Ah8ZMSfgXPgDBhVAbwAnWHiL+Ac6ObEn4E74A44BS6BbiXAwlL8O3AF9B3iJ1ItfVpL77sCtjIBdpfiX4ErYFAh/hzYBx6kWnqjtfSdHsBeav4r/4+vHHq2gUumEy8U72S95Z1k63VYlmVZ1l/zCxuBgqpj+CKmAAAAAElFTkSuQmCC",
-        "Community": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVR4nO2XvU7DMBTFP8hTILEhsSGxIbGxMbKxMTGysbExsrGxMbKxMTGysbExsrGxMbKxMTGy8RC8BK7UKlVp4jpO1Q5wpaO0ub7fPf7JbTRarVarNTDWwBV4AnfgFXwB3+ATfIAX8AjuwAW4AkvgqAiW4AK8g1dGJ0XwBl7AM7gF58A8B+bgHNyBZ/ACXlMF4Ra8AziA63JfG1yAz44fwv0+gnV5/grcg/UAAtiAH/AJrkElHMAzeAe/YAdOQAmcgB+wAwW4AE/gA3yBrwiBHfBbnn0Dx+D4kMAx+AbfFQKxBj8VEjuKwqngFDyCs7Id7IF98AjOwYmic9CHX6X4GeyAWdmO8+EcnICfku8HHJbHTRFeJXECdvV/SgYnYAPuagR+VAmU4Kb+37u5/6ZardZq/Q0vLN5+kGOQ4gAAAABJRU5ErkJggg==",
-        "Staff": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2ElEQVR4nGNgGCbAkYGB4T8DAz4w2IB7DA8Z/v//TxUDHjH8Y2BgYEBmmAz+z8DwHyz2n4GB4QEDAwMTMgOZwczAwMDAwPCfgYGBAVkMpgGZgWwAugFgDcgGwA1ANgCmAZmBbADcAGQGsgFwA5AZyAbADUBmIBsANwCZQQ8DoAbANFBkAEwjUQZg00ipASANQJeAugAZIBvwhQHbODEYGCZQME7+MzAwMKC7BJmBagBYA7IBcAOQGcgGwA1AZiAbADcAmYFsANwAZAayAXADkBlDbQBYAzIDXQwsgO4FfAYAAJSLZrz6WzPSAAAAAElFTkSuQmCC"
+        "Overall": "🏆",
+        "Sword": "⚔️",        // Diamond Sword
+        "Vanilla": "🔮",       // Crystal/Amethyst
+        "UHC": "🍎",          // Golden Apple
+        "Pot": "🧪",          // Potion (splash)
+        "NetherOP": "🔥",     // Fire/Lava
+        "SMP": "🏠",          // House/World
+        "Axe": "🪓",          // Iron Axe
+        "Mace": "🔨",         // Mace
+        "Iron UHC": "🍎",     // Golden Apple (same as UHC)
+        "Community": "👥",
+        "Staff": "👑"
     };
     
     let PLAYERS = [];
@@ -453,7 +597,7 @@
     function renderTabs() {
         document.getElementById('modeList').innerHTML = MODES.map(m => `
             <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">
-                <img src="${MODE_ICONS[m]}" alt="${m}" class="mode-icon">
+                <div class="mode-icon">${MODE_ICONS[m]}</div>
                 <span class="mode-label">${m}</span>
             </button>
         `).join('');
@@ -464,7 +608,55 @@
         board.innerHTML = '';
         
         if(currentMode === "Community") {
-            board.innerHTML = `<div style="text-align:center; width:100%; padding:100px;"><a href="https://discord.gg/m2jvAtrp" target="_blank" style="background:#5865F2; color:white; padding:20px 40px; text-decoration:none; font-family:'Rajdhani'; font-weight:800; font-size:2rem; border-radius:4px;">JOIN DISCORD</a></div>`;
+            board.innerHTML = `
+                <div class="community-hub">
+                    <div class="community-title">JOIN OUR COMMUNITY</div>
+                    <div class="community-subtitle">Connect • Compete • Conquer</div>
+                    
+                    <a href="https://discord.gg/m2jvAtrp" target="_blank" class="discord-button">
+                        <span class="discord-icon">💬</span>
+                        <span>JOIN DISCORD SERVER</span>
+                    </a>
+                    
+                    <div class="community-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Active Players</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">9</div>
+                            <div class="stat-label">Game Modes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Server Uptime</div>
+                        </div>
+                    </div>
+                    
+                    <div class="community-features">
+                        <div class="feature-card">
+                            <div class="feature-icon">⚔️</div>
+                            <div class="feature-title">Competitive PvP</div>
+                            <div class="feature-desc">Join ranked matches and climb the leaderboards across multiple game modes</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🏆</div>
+                            <div class="feature-title">Tournaments</div>
+                            <div class="feature-desc">Participate in weekly tournaments with exclusive rewards and prizes</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">👥</div>
+                            <div class="feature-title">Active Community</div>
+                            <div class="feature-desc">Join a thriving community of skilled players and make new friends</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⭐</div>
+                            <div class="feature-title">Prestige System</div>
+                            <div class="feature-desc">Earn prestige points and unlock exclusive perks as you progress</div>
+                        </div>
+                    </div>
+                </div>
+            `;
             return;
         }
         
