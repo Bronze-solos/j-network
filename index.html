@@ -116,6 +116,54 @@
         
         .subtitle { font-family: 'Rajdhani'; font-size: 0.7rem; color: #888; letter-spacing: 4px; margin-top: 8px; font-weight: 700; text-transform: uppercase; opacity: 0.7; }
         
+        /* Realm Info Styles */
+        .realm-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(20, 0, 0, 0.8);
+            border: 2px solid #440000;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .realm-info:hover {
+            border-color: var(--red-lava);
+            box-shadow: 0 0 20px var(--red-glow);
+        }
+        .realm-icon {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--red-lava);
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #ff0000 0%, #cc0000 50%, #990000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+        }
+        .realm-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .realm-label {
+            font-family: 'Rajdhani';
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .realm-code {
+            font-family: 'Rajdhani';
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--red-lava);
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--red-glow);
+        }
+        
         /* Search Bar Styles */
         .search-container { display: flex; align-items: center; gap: 10px; }
         .search-box { background: rgba(20, 0, 0, 0.8); border: 2px solid #440000; padding: 12px 20px; color: var(--text-main); font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1rem; width: 300px; transition: 0.3s; outline: none; }
@@ -484,17 +532,26 @@
 <div class="nether-floor"></div>
 
 <nav class="navbar">
-    <div class="logo-area">
-        <div class="logo-container">
-            <div class="logo-accent logo-accent-top"></div>
-            <div class="logo">J-NETWORK</div>
-            <div class="logo-accent logo-accent-bottom"></div>
-            <div class="network-badge">OG</div>
+    <div style="display: flex; align-items: center; gap: 30px;">
+        <div class="realm-info">
+            <div class="realm-icon">J-NETWORK</div>
+            <div class="realm-details">
+                <div class="realm-label">REALM CODE</div>
+                <div class="realm-code">jRzLnhzh5M4</div>
+            </div>
         </div>
-        <div class="subtitle">Made by BronzeHarpy80</div>
-        <div class="sync-indicator">
-            <div class="sync-dot"></div>
-            <span>SYNCED WITH DISCORD BOT</span>
+        <div class="logo-area">
+            <div class="logo-container">
+                <div class="logo-accent logo-accent-top"></div>
+                <div class="logo">J-NETWORK</div>
+                <div class="logo-accent logo-accent-bottom"></div>
+                <div class="network-badge">OG</div>
+            </div>
+            <div class="subtitle">Made by BronzeHarpy80</div>
+            <div class="sync-indicator">
+                <div class="sync-dot"></div>
+                <span>SYNCED WITH DISCORD BOT</span>
+            </div>
         </div>
     </div>
     <div class="search-container">
