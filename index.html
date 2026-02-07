@@ -215,12 +215,19 @@
             transform: translateY(-3px) scale(1.05);
         }
         
-        /* Emoji icons */
+        /* SVG icons */
         .mode-icon { 
-            font-size: 2rem;
+            width: 32px;
+            height: 32px;
             filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.7;
+        }
+        
+        .mode-icon.emoji {
+            font-size: 2rem;
+            width: auto;
+            height: auto;
         }
         
         .mode-btn.active .mode-icon, .mode-btn:hover .mode-icon { 
@@ -515,18 +522,18 @@
     const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community", "Staff"];
     const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
     
-    // Corrected icon mappings
+    // Icon mappings using mctiers.com SVG icons
     const MODE_ICONS = {
-        "Overall": "🏆",
-        "Sword": "⚔️",        // Diamond Sword
-        "Vanilla": "🔮",       // Crystal/Amethyst
-        "UHC": "🍎",          // Golden Apple
-        "Pot": "🧪",          // Potion (splash)
-        "NetherOP": "🔥",     // Fire/Lava
-        "SMP": "🏠",          // House/World
-        "Axe": "🪓",          // Iron Axe
-        "Mace": "🔨",         // Mace
-        "Iron UHC": "🍎",     // Golden Apple (same as UHC)
+        "Overall": "https://mctiers.com/tier_icons/overall.svg",
+        "Sword": "https://mctiers.com/tier_icons/sword.svg",
+        "Vanilla": "https://mctiers.com/tier_icons/vanilla.svg",
+        "UHC": "https://mctiers.com/tier_icons/uhc.svg",
+        "Pot": "https://mctiers.com/tier_icons/pot.svg",
+        "NetherOP": "https://mctiers.com/tier_icons/netherop.svg",
+        "SMP": "https://mctiers.com/tier_icons/smp.svg",
+        "Axe": "https://mctiers.com/tier_icons/axe.svg",
+        "Mace": "https://mctiers.com/tier_icons/mace.svg",
+        "Iron UHC": "https://mctiers.com/tier_icons/uhc.svg",
         "Community": "👥",
         "Staff": "👑"
     };
@@ -595,12 +602,26 @@
     }
     
     function renderTabs() {
-        document.getElementById('modeList').innerHTML = MODES.map(m => `
-            <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">
-                <div class="mode-icon">${MODE_ICONS[m]}</div>
-                <span class="mode-label">${m}</span>
-            </button>
-        `).join('');
+        document.getElementById('modeList').innerHTML = MODES.map(m => {
+            const iconUrl = MODE_ICONS[m];
+            const isEmoji = m === "Community" || m === "Staff";
+            
+            if (isEmoji) {
+                return `
+                    <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">
+                        <div class="mode-icon emoji">${iconUrl}</div>
+                        <span class="mode-label">${m}</span>
+                    </button>
+                `;
+            } else {
+                return `
+                    <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">
+                        <img src="${iconUrl}" alt="${m}" class="mode-icon" />
+                        <span class="mode-label">${m}</span>
+                    </button>
+                `;
+            }
+        }).join('');
     }
     
     function renderBoard() {
