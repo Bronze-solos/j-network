@@ -171,7 +171,7 @@
             min-width: min-content;
         }
         
-        /* Enhanced Mode Button with Custom Icons */
+        /* Enhanced Mode Button with Minecraft Icons */
         .mode-btn { 
             background: linear-gradient(135deg, rgba(30, 0, 0, 0.9) 0%, rgba(15, 0, 0, 0.9) 100%);
             border: 2px solid #440000; 
@@ -215,18 +215,19 @@
             transform: translateY(-3px) scale(1.05);
         }
         
-        /* Custom SVG Icons for Each Gamemode */
+        /* Minecraft-style pixel art icons */
         .mode-icon { 
-            width: 32px;
-            height: 32px;
-            filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
+            width: 40px;
+            height: 40px;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            filter: brightness(0.7) drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0.7;
         }
         
         .mode-btn.active .mode-icon, .mode-btn:hover .mode-icon { 
-            filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.8));
-            opacity: 1;
+            filter: brightness(1) drop-shadow(0 0 12px rgba(0, 0, 0, 0.8));
             transform: scale(1.1) rotate(5deg);
         }
         
@@ -370,73 +371,20 @@
     const MODES = ["Overall", "Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC", "Community", "Staff"];
     const KITS = ["Sword", "Vanilla", "UHC", "Pot", "NetherOP", "SMP", "Axe", "Mace", "Iron UHC"];
     
-    // Custom SVG icons for each gamemode
+    // Base64 encoded Minecraft-style icons from uploaded images
     const MODE_ICONS = {
-        "Overall": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 4L28 16H40L30 24L34 36L24 28L14 36L18 24L8 16H20L24 4Z" fill="currentColor" stroke="currentColor" stroke-width="2"/>
-        </svg>`,
-        
-        "Sword": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="20" y="4" width="8" height="32" fill="currentColor"/>
-            <rect x="18" y="32" width="12" height="4" fill="currentColor"/>
-            <rect x="16" y="36" width="16" height="8" fill="currentColor"/>
-        </svg>`,
-        
-        "Vanilla": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 6L30 18L42 20L33 29L35 41L24 35L13 41L15 29L6 20L18 18L24 6Z" fill="currentColor"/>
-        </svg>`,
-        
-        "UHC": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 8C18 8 12 12 12 20C12 28 18 40 24 40C30 40 36 28 36 20C36 12 30 8 24 8Z" fill="currentColor"/>
-            <rect x="20" y="4" width="8" height="6" fill="currentColor"/>
-        </svg>`,
-        
-        "Pot": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="12" width="16" height="28" rx="2" fill="currentColor"/>
-            <rect x="14" y="8" width="20" height="6" rx="2" fill="currentColor"/>
-            <circle cx="24" cy="25" r="4" fill="#000"/>
-        </svg>`,
-        
-        "NetherOP": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 6L30 18L42 20L33 29L35 41L24 35L13 41L15 29L6 20L18 18L24 6Z" fill="currentColor"/>
-            <circle cx="24" cy="24" r="8" fill="#000"/>
-            <path d="M20 20L28 28M28 20L20 28" stroke="currentColor" stroke-width="2"/>
-        </svg>`,
-        
-        "SMP": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="8" y="24" width="32" height="16" fill="currentColor"/>
-            <path d="M12 24L24 8L36 24" fill="currentColor"/>
-            <rect x="18" y="28" width="6" height="12" fill="#000"/>
-        </svg>`,
-        
-        "Axe": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="28" y="8" width="12" height="16" fill="currentColor"/>
-            <rect x="20" y="20" width="8" height="24" fill="currentColor"/>
-        </svg>`,
-        
-        "Mace": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="12" r="8" fill="currentColor"/>
-            <rect x="20" y="18" width="8" height="26" fill="currentColor"/>
-        </svg>`,
-        
-        "Iron UHC": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="12" y="8" width="24" height="32" rx="4" fill="currentColor"/>
-            <rect x="16" y="12" width="16" height="4" fill="#000"/>
-            <rect x="16" y="20" width="16" height="4" fill="#000"/>
-            <rect x="16" y="28" width="16" height="4" fill="#000"/>
-        </svg>`,
-        
-        "Community": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="16" cy="16" r="6" fill="currentColor"/>
-            <circle cx="32" cy="16" r="6" fill="currentColor"/>
-            <circle cx="24" cy="32" r="6" fill="currentColor"/>
-            <path d="M20 20L24 28M28 20L24 28" stroke="currentColor" stroke-width="2"/>
-        </svg>`,
-        
-        "Staff": `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 6L28 18L40 20L30 28L32 40L24 34L16 40L18 28L8 20L20 18L24 6Z" fill="currentColor"/>
-            <circle cx="24" cy="24" r="6" fill="#000"/>
-        </svg>`
+        "Overall": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2ElEQVR4nGNgGCbAkYGB4T8DAz4w2IB7DA8Z/v//TxUDHjH8Y2BgYEBmmAz+z8DwHyz2n4GB4QEDAwMTMgOZwczAwMDAwPCfgYGBAVkMpgGZgWwAugFgDcgGwA1ANgCmAZmBbADcAGQGsgFwA5AZyAbADUBmIBsANwCZQQ8DoAbANFBkAEwjUQZg00ipASANQJeAugAZIBvwhQHbODEYGCZQME7+MzAwMKC7BJmBagBYA7IBcAOQGcgGwA1AZiAbADcAmYFsANwAZAayAXADkBlDbQBYAzIDXQwsgO4FfAYAAJSLZrz6WzPSAAAAAElFTkSuQmCC",
+        "Sword": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVR4nO2WsW3DMBBFn+RAhhs3rkw4a2QLr+AtlD28hUdQZsAW3sJTKE1WcGNAQCQKPPIoURIFqcgP/EYgj/eO/CMlIiIiIvpnBGAFPAEf4HNwNXRbA0+pBl6BNfDSaOxX4Aq8A5vBSBfgTqxhMngPnIDf1HgB7lvNW2S0C3Bv5Kdh+x1YtZq3yGgXYO85Xz8Zm80aZLQLsEt8/+lx3iqjXYCj5/zY47xVRrsAqXx+9zjXnlN7TtsEeCTbr/C8VUa7AE/AMmzvBv77utW8RUa7AMn2u8AReAf2wNnJ55rgYe4BUhvt2nMT4AxcgB2wcPK5G7x0AXZOPm+Nw1YBpjVvkdFZgJm15y0yOgswsfa8RUZnASbWnrfI6CzAxNpzK4uM9Df8Ay5qXTcjO99iAAAAAElFTkSuQmCC",
+        "Vanilla": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+ElEQVR4nO2UwQ2CQBCGP42FaAeWYAl0IBVYgp3YiZ1YAh1YgnZACdKBJVCC/slcjAkHZjkM8SX7J5vM7s7u7MxKSkpKelgB18CNULIHJkCR5VAtKmAL3IEngH+k+Eq+ASYxYz4lX4w6fQxsHOsqKP8SOEfaxxbyqeBc89hNQQG0QemtiPMTnBN6rJuiGiCvdVnEuQ/0Qd1fyjvnXaZr+m3ygIqBIB+w/y8B44D9l/ICBuE08OOPP/J5YOT0v9Vd5E/eAtoe+x3QCbT/F1X0F1AA18Bu6F3RvF68DgGeJ8oqbSp7PZ4LYEq95L5xOyq8JSUlJWn4ADv9WOSW8zjiAAAAAElFTkSuQmCC",
+        "UHC": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2UvU7DMBSFT8hTILEhsSGxIbGxMbKxMTGysbExsrGxMbKxMTGysbExsrGxMbKxMTGy8RC8BK7UKlVp4jpO1Q5wpaO0ub7fPf7JbTRarVarNTDWwBV4AnfgFXwB3+ATfIAX8AjuwAW4AEvgqAiW4AK8g1dGJ0XwBl7AM7gF58A8B+bgHNyBZ/ACXlMF4Ra8AziA63JfG1yAz44fwv0+gnV5/grcg/UAAtiAH/AJrkElHMAzeAe/YAdOQAmcgB+wAwW4AE/gA3yBrwiBHfBbnn0Dx+D4kMAx+AbfFQKxBj8VEjuKwqngFDyCs7Id7IF98AjOwYmic9CHX6X4GeyAWdmO8+EcnICfku8HHJbHTRFeJXECdvV/SgYnYAPuagR+VAmU4Kb+37u5/6ZardZq/Q0vLN5+kGOQ4gAAAABJRU5ErkJggg==",
+        "Pot": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABfElEQVR4nO2WvU7DMBSFP8hTIDEhMSGxILEgsSDYGNkY2RjZWJBYkFiQ2BjZWJBYkNgY2RjZWJBYkFiQWJB4CV6Cq1SpStPGdqp0gCsdqYnj+517f+xIkiRJkiRJ/w4BHIEnwAfwBvwC/8Af8A28Am/AO3AL3AE34BrYA1s5sAd24Ba4A/fAB/AOvAHfAr3D/Al8Cm0ewL1AfwY+gBfgBXgGnoAn4Bl4EXz14lMv9n3xXQR34I44KrZRa6QeL+t5gPvG+wH3dfI/Ff9VPLdqPZ+3HnkArAv0r+ADeBVxX77fAY/Ah0DvE/gg2qrtCqwK9K/AI/Ak0PsEPokxq/ac1oHGzsBFz68L9C/Ak0DvE/gk4KPWc6LvS+rWyoG+Xwv0L8Aj8CTQ+wQ+CfioeV7U+wI7A5v8nzx0G47AETgWaLmH2k9rgbZb3y1vN7PuFOxp3m4BN3nvWB+3jv0TcAq+BHqf0BdwCk7/KvxcL6bBSdEz4K5VfL9G+nxQkiRJ+n8pnmKhhlmgWWwAAAAASUVORK5CYII=",
+        "NetherOP": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+ElEQVR4nO2UwQ2CQBCGP42FaAeWYAl0IBVYgp3YiZ1YAh1YgnZACdKBJVCC/slcjAkHZjkM8SX7J5vM7s7u7MxKSkpKelgB18CNULIHJkCR5VAtKmAL3IEngH+k+Eq+ASYxYz4lX4w6fQxsHOsqKP8SOEfaxxbyqeBc89hNQQG0QemtiPMTnBN6rJuiGiCvdVnEuQ/0Qd1fyjvnXaZr+m3ygIqBIB+w/y8B44D9l/ICBuE08OOPP/J5YOT0v9Vd5E/eAtoe+x3QCbT/F1X0F1AA18Bu6F3RvF68DgGeJ8oqbSp7PZ4LYEq95L5xOyq8JSUlJWn4ADv9WOSW8zjiAAAAAElFTkSuQmCC",
+        "SMP": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABfUlEQVR4nO2YvW7CMBSFv4AnaNoObR+BJ2DqULVD1Q5VO1Qd2DJU7VC1Q9UObR+Bqh2qdqjaB+AleAmuVKVqSOKfOFQc6Uhn8L3n+No/iSRJkiRJ0v8BARwBHwAf4BP4Bn6BX+ATeBewfwI+gSPgogjOgBfgFXgD/gD/QbgF78Ar8AKcAycFcAy8A2/AH+M/EG7AO3AEnHdVYAa8pzzyAtwCx1mxBG6BV+AZ+EiJ92AvZyZbgenwAdwDV4Z4r3YjFZgDF8BD1mVp+wJc6j+3Hh+Xs5dJvEuALMAtwJwZ8Aw8mjgP+jd3nTjxLgGWwB1wb4gbvLU6KzAbPoA74AaYW+I94/iXIu7/9PQMYAl8ZcTB1RnQtwQLHffIELcED+0HLIGvIfRK7+YtoasI7JqXDYrVeBdCl1GsX/m0GtxFYPf8nxbf+xUi3qPjXYos/yoQHB2/3rdKEydeQ0MX7xZgCXwNZ8L3+qMR30VgV2Vv/p/uWiVJkiRJGt0fU4+EaBiIDUsAAAAASUVORK5CYII=",
+        "Axe": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABGklEQVR4nO2WQU7DMBCG/wVegCN7uAAn4AhLOEJ6hCN0yxG65QhwBC7AEY7AES7QJVJIJVU0TmwnaZEqfqmSrXH+/54ZO44kSZIkSdK/RABr4Al4BT6AD+Ab+AW+gE/gA3gH3oBX4BnYAOsygA2wBd6A9+AT+AI+gRfgGTgBJ8AGWJbJ6Ap4Br6BH+C3gfDz/gFOwBFYlMnoCvgE/oB/A+EnfAInwGGZjK4y4nDgY0BORlcZ8fLAx4CcjK4y4u2BjwE5GV1lxKsDHwNyMrrKiFcFxatm9C3wVDC+9Yw/FhRv7Rl/Lije0zP+VFC8h2f8vqB4d8/4bUHxbp7xm4Li3TzjNwXFu3nGbwqKd/OMXxcU7+oZvy4o3tUzflVQvEudf5ckSZIk/SdOAPo2dKAxOJEEAAAAAElFTkSuQmCC",
+        "Mace": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO2WQQ6CMBCG/4VewKN61KN6VG/gUb2BR/WoHtWjegOP6lG9gUf1Bh7VG/gSJiZbUyC0E0xM+qVNof1+Zqa0hBBCCCGE+B8AOAAvAF8AX1V9AXgAuAGYeXF0ygzADcAjJ/4A7lV9ATgBeBMwAXACcPZoqe4fKn4KcAVwzYl/AWgBNF0ZalU3KvcbcHGtdgagjZvbLACYl8Wfx83Nx8lnMfFndjxubjpO3g2x8W4IfOwRtQCaPiY+xI+7OTmnL/k5J4QQQgghJMwXbM8+aw4iUYEAAAAASUVORK5CYII=",
+        "Iron UHC": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABMElEQVR4nO2XvU4CQRSGP8RnsRNL0BK0hBJ6O+3EEuzETuzETuzETuzETuzETuzETuzETuzEEuwsTeElfAm+xCRkN+yPszPDDhdI9ksmmV2+c6Z8zMzG8iyLMuyrP8BAewAn8AH8AV8A9/AD/AFfAIfwDvwBrwCL8AzcAfsNMEzcAccgHtgF9gD9v8oewCPwB1wu0mAI+AF+AR+M+IP4BX4kv8JeMsxfwaegKNNAhwCb8An8Jsh/hO4AN6BT+ANuAROgH1gNwdwAJwCN8A18Ah8ZMSfgXPgDBhVAbwAnWHiL+Ac6ObEn4E74A44BS6BbiXAwlL8O3AF9B3iJ1ItfVpL77sCtjIBdpfiX4ErYFAh/hzYBx6kWnqjtfSdHsBeav4r/4+vHHq2gUumEy8U72S95Z1k63VYlmVZ1l/zCxuBgqpj+CKmAAAAAElFTkSuQmCC",
+        "Community": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVR4nO2XvU7DMBTFP8hTILEhsSGxIbGxMbKxMTGysbExsrGxMbKxMTGysbExsrGxMbKxMTGy8RC8BK7UKlVp4jpO1Q5wpaO0ub7fPf7JbTRarVarNTDWwBV4AnfgFXwB3+ATfIAX8AjuwAW4AkvgqAiW4AK8g1dGJ0XwBl7AM7gF58A8B+bgHNyBZ/ACXlMF4Ra8AziA63JfG1yAz44fwv0+gnV5/grcg/UAAtiAH/AJrkElHMAzeAe/YAdOQAmcgB+wAwW4AE/gA3yBrwiBHfBbnn0Dx+D4kMAx+AbfFQKxBj8VEjuKwqngFDyCs7Id7IF98AjOwYmic9CHX6X4GeyAWdmO8+EcnICfku8HHJbHTRFeJXECdvV/SgYnYAPuagR+VAmU4Kb+37u5/6ZardZq/Q0vLN5+kGOQ4gAAAABJRU5ErkJggg==",
+        "Staff": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2ElEQVR4nGNgGCbAkYGB4T8DAz4w2IB7DA8Z/v//TxUDHjH8Y2BgYEBmmAz+z8DwHyz2n4GB4QEDAwMTMgOZwczAwMDAwPCfgYGBAVkMpgGZgWwAugFgDcgGwA1ANgCmAZmBbADcAGQGsgFwA5AZyAbADUBmIBsANwCZQQ8DoAbANFBkAEwjUQZg00ipASANQJeAugAZIBvwhQHbODEYGCZQME7+MzAwMKC7BJmBagBYA7IBcAOQGcgGwA1AZiAbADcAmYFsANwAZAayAXADkBlDbQBYAzIDXQwsgO4FfAYAAJSLZrz6WzPSAAAAAElFTkSuQmCC"
     };
     
     let PLAYERS = [];
@@ -505,7 +453,7 @@
     function renderTabs() {
         document.getElementById('modeList').innerHTML = MODES.map(m => `
             <button class="mode-btn ${m === currentMode ? 'active' : ''}" onclick="setMode('${m}')">
-                <div class="mode-icon">${MODE_ICONS[m]}</div>
+                <img src="${MODE_ICONS[m]}" alt="${m}" class="mode-icon">
                 <span class="mode-label">${m}</span>
             </button>
         `).join('');
@@ -516,7 +464,7 @@
         board.innerHTML = '';
         
         if(currentMode === "Community") {
-            board.innerHTML = `<div style="text-align:center; width:100%; padding:100px;"><a href="https://discord.gg/wmpfhavP" target="_blank" style="background:#5865F2; color:white; padding:20px 40px; text-decoration:none; font-family:'Rajdhani'; font-weight:800; font-size:2rem; border-radius:4px;">JOIN DISCORD</a></div>`;
+            board.innerHTML = `<div style="text-align:center; width:100%; padding:100px;"><a href="https://discord.gg/m2jvAtrp" target="_blank" style="background:#5865F2; color:white; padding:20px 40px; text-decoration:none; font-family:'Rajdhani'; font-weight:800; font-size:2rem; border-radius:4px;">JOIN DISCORD</a></div>`;
             return;
         }
         
