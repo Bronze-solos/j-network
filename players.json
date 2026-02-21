@@ -187,5 +187,11 @@
             "SMP": "LT5",
             "UHC": "LT5"
         }
+    },
+    {
+        "name": "RequiemXV2",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
