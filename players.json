@@ -199,5 +199,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "SRT WRLDIE",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
