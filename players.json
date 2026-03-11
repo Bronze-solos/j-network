@@ -212,5 +212,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "d",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
