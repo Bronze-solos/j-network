@@ -216,7 +216,9 @@
     {
         "name": "Greyninja157061",
         "region": "NA",
-        "prestige": 0,
-        "tiers": {}
+        "prestige": 5,
+        "tiers": {
+            "SMP": "HT5"
+        }
     }
 ]
