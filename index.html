@@ -466,6 +466,17 @@
         }
     }
 
+    /* ── HT Tier Colors ── */
+    const HT_COLORS = {
+        'HT1': '#ffcc00',  // Gold
+        'HT2': '#d0d0d0',  // Silver
+        'HT3': '#cd7f32',  // Bronze
+        'HT4': '#55aaff',  // Sapphire
+        'HT5': '#e8c4ff'   // Light Purple
+    };
+    function htColor(rank) { return HT_COLORS[rank] || '#ffffff'; }
+    function isHT(rank) { return rank && rank.startsWith('HT'); }
+
     /* ── App ── */
     const MODES = ["Overall","Sword","Vanilla","UHC","Pot","NetherOP","SMP","Axe","Mace","Iron UHC","Community","Staff"];
     const KITS  = ["Sword","Vanilla","UHC","Pot","NetherOP","SMP","Axe","Mace","Iron UHC"];
@@ -584,7 +595,7 @@
                             const r = (p.tiers && p.tiers[k]) ? p.tiers[k] : "UR";
                             return `<div class="stat-box">
                                 <span style="color:#223344">${k.slice(0,3).toUpperCase()}</span>
-                                <span style="color:${r.includes('HT') ? 'var(--ht-gold)' : (r === 'UR' ? '#112233' : '#fff')}">${r}</span>
+                                <span style="color:${isHT(r) ? htColor(r) : (r === 'UR' ? '#112233' : '#fff')}">${r}</span>
                             </div>`;
                         }).join('')}
                     </div>
@@ -611,13 +622,14 @@
                 ? `<div style="padding:40px;text-align:center;color:#112233;font-family:'Rajdhani';font-size:0.9rem;">NO RANKED PLAYERS</div>`
                 : inTier.map(p => {
                     const r = p.tiers[currentMode];
-                    return `<div class="player-card ${r === 'HT1' ? 'ht1-gold' : ''}" onclick="showPlayerDetails('${p.name}')">
+                    const cardBorder = isHT(r) ? `border-color:${htColor(r)};box-shadow:inset 0 0 10px ${htColor(r)}22;` : '';
+                    return `<div class="player-card" style="${cardBorder}" onclick="showPlayerDetails('${p.name}')">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
                             <div>
                                 <div style="font-weight:800;">${p.name}</div>
                                 <div style="font-size:0.7rem;color:#334455;">${p.region}</div>
                             </div>
-                            <div class="p-rank" style="color:${r === 'HT1' ? 'var(--ht-gold)' : 'var(--blue-ice)'}">${r}</div>
+                            <div class="p-rank" style="color:${isHT(r) ? htColor(r) : '#ffffff'}">${r}</div>
                         </div>
                     </div>`;
                 }).join('');
@@ -661,10 +673,13 @@
             <div class="kit-results">
                 ${KITS.map(kit => {
                     const rank = (player.tiers && player.tiers[kit]) ? player.tiers[kit] : "UR";
-                    const isHT1 = rank === "HT1";
-                    return `<div class="kit-card ${rank !== 'UR' ? 'ranked' : ''} ${isHT1 ? 'ht1' : ''}">
+                    const ranked = rank !== 'UR';
+                    const htRank = isHT(rank);
+                    const borderStyle = htRank ? `border-color:${htColor(rank)};box-shadow:inset 0 0 15px ${htColor(rank)}22;` : '';
+                    const rankColor = htRank ? htColor(rank) : (ranked ? '#fff' : '#223344');
+                    return `<div class="kit-card ${ranked ? 'ranked' : ''}" style="${borderStyle}">
                         <div class="kit-name">${kit}</div>
-                        <div class="kit-rank ${isHT1 ? 'ht1' : (rank !== 'UR' ? 'ranked' : 'unranked')}">${rank}</div>
+                        <div class="kit-rank" style="color:${rankColor}">${rank}</div>
                     </div>`;
                 }).join('')}
             </div>`;
