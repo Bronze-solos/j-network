@@ -238,5 +238,11 @@
         "region": "NA",
         "prestige": 0,
         "tiers": {}
+    },
+    {
+        "name": "venshuru",
+        "region": "NA",
+        "prestige": 0,
+        "tiers": {}
     }
 ]
